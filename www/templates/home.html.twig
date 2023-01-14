@@ -1,0 +1,28 @@
+<!doctype html>
+<html
+	lang="en">
+	<!-- Calling method head.html.twig-->
+	{% include "partial/head.html.twig" %}
+	<body style="background-color:#eee; color:#333">
+		{% include "partial/navigation.html.twig" %}
+		<div class="container" style="background-color:#fff;">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card border-0">
+						<div class="card-header">
+							<h1>Hello World!</h1>
+						</div>
+						<div class="card-body text-center">
+							<p>Test for code formatter</p>
+							<p>{{greeting}}</p>
+							<p>test{{user_ins_name}}</p>
+							<p>test{{user_ins_add}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+	</body>
+</html>

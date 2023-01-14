@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+		<div class="container">
+			<div class="row">
+				<div class="col-2 side-container">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link active text-reset" href="userdashboard.php">
+								<strong class="text-primary" style="margin-left: -1rem;">Dashboard</strong>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="createUser.php">Create new user</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">Edit account</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return confirm('Warning!!! Do you really want to delete this account?')">Delete acount</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-10 main-container">
+					<p>
+						{{user_id}}
+						<br>
+						{{user_email}}
+						<br>
+						{{user_pw}}
+						<br>
+						{{user_userName}}
+						<br>
+						{{user_ins_ID}}
+						<br>
+						{{user_ins_add}}
+
+					</p>
+					<button style="width:100%; padding:5px;">Test button</button>
+				</div>
+			</div>
+		</body>
+	</body>
+</html></div>{% include "partial/footer.html.twig" %}{% include "partial/script.html.twig" %}</body></html>

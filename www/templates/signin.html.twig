@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	{% include "partial/head.html.twig" %}
+	<body style="background-color:#eee; color:#333">
+		<div class="container col-md-4 py-5 text-center shadow-lg rounded my-5" style="background-color:#fff;">
+			<div class="mx-auto mb-3" style="width:15%;">
+				<img id="logo-signin" src="/img/logo/BlackLogo.svg" alt="iMed Logo">
+			</div>
+			<h1 class="mb-5" style="color:#000;">
+				<strong>Sign In</strong>
+			</h1>
+			<div class="container text-start">
+				<form id="signin" method="post" action="signin.php">
+					<div class="mb-3">
+						<label for="email" class="form-label">Email address *</label>
+						<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password *</label>
+						<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" title="must be atleast 8 characters" placeholder="password" required>
+						<p style="margin-top:.3rem; font-size:.8rem">Must be atleast 8 characters</p>
+					</div>
+
+					{% set outcome = result.errors | join(", ") %}
+
+					<div class="d-grid">
+						<button type="submit" name="signin" class="btn btn-secondary mt-3" id="signin-btn" disabled>Sign in</button>
+					</div>
+
+					{% if outcome | length > 0 %}
+						<div class="alert alert-warning alert-dismissible fade show my-3" role="alert">
+							{{ outcome }}
+							<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						</div>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+		{% include "partial/script.html.twig" %}</body>
+</html></body></html>

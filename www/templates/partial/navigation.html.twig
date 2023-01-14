@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg mb-5 px-3" style="background-color:blue; color:white">
+	<div class="container">
+		<a class="navbar-brand" href="/">
+			<img id="img-logo" src="/img/logo/WhiteLogo.svg" alt="iMed Logo">
+		</a>
+
+		{% if user_ins_name | length > 0 and user_profession | length > 0 %}
+			<span class="navbar-text">
+				<strong>{{user_ins_name ~ ' | '}}{{user_profession}}</strong>
+			</span>
+		{% else %}
+			<div style="display: flex; gap: 2px; text-align:center;">
+				<p>
+					<strong>{{user_ins_name}}</strong>
+				</p>
+			</div>
+
+		{% endif %}
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center justify-content-end w-100">
+
+				{% if user_email | length <= 0 %}
+
+					<li class="nav-item p-3">
+						<form class="d-flex" action="search_result.php" method="get">
+							<input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">Search</button>
+						</form>
+					</li>
+					<li class="nav-item p-3">
+						<a class="nav-link text-reset" href="signin.php">Sign in</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-reset" href="signup.php">
+							<button type="button" class="btn btn-primary">Sign out</button>
+						</a>
+					</li>
+				{% endif %}
+
+				{% if user_email | length > 0  and (user_level == 1) or (user_level == 3) %}
+					<a class="nav-link active" href="userdashboard.php">
+						<img class="img-detail user-image" style="width:50px; height:50px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
+					</a>
+
+					<li class="nav-item dropdown" id="navbarDropdownMenuLink">
+						<a class="nav-link dropdown-toggle" href="userdashboard.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<span class="navbar-text" style="color:white;">
+								<strong>{{user_firstName ~ ' '}}{{user_lastName}}</strong>
+							</span>
+						</a>
+
+						<ul class="dropdown-menu ps-1" aria-labelledby="navbarDropdownMenuLink">
+
+							<li>
+								<a class="dropdown-item" href="userdashboard.php">Dashboard</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="edit_account.php">Edit account</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="signout.php">Sign out</a>
+							</li>
+						</ul>
+					</li>
+
+				{% else %}
+					<img class="img-detail user-image mx-3" style="width:50px; height:50px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
+					<li class="nav-item dropdown" id="navbarDropdownMenuLink">
+						<a class="nav-link active dropdown-toggle" href="userdashboard.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<span class="navbar-text" style="color:white;">
+								<strong>{{user_firstName ~ ' '}}{{user_lastName}}</strong>
+							</span>
+						</a>
+
+						<ul class=" dropdown-menu ps-1" aria-labelledby=" navbardropdownmenulink">
+							<li>
+								<a class="dropdown-item" href="signout.php">Sign out</a>
+							</li>
+						</ul>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

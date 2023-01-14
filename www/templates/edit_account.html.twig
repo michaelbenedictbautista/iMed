@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+		<div class="container">
+			<div class="row">
+				<div class="col-2 side-container">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="userdashboard.php">Dashboard</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="createUser.php">Create new user</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">
+								<strong class="text-primary">Edit account</strong>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete acount</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-10 main-container text-left">
+					<form id="user" method="post" action="userdashboard.php?uId = {{user_Id}}">
+						<div class="row mb-3">
+							<div class="col-md-3 offset-md-3" style="margin-left: 4rem;">
+								<a class="navbar-brand " href="userdashboard.php">
+									<img class="img-detail user-image" style="width:100px; height:100px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
+								</a>
+							</div>
+							<div class="col">
+								<label for="formFile" class="form-label">Upload or change picture?</label>
+								<input class="form-control" type="file" name="formFile" id="formFile" value="{{ user_image }}" onchange="fileValidation()">
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col">
+								<label for="firstName" class="form-label">First name *</label>
+								<input type="text" class="form-control" name="firstName" id="firstName" aria-label="First name" value="{{user_firstName}}" required>
+							</div>
+							<div class="col">
+								<label for="lastName" class="form-label">Last name *</label>
+								<input type="text" class="form-control" name="lastName" id="lastName" aria-label="Last name" value="{{user_lastName}}" required>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="userName" class="form-label">User name *</label>
+							<input type="text" class="form-control" name="userName" id="userName" value="{{user_userName}}" required>
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email address *</label>
+							<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" required>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password *</label>
+							<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="{{user_pw}}" required>
+						</div>
+						<div class="mb-3">
+							<label for="contactNumber" class="form-label">Contact number *</label>
+							<input type="text" class="form-control" name="contactNumber" id="contactNumber" value="{{user_contact}}">
+						</div>
+
+						{% if user_level == 1 %}
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">Profession *</label>
+								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="userLevel" class="form-label">User level *</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" value="1" readonly>
+							</div>
+
+						{% elseif user_level == 3 %}
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">Profession *</label>
+								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="userLevel" class="form-label">User level *</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" value="3" readonly>
+							</div>
+
+						{% endif %}
+
+						<div class="mb-3">
+							<label for="institutionName" class="form-label">Institution name *</label>
+							<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}">
+						</div>
+						<div class="mb-3">
+							<label for="institutionAddress" class="form-label">Institution address *</label>
+							<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}">
+						</div>
+
+						<input type="hidden" name="user_id" value="{{user_id}}">
+
+						{% set outcome = result.errors | join(", ") %}
+						<button type="submit" class="btn btn-primary mt-3">Update</button>
+						<a href="userdashboard.php">
+							<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
+						</a>
+						{% if outcome | length > 0 %}
+							<div class="alert alert-warning alert-dismissible fade show" role="alert">
+								{{ outcome }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+							</div>
+						{% endif %}
+					</form>
+				</div>
+			</div>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}</body>
+</html></body></html>
