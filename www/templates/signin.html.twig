@@ -1,22 +1,26 @@
 <!doctype html>
 <html lang="en">
 	{% include "partial/head.html.twig" %}
-	<body style="background-color:#eee; color:#333">
-		<div class="container col-md-4 py-5 text-center shadow-lg rounded my-5" style="background-color:#fff;">
+	<body>
+		<div class="container container-body col-md-4 py-5 text-center shadow-lg rounded my-5">
 			<div class="mx-auto mb-3" style="width:15%;">
 				<img id="logo-signin" src="/img/logo/BlackLogo.svg" alt="iMed Logo">
 			</div>
-			<h1 class="mb-5" style="color:#000;">
+			<h1 class="mb-5">
 				<strong>Sign In</strong>
 			</h1>
-			<div class="container text-start">
+			<div class="container container-body text-start">
 				<form id="signin" method="post" action="signin.php">
 					<div class="mb-3">
-						<label for="email" class="form-label">Email address *</label>
+						<label for="email" class="form-label">Email address
+							<span class="asterisk">*</span>
+						</label>
 						<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required>
 					</div>
 					<div class="mb-3">
-						<label for="password" class="form-label">Password *</label>
+						<label for="password" class="form-label">Password
+							<span class="asterisk">*</span>
+						</label>
 						<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" title="must be atleast 8 characters" placeholder="password" required>
 						<p style="margin-top:.3rem; font-size:.8rem">Must be atleast 8 characters</p>
 					</div>
@@ -36,5 +40,8 @@
 				</form>
 			</div>
 		</div>
-		{% include "partial/script.html.twig" %}</body>
-</html></body></html>
+		{% include "partial/script.html.twig" %}
+		<!-- Custom Javascript -->
+		<script type="text/javascript" src="js/signIn.js" defer></script>
+	</body>
+</html>

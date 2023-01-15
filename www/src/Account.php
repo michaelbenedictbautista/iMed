@@ -52,11 +52,11 @@ class Account extends Database
             FROM institution 
             WHERE ins_name = ?";
 
-            $statementSelect = $this->dbconnection->prepare($querySelectInstitution) or die($this->dbconnection->error);
-            $statementSelect->bind_param("s", $insName);
-
             // Execute query
             try {
+                $statementSelect = $this->dbconnection->prepare($querySelectInstitution) or die($this->dbconnection->error);
+                $statementSelect->bind_param("s", $insName);
+
                 if (!$statementSelect->execute()) {
                     throw new Exception("Error executing query");
                 } else {
@@ -84,12 +84,12 @@ class Account extends Database
                                  INSERT INTO iMed.User (first_name, last_name, username, password, contact_number, email, ins_ID, profession, user_level, user_image) 
                                  VALUES( ?, ?, ?, ?, ?, ?, $ins_ID, ?, ?, ?)";
 
-                                //$hashed = password_hash($password, PASSWORD_DEFAULT);
-                                $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
-                                $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
-
-                                // Execute query
                                 try {
+                                    //$hashed = password_hash($password, PASSWORD_DEFAULT);
+                                    $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
+                                    $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
+
+                                    // Execute query
                                     if (!$statementUser->execute()) {
                                         throw new Exception("Database connection error occured!");
                                     } else {
@@ -106,6 +106,7 @@ class Account extends Database
                                     $response["message"] = "Account cannot be created!";
                                     $response["errors"] = $errors;
                                 }
+                                return $response;
                             }
                         } catch (Exception $exc) {
                             $errors["system"] = $exc->getMessage();
@@ -118,6 +119,7 @@ class Account extends Database
                             $response["message"] = "Account cannot be created!";
                             $response["errors"] = $errors;
                         }
+                        return $response;
                     } else {
                         $account_data = $result->fetch_assoc();
 
@@ -130,12 +132,12 @@ class Account extends Database
                         INSERT INTO iMed.User (first_name, last_name, username, password, contact_number, email, ins_ID, profession, user_level, user_image) 
                         VALUES( ?, ?, ?, ?, ?, ?, $ins_ID, ?, ?, ?)";
 
-                            //$hashed = password_hash($password, PASSWORD_DEFAULT);
-                            $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
-                            $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
-
-                            // Execute query
                             try {
+                                //$hashed = password_hash($password, PASSWORD_DEFAULT);
+                                $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
+                                $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
+
+                                // Execute query
                                 if (!$statementUser->execute()) {
                                     throw new Exception("Database connection error occured!");
                                 } else {
@@ -152,6 +154,7 @@ class Account extends Database
                                 $response["message"] = "Account cannot be created!";
                                 $response["errors"] = $errors;
                             }
+                            return $response;
                         }
                     }
                 }
@@ -161,6 +164,7 @@ class Account extends Database
                 $response["message"] = "Account cannot be created!";
                 $response["errors"] = $errors;
             }
+            return $response;
         } else {
             // return errors to user
             $response["success"] = false;
@@ -180,8 +184,6 @@ class Account extends Database
         $email = trim(strtolower($email));
         $password = trim($password);
 
-
-
         // Query to select user
         $query = "
         SELECT user_ID, first_name, last_name, username, password, contact_number, email, user.ins_ID, profession, user_level, user_image, user.updated_date, ins_name, ins_add 
@@ -190,11 +192,12 @@ class Account extends Database
         ON user.ins_ID = institution.ins_ID
         WHERE email = ?";
 
-        $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
-        $statement->bind_param("s", $email);
 
-        // Execute query
         try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            $statement->bind_param("s", $email);
+
+            // Execute query
             if (!$statement->execute()) {
                 throw new Exception("Error executing query");
             } else {
@@ -232,8 +235,8 @@ class Account extends Database
             $errors["system"] = $exc->getMessage();
             $response["success"] = false;
             $response["errors"] = $errors;
-            return $response;
         }
+        return $response;
     }
 
     // Update account
@@ -261,11 +264,11 @@ class Account extends Database
         ins_add = '$insAdd'
         WHERE ins_ID = ?";
 
-        $statementUpdateInstitution = $this->dbconnection->prepare($queryUpdateInstitution);
-        $statementUpdateInstitution->bind_param("i", $insID);
-
-        // Execute query
         try {
+            $statementUpdateInstitution = $this->dbconnection->prepare($queryUpdateInstitution);
+            $statementUpdateInstitution->bind_param("i", $insID);
+
+            // Execute query
             if (!$statementUpdateInstitution->execute()) {
                 throw new Exception("Database connection error occured!");
             } elseif (empty($insName) || empty($insAdd)) {

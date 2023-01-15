@@ -3,100 +3,155 @@
 	{% include "partial/head.html.twig" %}
 	<body>
 		{% include "partial/navigation.html.twig" %}
-		<div class="container">
+		<div class="container container-body px-5 py-5 shadow-lg rounded">
 			<h1 class="text-center mb-5">Create New User</h1>
-			<form id="createUser" method="post" action="createUser.php" enctype="multipart/form-data">
-				<div class="row mb-3">
-					<div class="col">
-						<label for="firstName" class="form-label">First name *</label>
-						<input type="text" class="form-control" name="firstName" id="firstName" aria-label="First name" placeholder="John" required>
-					</div>
-					<div class="col">
-						<label for="lastName" class="form-label">Last name *</label>
-						<input type="text" class="form-control" name="lastName" id="lastName" aria-label="Last name" placeholder="Doe" required>
-					</div>
+			<div class="row">
+				<div class="col-md-2 side-container">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="userdashboard.php">Dashboard</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="createUser.php">
+								<strong class="text-primary">Create New User</strong>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">Edit account</a>
+						</li>
+						{% if user_level == 3 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
+							</li>
+						{% endif %}
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+						</li>
+					</ul>
 				</div>
-				<div class="mb-3">
-					<label for="userName" class="form-label">User name *</label>
-					<input type="text" class="form-control" name="userName" id="userName" placeholder="enter user name here..." required>
+				<div class="col-md-10 main-container text-left">
+
+					<form id="createUser" method="post" action="createUser.php" enctype="multipart/form-data">
+						<div class="row mb-3">
+							<div class="col">
+								<label for="firstName" class="form-label">First name
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="firstName" id="firstName" onkeyup="userInput()" aria-label="First name" placeholder="John" required>
+							</div>
+							<div class="col">
+								<label for="lastName" class="form-label">Last name
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="lastName" id="lastName" onkeyup="userInput()" aria-label="Last name" placeholder="Doe" required>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="userName" class="form-label">User name
+								<span class="asterisk">*</span>
+							</label>
+							<input type="text" class="form-control" name="userName" id="userName" onkeyup="userInput()" placeholder="enter user name here..." required>
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email address
+								<span class="asterisk">*</span>
+							</label>
+							<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password
+								<span class="asterisk">*</span>
+							</label>
+							<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" title="must be atleast 8 characters" placeholder="minimum 8 characters" required>
+						</div>
+						<div class="mb-3">
+							<label for="contactNumber" class="form-label">Contact number
+								<span class="asterisk">*</span>
+							</label>
+							<input type="text" class="form-control" name="contactNumber" id="contactNumber" onkeyup="userInput()" placeholder="0478895252" required>
+						</div>
+
+						{% if user_level == 1 %}
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">Profession
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="profession" id="profession" onkeyup="userInput()" placeholder="doctor, nurse, pharmacist..." required>
+							</div>
+
+							<div class="mb-3">
+								<label for="userLevel" class="form-label">User level</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" onkeyup="userInput()" value="2" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="institutionName" class="form-label">Institution name</label>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" onkeyup="userInput()" value="{{user_ins_name}}" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="institutionAddress" class="form-label">Institution address
+								</label>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" onkeyup="userInput()" value="{{user_ins_add}}" readonly>
+							</div>
+
+						{% elseif user_level == 3 %}
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">Profession</label>
+								<input type="text" class="form-control" name="profession" id="profession" onkeyup="userInput()" value="admin" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="userLevel" class="form-label">User level</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" onkeyup="userInput()" value="1" readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="institutionName" class="form-label">Institution name
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" onkeyup="userInput()" placeholder="enter institution name here..." required>
+							</div>
+
+							<div class="mb-3">
+								<label for="institutionAddress" class="form-label">Institution address
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" onkeyup="userInput()" placeholder="enter institution address here..." required>
+							</div>
+
+						{% endif %}
+
+						<div class="mb-3">
+							<label for="formFile" class="form-label">Choose your profile picture
+								<span class="asterisk">*</span>
+							</label>
+							<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
+						</div>
+
+						{% set outcome = result.errors | join(", ") %}
+						<button type="submit" class="btn btn-secondary mt-3" id="create-btn" disabled>Create</button>
+						<a href="userdashboard.php">
+							<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
+						</a>
+
+						{% if outcome | length > 0 %}
+							<div class="alert alert-warning alert-dismissible fade show" role="alert">
+								{{ outcome }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+							</div>
+						{% endif %}
+					</form>
 				</div>
-				<div class="mb-3">
-					<label for="email" class="form-label">Email address *</label>
-					<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="example@gmail.com" required>
-				</div>
-				<div class="mb-3">
-					<label for="password" class="form-label">Password *</label>
-					<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" required>
-				</div>
-				<div class="mb-3">
-					<label for="contactNumber" class="form-label">Contact number *</label>
-					<input type="text" class="form-control" name="contactNumber" id="contactNumber" placeholder="0478895252" required>
-				</div>
-
-				{% if user_level == 1 %}
-
-					<div class="mb-3">
-						<label for="profession" class="form-label">Profession *</label>
-						<input type="text" class="form-control" name="profession" id="profession" placeholder="doctor, nurse, pharmacist..." required>
-					</div>
-
-					<div class="mb-3">
-						<label for="userLevel" class="form-label">User level *</label>
-						<input type="text" class="form-control" name="userLevel" id="userLevel" value="2" readonly>
-					</div>
-
-					<div class="mb-3">
-						<label for="institutionName" class="form-label">Institution name *</label>
-						<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" readonly>
-					</div>
-
-					<div class="mb-3">
-						<label for="institutionAddress" class="form-label">Institution address *</label>
-						<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" readonly>
-					</div>
-
-				{% elseif user_level == 3 %}
-
-					<div class="mb-3">
-						<label for="profession" class="form-label">Profession *</label>
-						<input type="text" class="form-control" name="profession" id="profession" value="admin" readonly>
-					</div>
-
-					<div class="mb-3">
-						<label for="userLevel" class="form-label">User level *</label>
-						<input type="text" class="form-control" name="userLevel" id="userLevel" value="1" readonly>
-					</div>
-
-					<div class="mb-3">
-						<label for="institutionName" class="form-label">Institution name *</label>
-						<input type="text" class="form-control" name="institutionName" id="institutionName" placeholder="enter institution name here..." required>
-					</div>
-
-					<div class="mb-3">
-						<label for="institutionAddress" class="form-label">Institution address *</label>
-						<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" placeholder="enter institution address here..." required>
-					</div>
-
-				{% endif %}
-
-				<div class="mb-3">
-					<label for="formFile" class="form-label">Choose your profile picture *</label>
-					<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
-				</div>
-
-				{% set outcome = result.errors | join(", ") %}
-				<button type="submit" class="btn btn-primary mt-3">Create</button>
-				<a href="userdashboard.php">
-					<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
-				</a>
-
-				{% if outcome | length > 0 %}
-					<div class="alert alert-warning alert-dismissible fade show" role="alert">
-						{{ outcome }}
-						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-					</div>
-				{% endif %}
-			</form>
-		</body>
+			</div>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script type="text/javascript" src="js/createNewUser.js" defer></script>
 	</body>
-</html></div>{% include "partial/footer.html.twig" %}{% include "partial/script.html.twig" %}</body></html></body></html>
+</html>

@@ -22,6 +22,7 @@ $user_ins_ID = null;
 $user_ins_name = null;
 $user_ins_add = null;
 
+
 // Set variable after successful log in
 //if ($_SERVER["REQUEST_METHOD"] == "POST")
 if (isset($_POST['signin'])) {
@@ -44,7 +45,7 @@ if (isset($_POST['signin'])) {
             Session::set("user_ins_name", $result['ins_name']);
             Session::set("user_ins_add", $result['ins_add']);
 
-            if ($result['user_level'] == 1) {
+            if ($result['user_level'] == 1 || $result['user_level'] == 3) {
                 header('Location: userdashboard.php');
             } else {
                 header('Location: /');

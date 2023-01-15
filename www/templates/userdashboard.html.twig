@@ -3,9 +3,10 @@
 	{% include "partial/head.html.twig" %}
 	<body>
 		{% include "partial/navigation.html.twig" %}
-		<div class="container">
+		<div class="container container container-body px-5 py-5 shadow-lg rounded">
+			<h1 class="text-center mb-5">Dashboard</h1>
 			<div class="row">
-				<div class="col-2 side-container">
+				<div class="col-md-2 side-container">
 					<ul class="nav flex-column">
 						<li class="nav-item">
 							<a class="nav-link active text-reset" href="userdashboard.php">
@@ -21,16 +22,45 @@
 							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">Edit account</a>
 						</li>
 
-						<li class="nav-item">
-							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return confirm('Warning!!! Do you really want to delete this account?')">Delete acount</a>
-						</li>
+						{% if user_level == 3 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
+							</li>
+						{% endif %}
 
 						<li class="nav-item">
 							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
 						</li>
 					</ul>
 				</div>
-				<div class="col-10 main-container">
+				<div class="col-md-10 main-container">
+					<div class="container text-md-start fs-5 fw-bolder" style="padding:0; margin: 0;">
+						<div class="row">
+							<div class="col-md-3 table-header text-bold">Name</div>
+							<div class="col-md-3 table-header">Email</div>
+							<div class="col-md-3 table-header">Institution name</div>
+							<div class="col-md-3 table-header">Institution Address</div>
+						</div>
+					</div>
+
+					<div class="container" style="padding:0; margin: 0;">
+						{% for account in accounts.items | slice(0, 15) %}
+
+							<div class="row">
+								<div class="col-md-3 name">{{account.first_name}}
+									{{account.last_name}}</div>
+
+								<div class="col-md-3 email">{{account.email}}</div>
+
+								<div class="col-md-3 ins_name">{{account.ins_name}}</div>
+
+								<div class="col-md-3 profession">{{account.profession}}</div>
+
+							</div>
+
+						{% endfor %}
+					</div>
+
 					<p>
 						{{user_id}}
 						<br>
@@ -46,8 +76,11 @@
 
 					</p>
 					<button style="width:100%; padding:5px;">Test button</button>
+
 				</div>
 			</div>
-		</body>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
 	</body>
-</html></div>{% include "partial/footer.html.twig" %}{% include "partial/script.html.twig" %}</body></html>
+</html>

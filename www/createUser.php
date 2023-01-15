@@ -43,13 +43,13 @@ if (Session::get('user_email') == null) {
 
 // Set variable after creating new user
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_user_firstName = $_POST["firstName"];
-    $new_user_lastName = $_POST["lastName"];
-    $new_user_userName = $_POST["userName"];
-    $new_user_email = $_POST["email"];
-    $new_user_pw = $_POST["password"];
-    $new_user_contact = $_POST["contactNumber"];
-    $new_user_profession = $_POST["profession"];
+    $new_user_firstName = trim(strtolower($_POST["firstName"]));
+    $new_user_lastName = trim(strtolower($_POST["lastName"]));
+    $new_user_userName = trim(strtolower($_POST["userName"]));
+    $new_user_email = trim(strtolower($_POST["email"]));
+    $new_user_pw = trim($_POST["password"]);
+    $new_user_contact = trim($_POST["contactNumber"]);
+    $new_user_profession = trim(strtolower($_POST["profession"]));
     $new_user_level = $_POST["userLevel"];
     // $new_user_ins_ID = $_GET["ins_ID"];
     $new_user_ins_name = trim(strtolower($_POST["institutionName"]));

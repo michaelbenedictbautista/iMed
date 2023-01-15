@@ -2,8 +2,9 @@
 // enable composer autoloading
 require("vendor/autoload.php");
 
-use imed\Account;
 use imed\Session;
+use imed\User;
+use imed\Account;
 
 if (Session::get('user_email') == null) {
     header('Location: signin.php');
@@ -23,9 +24,20 @@ if (Session::get('user_email') == null) {
     $user_ins_add = Session::get("user_ins_add");
 }
 
+//User class
+$user = new User();
+if ($user_level == 1) {
+    $userDisplayLevel = 2;
+} else {
+    $userDisplayLevel = 1;
+}
+
+// Call funtion to display users base on their user levels
+$items = $user->getAllUser($userDisplayLevel);
+
+////////////////////////////////////////////////////////////
 $account = new Account();
 $result =  null;
-
 // Update user
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
 
@@ -44,13 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     Session::unset("user_ins_add", $user_ins_add);
 
     // Get variable('name') from Post method
-    $user_firstName = $_POST["firstName"];
-    $user_lastName = $_POST["lastName"];
-    $user_userName = $_POST["userName"];
-    $user_email = $_POST["email"];
-    $user_pw = $_POST["password"];
-    $user_contact = $_POST["contactNumber"];
-    $user_profession = $_POST["profession"];
+    $user_firstName = trim(strtolower($_POST["firstName"]));
+    $user_lastName = trim(strtolower($_POST["lastName"]));
+    $user_userName = trim(strtolower($_POST["userName"]));
+    $user_email = trim(strtolower($_POST["email"]));
+    $user_pw = trim($_POST["password"]);
+    $user_contact = trim($_POST["contactNumber"]);
+    $user_profession = trim(strtolower($_POST["profession"]));
     $user_level = $_POST["userLevel"];
     $user_image = $_POST["formFile"];
     $user_ins_name = trim(strtolower($_POST["institutionName"]));
@@ -78,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     </script>";
 }
 
+
 $site_name = "iMed";
 
 // create twig environment
@@ -91,6 +104,8 @@ echo $twig->render(
         "site_name" => $site_name,
 
         "user_email" => $user_email,
+
+        "accounts" => $items,
 
         // Session after login
         "user_id" => $user_id,
@@ -106,5 +121,8 @@ echo $twig->render(
         "user_ins_ID" => $user_ins_ID,
         "user_ins_name" => $user_ins_name,
         "user_ins_add" => $user_ins_add,
+
+
+        "userDisplayLevel" => $userDisplayLevel,
     ]
 );
