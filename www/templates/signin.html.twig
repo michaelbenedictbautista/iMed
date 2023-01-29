@@ -3,8 +3,8 @@
 	{% include "partial/head.html.twig" %}
 	<body>
 		<div class="container container-body col-md-4 py-5 text-center shadow-lg rounded my-5">
-			<div class="mx-auto mb-3" style="width:15%;">
-				<img id="logo-signin" src="/img/logo/BlackLogo.svg" alt="iMed Logo">
+			<div class="mx-auto mb-3" style="width:12%;">
+				<img id="logo-signin" src="/img/logo/BlackLogo.svg" alt="iMed Logo" draggable="false">
 			</div>
 			<h1 class="mb-5">
 				<strong>Sign In</strong>
@@ -15,7 +15,7 @@
 						<label for="email" class="form-label">Email address
 							<span class="asterisk">*</span>
 						</label>
-						<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required>
+						<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required autofocus>
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password
