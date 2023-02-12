@@ -4,7 +4,7 @@
 	<body>
 		{% include "partial/navigation.html.twig" %}
 		<div class="container container-body px-5 py-5 shadow-lg rounded">
-			<h1 class="text-center mb-5">Create New User</h1>
+
 			<div class="row">
 				<div class="col-md-2 side-container">
 					<ul class="nav flex-column">
@@ -33,7 +33,7 @@
 					</ul>
 				</div>
 				<div class="col-md-10 main-container text-left">
-
+					<h1 class="text-center mb-5">Create New User</h1>
 					<form id="createUser" method="post" action="createUser.php" enctype="multipart/form-data">
 						<div class="row mb-3">
 							<div class="col">
@@ -53,25 +53,25 @@
 							<label for="userName" class="form-label">User name
 								<span class="asterisk">*</span>
 							</label>
-							<input type="text" class="form-control" name="userName" id="userName" onkeyup="userInput()" placeholder="enter user name here..." required>
+							<input type="text" class="form-control" name="userName" id="userName" onkeyup="userInput()" placeholder="Enter user name here..." required>
 						</div>
 						<div class="mb-3">
 							<label for="email" class="form-label">Email address
 								<span class="asterisk">*</span>
 							</label>
-							<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="[A-Za-z0-9._+-]+@[A-Za-z0-9 -]+\.[a-z]{2,}" title="must be a valid email address" placeholder="example@gmail.com" required>
+							<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" title="must be a valid email address" placeholder="example@gmail.com" required>
 						</div>
 						<div class="mb-3">
 							<label for="password" class="form-label">Password
 								<span class="asterisk">*</span>
 							</label>
-							<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" title="must be atleast 8 characters" placeholder="minimum 8 characters" required>
+							<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" pattern="[A-Za-z0-9!@#$%^&*()-_=+{}'|,<.>/\?]{8,}" title="must be atleast 8 characters" placeholder="minimum 8 characters" required>
 						</div>
 						<div class="mb-3">
 							<label for="contactNumber" class="form-label">Contact number
 								<span class="asterisk">*</span>
 							</label>
-							<input type="text" class="form-control" name="contactNumber" id="contactNumber" onkeyup="userInput()" placeholder="0478895252" required>
+							<input type="text" pattern="\d{1,12}" inputmode="numeric" class="form-control" name="contactNumber" id="contactNumber" onkeyup="userInput()" title="must contain digits only" placeholder="maximum 12 digits" required>
 						</div>
 
 						{% if user_level == 1 %}
@@ -129,7 +129,7 @@
 
 						<div class="mb-3">
 							<label for="formFile" class="form-label">Choose your profile picture
-								<span class="asterisk">*</span>
+								{# <span class="asterisk">*</span> #}
 							</label>
 							<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
 						</div>
