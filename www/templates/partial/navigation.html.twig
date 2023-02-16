@@ -10,17 +10,16 @@
 			</a>
 		{% endif %}
 
-		{% if user_ins_name | length > 0 and user_profession | length > 0 %}
-			<span class="navbar-text">
+		{% if user_ins_name | length > 0 and user_profession | length > 0 %}	
+			<span class="navbar-text text-capitalize">
 				<strong>{{user_ins_name ~ ' | '}}{{user_profession}}</strong>
 			</span>
 		{% else %}
 			<div style="display: flex; gap: 2px; text-align:center;">
-				<p>
+				<p class="text-capitalize">
 					<strong>{{user_ins_name}}</strong>
 				</p>
 			</div>
-
 		{% endif %}
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +34,7 @@
 
 					<li class="nav-item dropdown" id="navbarDropdownMenuLink">
 						<a class="nav-link dropdown-toggle" href="userdashboard.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<span class="navbar-text" style="color:white;">
+							<span class="navbar-text text-capitalize" style="color:white;">
 								<strong>{{user_firstName ~ ' '}}{{user_lastName}}</strong>
 							</span>
 						</a>
@@ -58,7 +57,7 @@
 					<img class="img-detail user-image mx-3" style="width:50px; height:50px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
 					<li class="nav-item dropdown" id="navbarDropdownMenuLink">
 						<a class="nav-link active dropdown-toggle" href="userdashboard.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<span class="navbar-text" style="color:white;">
+							<span class="navbar-text text-capitalize" style="color:white;">
 								<strong>{{user_firstName ~ ' '}}{{user_lastName}}</strong>
 							</span>
 						</a>
