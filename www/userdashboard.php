@@ -104,6 +104,7 @@ echo $twig->render(
         "site_name" => $site_name,
 
         "user_email" => $user_email,
+        "result" => $result,
 
         "accounts" => $items,
 

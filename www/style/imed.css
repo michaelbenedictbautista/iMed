@@ -1,3 +1,8 @@
+:root {
+  --bgColor: #eee;
+  --fontColor: #333;
+}
+
 *,
 ::after,
 ::before {
@@ -11,8 +16,8 @@ html {
 }
 
 body {
-  background-color: #eee;
-  color: #333;
+  background-color: var(--bgColor);
+  color: var(--fontColor);
   min-height: 100vh;
   /* display: grid;
   grid-template-rows: auto 1fr auto; */

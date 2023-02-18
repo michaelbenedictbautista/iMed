@@ -4,9 +4,9 @@ require("vendor/autoload.php");
 
 // Request classes from autoloader
 use imed\Session;
-use imed\Search;
+use imed\Note; 
 
-// Session class
+// Instantiate Session class
 $user_email = null;
 
 if (Session::get('user_email') == null) {
@@ -28,16 +28,33 @@ if (Session::get('user_email') == null) {
 }
 
 
-//Restaurant class
-// $restaurant = new Restaurant();
-// $items = $restaurant->getItems();
-
-$site_name = "Restaurant Review Expert";
+// Instantiate Note class
+$note = new Note();
+$notes = $note->getNotes();
 
 
-//Instantiate Search class
-// $search = new Search();
-// $categories = $search->getCategories();
+// $result =  null;
+
+// Add note
+// if( $_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_Id))) {
+//   $addingNote = $_POST['addingNote'];
+//   $result = $note->addNote($addingNote, $user_id);
+
+
+//   echo "<script>
+//     alert('Note added successfull!');
+//     window.location.href='index.php';
+//     </script>";
+// } else {
+//   echo "<script>
+//   alert('Error!);
+//   window.location.href='index.php';
+//   </script>";
+// }
+
+
+
+$site_name = "iMed";
 
 // Create twig environment
 $loader = new \Twig\Loader\FilesystemLoader("templates");
@@ -47,12 +64,11 @@ echo $twig->render(
   "home.html.twig",
   [
     "page_title" => "iMed",
-    "greeting" => "Welcome to expert review restaurant webpage",
-    //"restaurants" => $items,
+    "greeting" => "Welcome to iMed webpage",
     "site_name" => $site_name,
 
-    // nav category pull down menu
-    //"categories" => $categories,
+    "notes" => $notes,
+    // "result" => $result,
 
     // Session after login
     "user_id" => $user_id,

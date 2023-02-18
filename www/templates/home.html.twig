@@ -9,30 +9,35 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3">
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" aria-current="page" href="#">Active</a>
+					<a class="h3 nav-link fw-bold active" aria-current="page" href="/">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" href="#">Patients</a>
+					<a class="h3 nav-link fw-bold linkUnset" href="/">Patients</a>
 				</li>
 			</ul>
 
-			<!--TODO For loop-->
-			<div class="container container-body px-5 py-5 my-3 shadow-sm rounded ">
-				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti necessitatibus, totam incidunt culpa at doloribus ea suscipit ab omnis, dignissimos ullam sit est laudantium consequatur recusandae deserunt magni maxime doloremque.</p>
-				<span class="navbar-text text-capitalize">
-					<strong>{{user_firstName ~ ' '}}{{user_lastName}}
-						|
-						{{user_profession}}</strong>
-				</span>
-			</div>
-			<div class="container container-body px-5 py-5 my-3 shadow-sm rounded">
-				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti necessitatibus, totam incidunt culpa at doloribus ea suscipit ab omnis, dignissimos ullam sit est laudantium consequatur recusandae deserunt magni maxime doloremque.</p>
-				<span class="navbar-text text-capitalize">
-					<strong>{{user_firstName ~ ' '}}{{user_lastName}}
-						|
-						{{user_profession}}</strong>
-				</span>
-			</div>
+			{% for note in notes.items %}
+				<div class="container container-body px-5 py-5 my-3 shadow-sm rounded ">
+
+					<div class="row justify-content-between">
+						<div class="col-9">
+							<p class="fw-bold fs-4" id="note">{{note.note_text}}</p>
+							<span class="navbar-text text-capitalize fs-5">
+								source:
+								{{ note.first_name ~ ' ' }}{{ note.last_name }}
+								|
+								{{ note.profession }}
+							</span>
+						</div>
+						<div class="col-3">
+							<p class="fst-italic text-end">{{ note.updated_date }}</p>
+						</div>
+					</div>
+				</div>
+
+
+			{% endfor %}
+
 
 			<!-- Add note button function -->
 			<div class="d-grid">
@@ -42,15 +47,15 @@
 			</div>
 
 			<!-- Modal -->
+			{# <form id="addNote" method="post" action="index.php"> #}
 			<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Title</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="form-floating">
-							<textarea class="form-control" placeholder="Leave a note here" id="floatingTextarea2" style="height: 300px"></textarea>
+							<textarea class="form-control" placeholder="Leave a note here" name="addingNote" id="floatingTextarea2" style="height: 300px"></textarea>
 							<label for="floatingTextarea2">Notes</label>
 						</div>
 						<div class="modal-footer">
@@ -60,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-
+			{# </form> #}
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
