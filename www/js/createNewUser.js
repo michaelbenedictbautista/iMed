@@ -12,14 +12,6 @@ const institutionAddress = document.getElementById("institutionAddress");
 
 const btnSignin = document.getElementById("create-btn");
 
-// const validInput = () => {
-//     if ((firstName != null || firstName.value.trim().length > 0) && (lastName != null || lastName.value.trim().length > 0) && (userName != null || userName.value.trim().length > 0) && (email != null || email.value.trim().length > 0) && (password != null || password.value.trim().length >= 8) && (contactNumber != null || contactNumber.value.trim().length > 0) && (profession != null || profession.value.trim().length > 0) && (userLevel != null || userLevel.value.trim().length > 0) && (institutionName != null || institutionName.value.trim().length > 0) && (institutionAddress != null || institutionAddress.value.trim().length > 0)) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
-
 const validInput = () => {
     if ((firstName.value.trim().length <=0 || firstName == null) && (lastName.value.trim().length <= 0 || lastName == null) && (userName.value.trim().length <= 0 || userName == null) && (email.value.trim().length <= 0 || email == null) && (password.value.trim().length < 8 || password == null) && (contactNumber.value.trim().length <= 0 || contactNumber == null) && (profession.value.trim().length <= 0 || profession == null) && (userLevel.value.trim().length <= 0 || userLevel == null) && (institutionName.value.trim().length <= 0 || institutionName == null) && (institutionAddress.value.trim().length <= 0 || institutionAddress == null)) {
         return false;

@@ -61,33 +61,38 @@ class Note extends Database
     }
 
     // Add note function
-    public function addNote($note_text, $user_id) 
+    public function addNote($note_text, $user_id)
     {
-        if ((empty($note) || is_null($note)) || (empty($user_id))) {
-            return false;
-            
-        } else {
-            $query = "
+        $notes = array();
+        $errors = array();
+        // try {
+        //     if ((empty($note) || is_null($note)) || (empty($user_id))) {
+        //         throw new Exception("Text field can not be empty.");
+        //         return false;
+        //     } else return true;
+        // } catch (Exception $exception) {
+        //     $errors["system"] = $exception->getMessage();
+        //     $notes["errors"] = $errors;
+        // }
+
+        $query = "
             INSERT INTO note (note_text, user_ID)
             VALUES (?, ?)";
-            
-            try {
-                $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
-                if (!$statement) {
-                    throw new Exception("Database connection error!");
-                }
-                $statement->bind_param("si", $note_text, $user_id);
-                if (!$statement->execute()) {
-                    throw new Exception("Query execution error!");
-                } else {
-                    return true;
-                }
-            } catch (Exception $exception) {
-                $notes = array();
-                $errors = array();
-                $errors["system"] = $exception->getMessage();
-                $notes["errors"] = $errors;
+
+        try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            $statement->bind_param("si", $note_text, $user_id);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
             }
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                return true;
+            }
+        } catch (Exception $exception) {
+            $errors["system"] = $exception->getMessage();
+            $notes["errors"] = $errors;
         }
     }
 }

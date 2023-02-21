@@ -33,27 +33,6 @@ $note = new Note();
 $notes = $note->getNotes();
 
 
-// $result =  null;
-
-// Add note
-// if( $_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_Id))) {
-//   $addingNote = $_POST['addingNote'];
-//   $result = $note->addNote($addingNote, $user_id);
-
-
-//   echo "<script>
-//     alert('Note added successfull!');
-//     window.location.href='index.php';
-//     </script>";
-// } else {
-//   echo "<script>
-//   alert('Error!);
-//   window.location.href='index.php';
-//   </script>";
-// }
-
-
-
 $site_name = "iMed";
 
 // Create twig environment

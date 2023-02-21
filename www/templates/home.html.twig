@@ -37,8 +37,7 @@
 
 
 			{% endfor %}
-
-
+		
 			<!-- Add note button function -->
 			<div class="d-grid">
 				<button type="button" name="add-note-btn" class="btn btn-primary btn-lg mt-5" id="add-note-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
@@ -46,28 +45,41 @@
 				</button>
 			</div>
 
+			
 			<!-- Modal -->
-			{# <form id="addNote" method="post" action="index.php"> #}
+			{# <form id="addNote" method="post" action="add_note.php"> #}
 			<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<form id="addNote" method="post" action="add_note.php">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>				
+								<div class="form-floating">
+									<input type="text" class="form-control" placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 300px">
+									<label for="addingNote">Notes</label>
+								</div>							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								{# <button type="button" class="btn btn-primary">Save changes</button> #}
+								{% set outcome = result.errors | join(", ") %}
+								<button type="submit" class="btn btn-primary" id="add-note-btn">Save changes</button>
+							
+								{% if outcome | length > 0 %}
+									<div class="alert alert-warning alert-dismissible fade show" role="alert">
+										{{ outcome }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									</div>
+								{% endif %}
+							</div>						
 						</div>
-						<div class="form-floating">
-							<textarea class="form-control" placeholder="Leave a note here" name="addingNote" id="floatingTextarea2" style="height: 300px"></textarea>
-							<label for="floatingTextarea2">Notes</label>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
-						</div>
-					</div>
+					</form>
 				</div>
 			</div>
-			{# </form> #}
+			
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
+		{# <script type="text/javascript" src="js/home.js" defer></script> #}
 	</body>
 </html>
