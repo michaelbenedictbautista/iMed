@@ -46,9 +46,6 @@ echo $twig->render(
     "greeting" => "Welcome to iMed webpage",
     "site_name" => $site_name,
 
-    "notes" => $notes,
-    // "result" => $result,
-
     // Session after login
     "user_id" => $user_id,
     "user_userName" => $user_userName,
@@ -63,5 +60,8 @@ echo $twig->render(
     "user_ins_ID" => $user_ins_ID,
     "user_ins_name" => $user_ins_name,
     "user_ins_add" => $user_ins_add,
+
+    "notes" => $notes,
+    // "result" => $result,
   ]
 );
