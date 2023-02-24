@@ -123,7 +123,6 @@ echo $twig->render(
         "user_ins_name" => $user_ins_name,
         "user_ins_add" => $user_ins_add,
 
-
         "userDisplayLevel" => $userDisplayLevel,
     ]
 );

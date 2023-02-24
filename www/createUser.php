@@ -80,7 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Destination folder ---------
                 //$fileDestination = 'img/user/' . $fileNameNew;
-                move_uploaded_file($fileTmpName, $fileDestination);
+                $fileDestination = 'img/user/' . $fileName;
+                move_uploaded_file($fileName, $fileDestination);
 
                 // Insert the data
                 //$firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image, $insName, $insAdd

@@ -182,7 +182,7 @@ class Account extends Database
         $response = array();
 
         $email = trim(strtolower($email));
-        $password = trim($password);
+        //$password = trim($password);
 
         // Query to select user
         $query = "
@@ -206,10 +206,12 @@ class Account extends Database
                     throw new Exception("Invalid email or password!");
                 } else {
                     $account_data = $result->fetch_assoc();
+                    
 
-                    // if (password_verify($password, $account_data["password"])) {
                     // Check password
-                    if ($password == $account_data["password"]) {
+                    //if (password_verify($password, $account_data["password"])) {
+                    
+                     if ($password == $account_data["password"]) {
                         $response["success"] = true;
                         $response["id"] = $account_data["user_ID"];
                         $response["uName"] = $account_data["username"];
@@ -249,6 +251,7 @@ class Account extends Database
         $lastName = trim($lastName);
         $userName = trim(strtolower($userName));
         $password = trim($password);
+        //$hashed = password_hash($password, PASSWORD_DEFAULT);
         $contactNumber = trim($contactNumber);
         $email = trim(strtolower($email));
         $profession = trim(strtolower($profession));

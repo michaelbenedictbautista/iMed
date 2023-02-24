@@ -17,7 +17,7 @@ class Note extends Database
     }
 
     // Fetch data from note table our from database
-    public function getNotes()
+    public function getAllNotes()
     {
         $query = "
         SELECT 
@@ -27,6 +27,7 @@ class Note extends Database
         first_name,
         last_name,
         profession
+        
         FROM note
         INNER JOIN user
         ON note.user_ID = user.user_ID
@@ -65,26 +66,27 @@ class Note extends Database
     {
         $notes = array();
         $errors = array();
-        // try {
-        //     if ((empty($note) || is_null($note)) || (empty($user_id))) {
-        //         throw new Exception("Text field can not be empty.");
-        //         return false;
-        //     } else return true;
-        // } catch (Exception $exception) {
-        //     $errors["system"] = $exception->getMessage();
-        //     $notes["errors"] = $errors;
-        // }
+        try {
+            if ((empty($note) || is_null($note)) || (empty($user_id))) {
+                throw new Exception("Text field can not be empty.");
+                return false;
+            } else return true;
+        } catch (Exception $exception) {
+            $errors["system"] = $exception->getMessage();
+            $notes["errors"] = $errors;
+        }
 
         $query = "
             INSERT INTO note (note_text, user_ID)
             VALUES (?, ?)";
 
         try {
-            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
-            $statement->bind_param("si", $note_text, $user_id);
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);        
             if (!$statement) {
                 throw new Exception("Database connection error!");
             }
+
+            $statement->bind_param("si", $note_text, $user_id);
             if (!$statement->execute()) {
                 throw new Exception("Query execution error!");
             } else {
@@ -93,6 +95,46 @@ class Note extends Database
         } catch (Exception $exception) {
             $errors["system"] = $exception->getMessage();
             $notes["errors"] = $errors;
+        }
+    }
+
+    // Get note's details
+    public function getNoteDetail($note_ID)
+    {
+        $notes = array();
+        $errors = array();
+        
+        $query = "
+            SELECT 
+            note_ID,
+            note_text,
+            note.user_ID,
+            note.updated_date
+        
+            FROM note
+            INNER JOIN user
+            ON  note.user_ID= user.user_ID
+            WHERE note.note_ID = ?";
+            
+        try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+
+            $statement->bind_param("i", $note_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $result = $statement->get_result();
+                $detail = $result->fetch_assoc();
+                return $detail;
+            }
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+            $errors["system"] = $exception->getMessage();
+            $notes["errors"] = $errors;
+            return false;
         }
     }
 }

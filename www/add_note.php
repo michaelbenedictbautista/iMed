@@ -24,6 +24,7 @@ if (Session::get('user_email') == null) {
     $user_profession = Session::get("user_profession");
     $user_level = Session::get("user_level");
     $user_image = Session::get("user_image");
+    $user_ins_ID = Session::get("user_ins_ID");
     $user_ins_name = Session::get("user_ins_name");
     $user_ins_add = Session::get("user_ins_add");
 }
@@ -59,15 +60,13 @@ $twig = new Twig\Environment($loader, ["cache" => false]);
 
 echo $twig->render(
 
-    "home.html.twig",
+    "index.html.twig",
     [
         "user_id" => $user_id,
         "user_email" => $user_email,
         "result" => $result,
 
         "newNote" => $newNote,
-        
+
     ]
 );
-
- 

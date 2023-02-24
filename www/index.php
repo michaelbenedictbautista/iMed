@@ -27,11 +27,9 @@ if (Session::get('user_email') == null) {
   $user_ins_add = Session::get("user_ins_add");
 }
 
-
 // Instantiate Note class
 $note = new Note();
-$notes = $note->getNotes();
-
+$notes = $note->getAllNotes();
 
 $site_name = "iMed";
 
@@ -40,11 +38,12 @@ $loader = new \Twig\Loader\FilesystemLoader("templates");
 $twig = new Twig\Environment($loader, ["cache" => false]);
 
 echo $twig->render(
-  "home.html.twig",
+  "index.html.twig",
   [
     "page_title" => "iMed",
-    "greeting" => "Welcome to iMed webpage",
     "site_name" => $site_name,
+    "greeting" => "Welcome to iMed",
+    
 
     // Session after login
     "user_id" => $user_id,
@@ -63,5 +62,6 @@ echo $twig->render(
 
     "notes" => $notes,
     // "result" => $result,
+
   ]
 );
