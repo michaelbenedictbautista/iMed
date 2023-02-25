@@ -9,20 +9,20 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3">
 				<li class="nav-item">
-					<a class="h3 nav-link fw-bold active" aria-current="page" href="/">Home</a>
+					<a class="nav-link fw-bold active" aria-current="page" href="/">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="h3 nav-link fw-bold linkUnset" href="/">Patients</a>
+					<a class="nav-link fw-bold linkUnset" href="/">Patients</a>
 				</li>
 			</ul>
 
 			{% for note in notes.items %}
-				<div class="container container-body px-5 py-5 my-3 shadow-sm rounded ">
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
 
 					<div class="row justify-content-between">
 						<div class="col-9">
-							<p class="fw-bold fs-4 text-truncate" id="note">{{note.note_text}}</p>
-							<span class="navbar-text text-capitalize fs-5">
+							<p class="fw-bold fs-5 text-truncate" id="note">{{note.note_text}}</p>
+							<span class="navbar-text text-capitalize">
 								source:
 								{{ note.first_name ~ ' ' }}{{ note.last_name }}
 								|
@@ -52,14 +52,22 @@
 			<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<form id="addNote" method="post" action="add_note.php">
-						<div class="modal-content">
+						<div class="modal-content" >
 							<div class="modal-header">
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<div class="form-floating">
-								<input type="text" class="form-control" placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 300px">
-								<label for="addingNote">Notes</label>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="addingNote">Notes</label>
+									<textarea type="text" rows="3" class="form-control mt-3"  placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 400px; "> </textarea>	
+								</div>
 							</div>
+
+							{# <div class="form-group">
+								<label for="exampleFormControlTextarea1">Example textarea</label>
+								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+							</div> #}
+
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
 								{# <button type="button" class="btn btn-primary">Save changes</button> #}
