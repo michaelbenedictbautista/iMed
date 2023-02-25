@@ -45,7 +45,7 @@ if (isset($_POST['signin'])) {
             Session::set("user_ins_name", $result['ins_name']);
             Session::set("user_ins_add", $result['ins_add']);
 
-            if ($result['user_level'] == 1 || $result['user_level'] == 3) {
+            if ($result['user_level'] == 1 || $result['user_level'] == 2) {
                 header('Location: userdashboard.php');
             } else {
                 header('Location: /');

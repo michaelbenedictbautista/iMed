@@ -26,8 +26,8 @@ if (Session::get('user_email') == null) {
 
 //User class
 $user = new User();
-if ($user_level == 1) {
-    $userDisplayLevel = 2;
+if ($user_level == 2) {
+    $userDisplayLevel = 3;
 } else {
     $userDisplayLevel = 1;
 }

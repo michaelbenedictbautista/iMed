@@ -37,19 +37,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
     $newNote = trim($_POST["addingNote"]);
     $result = $note->addNote($newNote, $user_id);
 
-    // echo "<script>
-    // alert('Note added successfully!');
-    // window.location.href='index.php';
-    // </script>";
+    echo "<script>
+    alert('Note added successfully!');
+    window.location.href='index.php';
+    </script>";
 
     header('Location: index.php');
 } else {
-    // echo "<script>
-    // alert('Error occured during execution!);
-    // window.location.href='index.php';
-    // </script>";
+    echo "<script>
+    alert('Error occured during execution!);
+    window.location.href='index.php';
+    </script>";
 
-    header('Location: test2.php');
+    header('Location: index.php');
 }
 
 $site_name = "iMed";

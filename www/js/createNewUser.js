@@ -10,7 +10,7 @@ const userLevel = document.getElementById("userLevel");
 const institutionName = document.getElementById("institutionName");
 const institutionAddress = document.getElementById("institutionAddress");
 
-const btnSignin = document.getElementById("create-btn");
+const btnCreate = document.getElementById("create-btn");
 
 const validInput = () => {
     if ((firstName.value.trim().length <=0 || firstName == null) && (lastName.value.trim().length <= 0 || lastName == null) && (userName.value.trim().length <= 0 || userName == null) && (email.value.trim().length <= 0 || email == null) && (password.value.trim().length < 8 || password == null) && (contactNumber.value.trim().length <= 0 || contactNumber == null) && (profession.value.trim().length <= 0 || profession == null) && (userLevel.value.trim().length <= 0 || userLevel == null) && (institutionName.value.trim().length <= 0 || institutionName == null) && (institutionAddress.value.trim().length <= 0 || institutionAddress == null)) {
@@ -24,13 +24,13 @@ const validInput = () => {
 const userInput = () => {
     if(validInput()) { 
         document.getElementById('create-btn').disabled = false;
-        btnSignin.setAttribute('class', 'btn btn-primary mt-3')
-        //btnSignin.setAttribute('disabled', 'removeAttribute()')
+        btnCreate.setAttribute('class', 'btn btn-primary mt-3')
+        //btnCreate.setAttribute('disabled', 'removeAttribute()')
 
     } else { 
         document.getElementById('create-btn').disabled = true;
-        btnSignin.setAttribute('class', 'btn btn-secondary mt-3')
-        // btnSignin.setAttribute('disabled', 'true') 
+        btnCreate.setAttribute('class', 'btn btn-secondary mt-3')
+        // btnCreate.setAttribute('disabled', 'true') 
     }
 }
 

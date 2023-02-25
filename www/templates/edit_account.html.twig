@@ -21,7 +21,7 @@
 							</a>
 						</li>
 
-						{% if user_level == 3 %}
+						{% if user_level == 1 %}
 							<li class="nav-item">
 								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
 							</li>
@@ -69,17 +69,17 @@
 							<input type="text" class="form-control" name="userName" id="userName" value="{{user_userName}}" required>
 						</div>
 
-						{% if user_level == 1 %}
+						{% if user_level == 2 %}
 							<div class="mb-3">
 								<label for="email" class="form-label">Email address</label>
-								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" readonly>
+								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" disabled>
 							</div>
 
 							<div class="mb-3">
 								<label for="password" class="form-label">Password
 									<span class="asterisk">*</span>
 								</label>
-								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" required>
+								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" pattern="[A-Za-z0-9!@#$%^&*()-_=+{}'|,<.>/\?]{8,}" title="Enter your password. Must be atleast 8 characters." required>
 							</div>
 
 							<div class="mb-3">
@@ -90,37 +90,53 @@
 							</div>
 
 
-							<div class="mb-3">
+							{# <div class="mb-3">
 								<label for="profession" class="form-label">Profession</label>
-								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" readonly>
+								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" disabled>
+							</div> #}
+
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">User profession</label>
+								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required disabled>
+									<option selected value="{{ user_profession }}">{{ user_profession }}</option>
+								</select>
 							</div>
+
+
+							{# <div class="mb-3">
+								<label for="userLevel" class="form-label">User level</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" value="1" disabled>
+							</div> #}
 
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
-								<input type="text" class="form-control" name="userLevel" id="userLevel" value="1" readonly>
+								<select class="custom-select form-control" name="userLevel" id="userLevel" onkeyup="userInput2()" required disabled>
+									<option selected value="2">2 = Administration</option>
+								</select>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name</label>
-								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" readonly>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" disabled>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionAddress" class="form-label">Institution address</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" readonly>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" disabled>
 							</div>
 
-						{% elseif user_level == 3 %}
+						{% elseif user_level == 1 %}
 							<div class="mb-3">
 								<label for="email" class="form-label">Email address</label>
-								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}">
+								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" title="Must be a valid email address">
 							</div>
 
 							<div class="mb-3">
 								<label for="password" class="form-label">Password
 									<span class="asterisk">*</span>
 								</label>
-								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" required>
+								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" pattern="[A-Za-z0-9!@#$%^&*()-_=+{}'|,<.>/\?]{8,}" title="Enter your password. Must be atleast 8 characters." required>
 							</div>
 
 							<div class="mb-3">
@@ -130,14 +146,41 @@
 								<input type="text" class="form-control" name="contactNumber" id="contactNumber" value="{{user_contact}}" required>
 							</div>
 
-							<div class="mb-3">
+							{# <div class="mb-3">
 								<label for="profession" class="form-label">Profession</label>
 								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}">
+							</div> #}
+
+							<div class="mb-3">
+								<label for="profession" class="form-label">User profession</label>
+								<span class="asterisk">*</span>
+								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required>
+									<option value="">Please select profession...</option>
+									<option value="Administration">Administration</option>
+									<option value="Developer">Developer</option>
+									<option value="Doctor">Doctor</option>
+									<option value="Nurse">Nurse</option>
+									<option value="Pathologist">Pathologist</option>
+									<option value="Pharmacist">Pharmacist</option>
+									<option value="Dietitian">Dietitian</option>
+									<option value="General medical practitioner">Other</option>
+								</select>
 							</div>
+
+							{# <div class="mb-3">
+								<label for="userLevel" class="form-label">User level</label>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" value="3">
+							</div> #}
 
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
-								<input type="text" class="form-control" name="userLevel" id="userLevel" value="3">
+								<span class="asterisk">*</span>
+								<select class="custom-select form-control" name="userLevel" id="userLevel" onkeyup="userInput2()" required>
+									<option value="">Please select user level...</option>
+									<option value="1">1 = Developer</option>
+									<option value="2">2 = Administration</option>
+									<option value="3">3 = Medical practioners</option>
+								</select>
 							</div>
 
 							<div class="mb-3">
