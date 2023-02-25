@@ -85,7 +85,7 @@ class Account extends Database
                                  VALUES( ?, ?, ?, ?, ?, ?, $ins_ID, ?, ?, ?)";
 
                                 try {
-                                    //$hashed = password_hash($password, PASSWORD_DEFAULT);
+                                    //$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                                     $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
                                     $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
 
@@ -133,7 +133,7 @@ class Account extends Database
                         VALUES( ?, ?, ?, ?, ?, ?, $ins_ID, ?, ?, ?)";
 
                             try {
-                                //$hashed = password_hash($password, PASSWORD_DEFAULT);
+                                //$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                                 $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
                                 $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
 
@@ -209,9 +209,8 @@ class Account extends Database
                     
 
                     // Check password
-                    //if (password_verify($password, $account_data["password"])) {
-                    
-                     if ($password == $account_data["password"]) {
+                    //  if ($password == $account_data["password"]) {
+                     if (password_verify($password, $account_data["password"])) {           
                         $response["success"] = true;
                         $response["id"] = $account_data["user_ID"];
                         $response["uName"] = $account_data["username"];
@@ -237,8 +236,10 @@ class Account extends Database
             $errors["system"] = $exc->getMessage();
             $response["success"] = false;
             $response["errors"] = $errors;
+            
         }
         return $response;
+        
     }
 
     // Update account
@@ -251,7 +252,7 @@ class Account extends Database
         $lastName = trim($lastName);
         $userName = trim(strtolower($userName));
         $password = trim($password);
-        //$hashed = password_hash($password, PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $contactNumber = trim($contactNumber);
         $email = trim(strtolower($email));
         $profession = trim(strtolower($profession));
@@ -278,7 +279,7 @@ class Account extends Database
                 throw new Exception("All fields are required!");
                 return false;
             } else {
-                //$hashed = password_hash($user_pw, PASSWORD_DEFAULT);
+                //$hashedPassword = password_hash($user_pw, PASSWORD_DEFAULT);
 
                 // Execute query
                 $query = "
@@ -287,7 +288,9 @@ class Account extends Database
                 first_name = '$firstName', 
                 last_name = '$lastName',
                 username = '$userName',
-                password = '$password',
+                
+                password = '$hashedPassword',
+                
                 contact_number = '$contactNumber',
                 email = '$email',
                 profession = '$profession',

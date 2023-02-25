@@ -34,7 +34,7 @@
 				</div>
 				<div class="col-md-10 main-container text-left">
 					<h1 class="text-center mb-5">Edit Account</h1>
-					<form id="user" method="post" action="userdashboard.php?uId = {{user_Id}}">
+					<form id="user" method="post" action="userdashboard.php?uId = {{user_id}}" enctype="multipart/form-data">
 						<div class="row mb-3">
 							<div class="col-md-3 offset-md-3" style="margin-left: 4rem;">
 								<a class="navbar-brand " href="userdashboard.php">
@@ -79,7 +79,7 @@
 								<label for="password" class="form-label">Password
 									<span class="asterisk">*</span>
 								</label>
-								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="{{user_pw}}" required>
+								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" required>
 							</div>
 
 							<div class="mb-3">
@@ -113,34 +113,41 @@
 						{% elseif user_level == 3 %}
 							<div class="mb-3">
 								<label for="email" class="form-label">Email address</label>
-								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" readonly>
+								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}">
 							</div>
 
 							<div class="mb-3">
 								<label for="password" class="form-label">Password
 									<span class="asterisk">*</span>
 								</label>
-								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="{{user_pw}}" required>
+								<input type="password" class="form-control" name="password" id="password" placeholder="minimum 8 characters" value="" required>
+							</div>
+
+							<div class="mb-3">
+								<label for="contactNumber" class="form-label">Contact number
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="contactNumber" id="contactNumber" value="{{user_contact}}" required>
 							</div>
 
 							<div class="mb-3">
 								<label for="profession" class="form-label">Profession</label>
-								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" readonly>
+								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}">
 							</div>
 
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
-								<input type="text" class="form-control" name="userLevel" id="userLevel" value="3" readonly>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" value="3">
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name</label>
-								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" readonly>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}">
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionAddress" class="form-label">Institution address</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" readonly>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}">
 							</div>
 
 						{% endif %}

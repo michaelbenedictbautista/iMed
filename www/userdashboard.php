@@ -35,10 +35,11 @@ if ($user_level == 1) {
 // Call funtion to display users base on their user levels
 $items = $user->getAllUser($userDisplayLevel);
 
-////////////////////////////////////////////////////////////
+// Update user
 $account = new Account();
 $result =  null;
-// Update user
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
 
     //Unset account data
@@ -51,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     Session::unset("user_email", $user_email);
     Session::unset("user_profession", $user_profession);
     Session::unset("user_level", $user_level);
+    //Session::unset("user_image", $user_image);
     Session::unset("user_image", $user_image);
     Session::unset("user_ins_name", $user_ins_name);
     Session::unset("user_ins_add", $user_ins_add);
@@ -64,11 +66,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     $user_contact = trim($_POST["contactNumber"]);
     $user_profession = trim(strtolower($_POST["profession"]));
     $user_level = $_POST["userLevel"];
-    $user_image = $_POST["formFile"];
+    //$user_image = $_POST["formFile"];
     $user_ins_name = trim(strtolower($_POST["institutionName"]));
     $user_ins_add = trim(strtolower($_POST["institutionAddress"]));
 
-    $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
+    // $file = $_FILES['formFile'];
+    // $fileName = $file['name'];
+    // $fileSize = $file['size'];
+    // $fileError = $file['error'];
+    // $fileType = $file['type'];
+
+    // Declare the values for update a thumbnail
+    $file = $_FILES['formFile'];
+    $user_image = $file['name'];
+    $fileError = $file['error'];
+
+    // Check the fileName
+    if (!empty($user_image)) {
+        // Find "." and separate into the array ---------
+        $fileExt = explode('.', $user_image);
+        // Find the last element in the array -> make it lower case ---------
+        $fileActualExt = strtolower(end($fileExt));
+        // make array to accept file type ---------
+        $fileAllowed = array('jpg', 'jpeg', 'png');
+        // Check the condition ---------
+        if (in_array($fileActualExt, $fileAllowed)) {
+            // Check for error
+            if ($fileError === 0) {
+                // Change the file name as "fileName + . + Uniqid" ---------
+                //$fileNameNew = uniqid('', true) . "." . $fileName;
+
+                // Destination folder ---------
+                //$fileDestination = 'img/user/' . $fileNameNew;
+                $fileDestination = 'img/user/' . $user_image;
+                move_uploaded_file($user_image, $fileDestination);
+
+                // Update account data   
+                $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
+
+                header('Location: userdashboard.php');
+            }
+        }
+    } else {
+        $user_image = "default.jpg";
+        $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
+        header('Location: userdashboard.php');
+    }
+    
+
+    // $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
+
 
     // Set account data
     Session::set("user_userName", $user_userName);

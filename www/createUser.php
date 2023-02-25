@@ -6,8 +6,8 @@ use imed\Session;
 use imed\Account;
 
 $account = new Account();
-
 $result = null;
+
 $user_id = null;
 $user_userName = null;
 $user_pw = null;
@@ -55,13 +55,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_user_ins_name = trim(strtolower($_POST["institutionName"]));
     $new_user_ins_add = trim(strtolower($_POST["institutionAddress"]));
 
-    // Declare the values for update a thumbnail ----------
+    
+    // $file = $_FILES['formFile'];
+    // $fileName = $file['name'];
+    // $fileSize = $file['size'];
+    // $fileError = $file['error'];
+    // $fileType = $file['type'];
+
+    // Declare the values for update a thumbnail
     $file = $_FILES['formFile'];
     $fileName = $file['name'];
-    $fileTmpName = $file['tmp_name'];
-    $fileSize = $file['size'];
     $fileError = $file['error'];
-    $fileType = $file['type'];
+
 
     // Check the fileName
     if (!empty($fileName)) {
