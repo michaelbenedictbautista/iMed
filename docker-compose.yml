@@ -31,3 +31,10 @@ services:
     - "./www:/var/www/html"
     ports:
     - 8080:80
+  tesseract:
+    build: .
+    command: bash -c "while true; do sleep 1000; done"
+    volumes:
+      - .:/app
+    depends_on:
+      - db

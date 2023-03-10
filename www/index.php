@@ -4,7 +4,8 @@ require("vendor/autoload.php");
 
 // Request classes from autoloader
 use imed\Session;
-use imed\Note; 
+use imed\Note;
+use thiagoalessio\TesseractOCR\TesseractOCR; 
 
 // Instantiate Session class
 $user_email = null;
@@ -30,6 +31,10 @@ if (Session::get('user_email') == null) {
 // Instantiate Note class
 $note = new Note();
 $notes = $note->getAllNotes();
+
+//
+$ocr = new TesseractOCR('img/1.jpg');
+echo $ocr->run();
 
 $site_name = "iMed";
 

@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '09e09c833d151c6d1439cc5ad76de69dfb541a9e',
+        'reference' => 'e0cf09e085c22cebb3aeca88db7c464469957b39',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '09e09c833d151c6d1439cc5ad76de69dfb541a9e',
+            'reference' => 'e0cf09e085c22cebb3aeca88db7c464469957b39',
             'dev_requirement' => false,
         ),
         'symfony/polyfill-ctype' => array(
@@ -35,6 +35,15 @@
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
             'reference' => '0abb51d2f102e00a4eefcf46ba7fec406d245825',
+            'dev_requirement' => false,
+        ),
+        'thiagoalessio/tesseract_ocr' => array(
+            'pretty_version' => '2.12.0',
+            'version' => '2.12.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../thiagoalessio/tesseract_ocr',
+            'aliases' => array(),
+            'reference' => '0f10bd7b02bdcba59c4fbd98fbd93a56f93b09b7',
             'dev_requirement' => false,
         ),
         'twig/twig' => array(
