@@ -29,19 +29,35 @@ if (Session::get('user_email') == null) {
 }
 
 // global variable
-$note_ID = trim($_GET['id']);
+// $note_ID = trim($_GET['id']);
 
-$note = new Note();
-$detail = $note->getNoteDetail($note_ID);
-$detailText = $detail['note_text'];
-
-// $detail = null;
 // $note = new Note();
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     $$note_ID = trim(strtolower($_POST["id"]));
-//     $detail = $note->getNoteDetail($note_ID);
-//     header('Location: note_detail.php');
+// $detail = $note->getNoteDetail($note_ID);
+// $detailText = $detail['note_text'];
+
+/////////////////////////////////
+// $note = new Note();
+// $detailText= null;
+// if(isset($_GET['id'])) {
+//   $note_id = $_GET['id'];
+//   $detail = $note->getNoteDetail($note_id);
+//   $detailText = $detail['note_text'];
+
+// } else {
+//   // Display all patients on the home page
+//   // ...
 // }
+
+////////////////////////
+$detailText = null;
+$detailID = null;
+if (isset($_POST["note_ID"])) {
+  $note_id = $_POST['note_ID'];
+  $detail = $note->getNoteDetail($note_id);
+  $detailText = $detail['note_text'];
+  $detailID = $detail['note_ID'];
+//   echo "<p class='alert alert-danger'>$note_id</p>";
+}
 
 $site_name = "iMed";
 
@@ -50,7 +66,8 @@ $loader = new \Twig\Loader\FilesystemLoader("templates");
 $twig = new Twig\Environment($loader, ["cache" => false]);
 
 echo $twig->render(
-    "note_detail.html.twig",
+    // "note_detail.html.twig",
+    "index.html.twig",
     [
         "page_title" => "View note",
         "site_name" => $site_name,
@@ -72,5 +89,6 @@ echo $twig->render(
 
         "detail" => $detail,
         "detailText" => $detailText,
+        "detailID"=>$detailID,
     ]
 );

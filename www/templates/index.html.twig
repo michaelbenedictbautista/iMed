@@ -32,7 +32,26 @@
 						<div class="col-3">
 							<p class="fst-italic text-end">{{ note.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}</p>
 							<p class="text-end">
-								<a href="note_detail.php?id={{ note.note_ID }}" class="btn btn-primary">View note</a>
+								{# <a href="note_detail.php?id={{ note.note_ID }}" class="btn btn-primary">View note</a> #}
+								{# <button type="button" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" data-note-id="{{note.note_ID}}">View note</button> #}
+								{# <a href="index.php?action=note_detail&id={{ note.note_ID }}">View note</a> #}
+
+								{# <form method="POST" action"index.php?id={{note.note_ID}}">
+									<input type="hidden" name="note_id" value="{{ note.note_ID }}">
+									<button type="submit" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" name="submitBtnNote">View note</button>	
+								</form> #}
+
+								{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note">View note</a> #}
+
+								{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#patientModal" class="btn btn-primary view-note"> View note</a> #}
+
+								{# <form method="post">
+									<button type="submit" name="submitBtn" value="{{note.note_ID}}">View note</button>
+								</form> #}
+
+								<button id='{{note.note_ID}}'  class='btn btn-primary Mybutton'>View</button>
+
+								
 							</p>
 						</div>
 					</div>
@@ -52,14 +71,14 @@
 			<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<form id="addNote" method="post" action="add_note.php">
-						<div class="modal-content" >
+						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="addingNote">Notes</label>
-									<textarea type="text" rows="3" class="form-control mt-3"  placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 400px; "> </textarea>	
+									<textarea type="text" rows="3" class="form-control mt-3" placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 400px; "></textarea>
 								</div>
 							</div>
 
@@ -86,9 +105,134 @@
 				</div>
 			</div>
 
+
+
+
+
+			<!--TEST-->
+			{% if detailText | length > 0 %}
+
+				<h1 style="display:flex;">{{detailText}}</h1>
+
+			{% else %}
+				<h1>Note detail not found!!!</h1>
+			{% endif %}
+
+			<div class="modal fade" id="patientModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="patientModalLabel"></h5>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							{# {% if result.detailInfo.detailText | length > 0 %}
+
+								<h1 id="detailText"></h1>
+
+							{% else %}
+								<h1>Note detail not found!!!</h1>
+							{% endif %} #}
+							<h1 id="detailText"></h1>
+
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+			<!--View note-->
+			<div class="modal fade" id="viewNoteModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
+				<div
+					class="modal-dialog">
+					{# <form id="viewNote" method="post" action="add_note.php"> #}
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="patientModalLabel"></h5>
+							<h4 id="viewingTitle"></h4>			
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							
+								
+
+								{# {% if detailText | length > 0 %}
+									<textarea type="text" rows="3" class="form-control mt-3" name="viewingNote" id="viewingNote" style="height: 400px; ">{{detailText}}</textarea>
+
+								{% else %}
+									<textarea type="text" rows="3" class="form-control mt-3" name="viewingNote" id="viewingNote" style="height: 400px; ">Data not found!!!</textarea>
+								{% endif %} #}
+								<h1 id="viewingNote"></h1>
+							
+						</div>
+
+						{# <div class="form-group">
+							<label for="exampleFormControlTextarea1">Example textarea</label>
+							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+						</div> #}
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+					{# </form> #}
+				</div>
+			</div>
+
+
+			<!-- OCR -->
+			<div class="row mt-5">
+				<div class="col-sm-8 mx-auto">
+					<div class="jumbotron">
+						<h1 class="display-4">Read Text from Images</h1>
+
+						{# {% if fileRead | length > 0 %}
+						<p class="lead bg-danger">{{ fileRead }}</p>
+
+						{% else %}
+						<p class="lead bg-danger" style="display:none"></p>
+						{% endif %} #}
+					<p>{{fileRead}}</p>
+
+						<hr class="my-4">
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-8 mx-auto">
+				<div class="card mt-5">
+					<div class="card-body">
+
+
+						<form action="" method="post" enctype="multipart/form-data">
+							<div class="form-group">
+
+								<label for="filechoose">Choose File</label>
+
+								<input type="file" name="file" class="form-control-file" id="filechoose">
+
+								<button class="btn btn-success mt-3" type="submit" name="submit">Upload</button>
+
+							</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		{# <script type="text/javascript" src="js/home.js" defer></script> #}
+		<script src="js/home.js"></script>
 	</body>
 </html>

@@ -5,7 +5,7 @@ require("vendor/autoload.php");
 // Request classes from autoloader
 use imed\Session;
 use imed\Note;
-use thiagoalessio\TesseractOCR\TesseractOCR; 
+use thiagoalessio\TesseractOCR\TesseractOCR;
 
 // Instantiate Session class
 $user_email = null;
@@ -32,9 +32,84 @@ if (Session::get('user_email') == null) {
 $note = new Note();
 $notes = $note->getAllNotes();
 
-//
-$ocr = new TesseractOCR('img/1.jpg');
-echo $ocr->run();
+
+//  Convert text image into a new searchable text file
+// $ocr = new TesseractOCR('img/1.jpg');
+// echo $ocr->run();
+
+$fileRead = null;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  // Check if submit button was clicked
+  if (isset($_POST['submit'])) {
+    $file_name = $_FILES['file']['name'];
+    $tmp_file = $_FILES['file']['tmp_name'];
+
+    $file_name = $user_id . '_' . time() . '_' . str_replace(array('!', "@", '#', '$', '%', '^', '&', ' ', '*', '(', ')', ':', ';', ',', '?', '/' . '\\', '~', '`', '-'), '_', strtolower($file_name));
+
+    if (move_uploaded_file($tmp_file, 'img/uploads/' . $file_name)) {
+      try {
+
+        // $fileRead = (new TesseractOCR('img/uploads/' . $file_name))       
+        //   ->setLanguage('eng')
+        //   ->run()
+
+        $file = (new TesseractOCR('img/uploads/' . $file_name));
+        $fileLang = $file->setLanguage('eng');
+        $fileDPI = $file->dpi(300);
+        $fileRead = $file->run();
+        //echo '<meta http-equiv="refresh" content="0">';
+        // header('Location: ' . $_SERVER['REQUEST_URI']);
+        // exit;
+
+
+      } catch (Exception $e) {
+
+        echo $e->getMessage();
+      }
+    } else {
+      echo "<p class='alert alert-danger'>Choose file to upload.</p>";
+    }
+  }
+}
+
+////////////////////////
+// $detailText = null;
+// if (isset($_GET['id'])) {
+//   $note_id = $_GET['id'];
+//   $detail = $note->getNoteDetail($note_id);
+//   $detailText = $detail['note_text'];
+// } else {
+//   // Display all patients on the home page
+//   // ...
+// }
+
+
+////////////////////////
+// $detailText= null;
+// if(isset($_POST['submitBtnNote']) && isset($_POST['note_id'])) {
+//   $note_id = $_POST['note_id'];
+//   $detail = $note->getNoteDetail($note_id);
+//   $detailText = $detail['note_text'];
+
+// } else {
+//   // Display all patients on the home page
+//   // ...
+// }
+
+
+/////////////////
+// $detailText = null;
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//   $note_id = $_POST['submitBtn'];
+//   $detail = $note->getNoteDetail($note_id);
+//   $detailText = $detail['note_text'];
+//   echo "<p class='alert alert-danger'>$note_id</p>";
+// }
+
+
+
+
 
 $site_name = "iMed";
 
@@ -48,7 +123,7 @@ echo $twig->render(
     "page_title" => "iMed",
     "site_name" => $site_name,
     "greeting" => "Welcome to iMed",
-    
+
 
     // Session after login
     "user_id" => $user_id,
@@ -67,6 +142,6 @@ echo $twig->render(
 
     "notes" => $notes,
     // "result" => $result,
-
+    "fileRead" => $fileRead,
   ]
 );
