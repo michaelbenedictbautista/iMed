@@ -41,11 +41,11 @@ $twig = new Twig\Environment($loader, ["cache" => false]);
 echo $twig->render(
     "terminology.html.twig",
     [
+        //Pass all variables to be used
         "page_title" => "iMed",
         "greeting" => "Welcome to iMed webpage",
         "site_name" => $site_name,
 
-        // Session after login
         "user_id" => $user_id,
         "user_userName" => $user_userName,
         "user_pw" => $user_pw,
@@ -61,6 +61,5 @@ echo $twig->render(
         "user_ins_add" => $user_ins_add,
 
         "terminologies" => $terminologies,
-        // "result" => $result,
     ]
 );

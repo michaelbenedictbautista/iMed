@@ -23,12 +23,18 @@
 
 						{% if user_level == 1 %}
 							<li class="nav-item">
-								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return confirm('Do you want to delete?')">Delete account</a>
+							</li>
+						{% endif %}
+						
+						{% if user_level == 2 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="view_all_patient.php">View all patient</a>
 							</li>
 						{% endif %}
 
 						<li class="nav-item">
-							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" onclick="return confirm('Do you want to sign out?')" href="signout.php">Sign out</a>
 						</li>
 					</ul>
 				</div>
@@ -72,7 +78,7 @@
 						{% if user_level == 2 %}
 							<div class="mb-3">
 								<label for="email" class="form-label">Email address</label>
-								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" disabled>
+								<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" value="{{user_email}}" readonly>
 							</div>
 
 							<div class="mb-3">
@@ -89,20 +95,10 @@
 								<input type="text" class="form-control" name="contactNumber" id="contactNumber" value="{{user_contact}}" required>
 							</div>
 
-
-							{# <div class="mb-3">
-								<label for="profession" class="form-label">Profession</label>
-								<input type="text" class="form-control" name="profession" id="profession" value="{{user_profession}}" disabled>
-							</div> #}
-
-
 							<div class="mb-3">
 								<label for="profession" class="form-label">User profession</label>
-								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required disabled>
-									<option selected value="{{ user_profession }}">{{ user_profession }}</option>
-								</select>
+								<input type="text" class="form-control" name="profession" id="profession" value="{{ user_profession }}" readonly>
 							</div>
-
 
 							{# <div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
@@ -111,19 +107,17 @@
 
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
-								<select class="custom-select form-control" name="userLevel" id="userLevel" onkeyup="userInput2()" required disabled>
-									<option selected value="2">2 = Administration</option>
-								</select>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" oninput="userInputValid()" value="2" readonly>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name</label>
-								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" disabled>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" value="{{user_ins_name}}" readonly>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionAddress" class="form-label">Institution address</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" disabled>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" value="{{user_ins_add}}" readonly>
 							</div>
 
 						{% elseif user_level == 1 %}
@@ -213,5 +207,6 @@
 			</div>
 		</div>
 		{% include "partial/footer.html.twig" %}
-		{% include "partial/script.html.twig" %}</body>
-</html></body></html>
+		{% include "partial/script.html.twig" %}
+	</body>
+</html>

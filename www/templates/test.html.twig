@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-	</head>
+	{% include "partial/head.html.twig" %}
 	<body>
+	{% include "partial/navigation.html.twig" %}
 		<div>
-			<h1>Hello World!</h1>
-			<p>Test Page</p>
+			<h1>Test Page</h1>
+			
+			{# <a href="note_detail.php?id={{ note.note_ID }}" class="btn btn-primary">View note</a> #}
+			{# <button type="button" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" data-note-id="{{note.note_ID}}">View note</button> #}
+			{# <a href="index.php?action=note_detail&id={{ note.note_ID }}">View note</a> #}
+
+			{# <form method="POST" action"index.php?id={{note.note_ID}}">
+				<input type="hidden" name="note_id" value="{{ note.note_ID }}">
+				<button type="submit" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" name="submitBtnNote">View note</button>	
+			</form> #}
+
+			{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note">View note</a> #}
+
+			{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#patientModal" class="btn btn-primary view-note"> View note</a> #}
+
+			{# <form method="post">
+				<button type="submit" name="submitBtn" value="{{note.note_ID}}">View note</button>
+			</form> #}
+
+
+			{# <form id="image-upload-form" action="upload.php" method="post">
+				<div id="targetLayer">Image Preview
+					<img src="{{newtargetPath}}" class="img-fluid rounded overflow-hidden" style="height:300px;">
+				</div>
+				<div>
+					<input name="userImage" type="file" class="inputFile" />
+				</div>
+				<div>
+					<input type="submit" value="Upload" class="btn-upload" />
+				</div>
+			</form> #}
+
+			<form id="imageUploadForm" method="post" enctype="multipart/form-data">
+				<input type="file" id="imageInput" name="imageInput" accept="image/*">
+				<img id="previewImage" src="#" alt="Preview Image">
+				<input type="submit" name="submit" value="Upload" class="btn-upload" />
+			</form>
+
+			
+
+
 		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script src="js/test.js"></script>
 	</body>
 </html>

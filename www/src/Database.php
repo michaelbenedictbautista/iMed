@@ -4,9 +4,9 @@ namespace imed;
 
 use Exception;
 
-// Declaring varibles
 class Database
 {
+    // Declaring variables
     private $username;
     private $password;
     private $database_name;

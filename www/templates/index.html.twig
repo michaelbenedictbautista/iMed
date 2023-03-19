@@ -12,18 +12,27 @@
 					<a class="nav-link fw-bold active" aria-current="page" href="/">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" href="/">Patients</a>
+					<a class="nav-link fw-bold linkUnset" href="patient.php">Patients</a>
 				</li>
 			</ul>
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded" style="background-color: gray; color:white">
+				<div class="row justify-content-between">
+						<div class="col-9">
+							<p class="fw-bold " id="patient-name">Notes</p>
+						</div>
+						<div class="col-3">
+							<p class="fw-bold text-end">Date</p>					
+						</div>
+				</div>
+			</div>
 
 			{% for note in notes.items %}
-				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
-
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
 					<div class="row justify-content-between">
 						<div class="col-9">
 							<p class="fw-bold fs-5 text-truncate" id="note">{{note.note_text}}</p>
 							<span class="navbar-text text-capitalize">
-								source:
+								Entered by:
 								{{ note.first_name ~ ' ' }}{{ note.last_name }}
 								|
 								{{ note.profession }}
@@ -31,27 +40,8 @@
 						</div>
 						<div class="col-3">
 							<p class="fst-italic text-end">{{ note.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}</p>
-							<p class="text-end">
-								{# <a href="note_detail.php?id={{ note.note_ID }}" class="btn btn-primary">View note</a> #}
-								{# <button type="button" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" data-note-id="{{note.note_ID}}">View note</button> #}
-								{# <a href="index.php?action=note_detail&id={{ note.note_ID }}">View note</a> #}
-
-								{# <form method="POST" action"index.php?id={{note.note_ID}}">
-									<input type="hidden" name="note_id" value="{{ note.note_ID }}">
-									<button type="submit" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note" name="submitBtnNote">View note</button>	
-								</form> #}
-
-								{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#viewNoteModal" class="btn btn-primary view-note">View note</a> #}
-
-								{# <a href="index.php?id={{note.note_ID}}" data-bs-toggle="modal" data-bs-target="#patientModal" class="btn btn-primary view-note"> View note</a> #}
-
-								{# <form method="post">
-									<button type="submit" name="submitBtn" value="{{note.note_ID}}">View note</button>
-								</form> #}
-
-								<button id='{{note.note_ID}}'  class='btn btn-primary Mybutton'>View</button>
-
-								
+							<p class="text-end">					
+								<button id='{{note.note_ID}}'  class='btn btn-primary noteDetailBtn'>View</button>
 							</p>
 						</div>
 					</div>
@@ -62,12 +52,11 @@
 			<!-- Add note button function -->
 			<div class="d-grid">
 				<button type="button" name="add-note-btn" class="btn btn-primary btn-lg mt-5" id="add-note-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
-					<strong>Add note</strong>
+					<strong>Add new note</strong>
 				</button>
 			</div>
 
 			<!-- Add note modal -->
-			{# <form id="addNote" method="post" action="add_note.php"> #}
 			<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<form id="addNote" method="post" action="add_note.php">
@@ -82,15 +71,9 @@
 								</div>
 							</div>
 
-							{# <div class="form-group">
-								<label for="exampleFormControlTextarea1">Example textarea</label>
-								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-							</div> #}
-
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-								{# <button type="button" class="btn btn-primary">Save changes</button> #}
-								{% set outcome = result.errors | join(", ") %}
+								{% set outcome = notes.errors | join(", ") %}
 								<button type="submit" class="btn btn-primary" id="add-note-btn">Add note</button>
 
 								{% if outcome | length > 0 %}
@@ -105,114 +88,43 @@
 				</div>
 			</div>
 
-
-
-
-
-			<!--TEST-->
-			{% if detailText | length > 0 %}
-
-				<h1 style="display:flex;">{{detailText}}</h1>
-
-			{% else %}
-				<h1>Note detail not found!!!</h1>
-			{% endif %}
-
-			<div class="modal fade" id="patientModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="patientModalLabel"></h5>
-							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							{# {% if result.detailInfo.detailText | length > 0 %}
-
-								<h1 id="detailText"></h1>
-
-							{% else %}
-								<h1>Note detail not found!!!</h1>
-							{% endif %} #}
-							<h1 id="detailText"></h1>
-
-						</div>
-
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
-
-
 			<!--View note-->
-			<div class="modal fade" id="viewNoteModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
+			<div class="modal fade" id="viewNoteModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 				<div
 					class="modal-dialog">
-					{# <form id="viewNote" method="post" action="add_note.php"> #}
+					
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="patientModalLabel"></h5>
-							<h4 id="viewingTitle"></h4>			
+							<h5 class="modal-title" id="modal-title"></h5>
+							<h4 id="viewingTitle" class="text-capitalize"></h4>			
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">
-							
-								
-
-								{# {% if detailText | length > 0 %}
-									<textarea type="text" rows="3" class="form-control mt-3" name="viewingNote" id="viewingNote" style="height: 400px; ">{{detailText}}</textarea>
-
-								{% else %}
-									<textarea type="text" rows="3" class="form-control mt-3" name="viewingNote" id="viewingNote" style="height: 400px; ">Data not found!!!</textarea>
-								{% endif %} #}
-								<h1 id="viewingNote"></h1>
-							
+						<div class="modal-body">						
+							<h1 id="viewingNote"></h1>												
 						</div>
-
-						{# <div class="form-group">
-							<label for="exampleFormControlTextarea1">Example textarea</label>
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-						</div> #}
-
-						<div class="modal-footer">
+						<div class="modal-footer justify-content-between">
+							<p id="viewingDate" class="fst-italic"></p>
 							<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
 						</div>
 					</div>
-					{# </form> #}
+					
 				</div>
 			</div>
 
-
-			<!-- OCR -->
+			<hr class="my-4">
+			
+			<!-- Read text from images OCR -->
 			<div class="row mt-5">
 				<div class="col-sm-8 mx-auto">
-					<div class="jumbotron">
+					<div class="read-text">
 						<h1 class="display-4">Read Text from Images</h1>
-
-						{# {% if fileRead | length > 0 %}
-						<p class="lead bg-danger">{{ fileRead }}</p>
-
-						{% else %}
-						<p class="lead bg-danger" style="display:none"></p>
-						{% endif %} #}
 					<p>{{fileRead}}</p>
-
-						<hr class="my-4">
 					</div>
 				</div>
 			</div>
 			<div class="row col-sm-8 mx-auto">
 				<div class="card mt-5">
 					<div class="card-body">
-
-
 						<form action="" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 
@@ -220,19 +132,15 @@
 
 								<input type="file" name="file" class="form-control-file" id="filechoose">
 
-								<button class="btn btn-success mt-3" type="submit" name="submit">Upload</button>
-
+								<button class="btn btn-primary mt-3 " type="submit" name="submit">Upload</button>
 							</div>
 						</form>
-
-
 					</div>
 				</div>
 			</div>
-
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/home.js"></script>
+		<script src="js/index.js"></script>
 	</body>
 </html>

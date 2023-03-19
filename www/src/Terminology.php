@@ -5,7 +5,6 @@ namespace imed;
 use imed\Database;
 use Exception;
 
-
 class Terminology extends Database
 {
     private $dbconnection;
@@ -20,6 +19,7 @@ class Terminology extends Database
     // Fetch data from Terminolgy table our from database
     public function getTerminology()
     {
+        // Create query to select all terminoligies
         $query = "
         SELECT 
         term_ID,
@@ -29,11 +29,13 @@ class Terminology extends Database
         ORDER BY description ASC";
 
         try {
+            // Verify database connection
             $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
             if (!$statement) {
                 throw new Exception("Database connection error!");
             }
-
+            
+            // Verify query execution
             if (!$statement->execute()) {
                 throw new Exception("Query execution error!");
             } else {
@@ -50,6 +52,7 @@ class Terminology extends Database
             }
             return null;
         } catch (Exception $exception) {
+            // Handle errors
             $errors = array();
             $errors["system"] = $exception->getMessage();
             $notes["errors"] = $errors;

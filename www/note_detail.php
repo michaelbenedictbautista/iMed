@@ -28,35 +28,14 @@ if (Session::get('user_email') == null) {
     $user_ins_add = Session::get("user_ins_add");
 }
 
-// global variable
-// $note_ID = trim($_GET['id']);
-
-// $note = new Note();
-// $detail = $note->getNoteDetail($note_ID);
-// $detailText = $detail['note_text'];
-
-/////////////////////////////////
-// $note = new Note();
-// $detailText= null;
-// if(isset($_GET['id'])) {
-//   $note_id = $_GET['id'];
-//   $detail = $note->getNoteDetail($note_id);
-//   $detailText = $detail['note_text'];
-
-// } else {
-//   // Display all patients on the home page
-//   // ...
-// }
-
-////////////////////////
 $detailText = null;
 $detailID = null;
+
 if (isset($_POST["note_ID"])) {
   $note_id = $_POST['note_ID'];
   $detail = $note->getNoteDetail($note_id);
   $detailText = $detail['note_text'];
   $detailID = $detail['note_ID'];
-//   echo "<p class='alert alert-danger'>$note_id</p>";
 }
 
 $site_name = "iMed";
@@ -69,6 +48,7 @@ echo $twig->render(
     // "note_detail.html.twig",
     "index.html.twig",
     [
+        //Pass all variables to be used
         "page_title" => "View note",
         "site_name" => $site_name,
 

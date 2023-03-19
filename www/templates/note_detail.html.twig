@@ -5,9 +5,7 @@
 	{% include "partial/head.html.twig" %}
 	<body>
 		{% include "partial/navigation.html.twig" %}
-
 		<div class="container">
-
 			<ul class="nav nav-pills gap-3">
 				<li class="nav-item">
 					<a class="nav-link fw-bold active" aria-current="page" href="/">Home</a>
@@ -16,12 +14,9 @@
 					<a class="nav-link fw-bold linkUnset" href="/">Patients</a>
 				</li>
 			</ul>
-
 			<div class="container container-body px-5 py-5 my-3 shadow-sm rounded">
-				<p>{{ detail.note_text }}</p>
-				{# <p>{{ detailText }}</p> #}
+				<p>{{ detail.note_text }}</p>			
 			</div>
-
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}

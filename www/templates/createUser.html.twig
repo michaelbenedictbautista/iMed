@@ -11,7 +11,7 @@
 						<li class="nav-item">
 							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="userdashboard.php">Dashboard</a>
 						</li>
-
+						
 						<li class="nav-item">
 							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="createUser.php">
 								<strong class="text-primary">Create New User</strong>
@@ -21,14 +21,21 @@
 						<li class="nav-item">
 							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">Edit account</a>
 						</li>
+						
 						{% if user_level == 1 %}
 							<li class="nav-item">
-								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return confirm('Do you want to delete?')">Delete account</a>
+							</li>
+						{% endif %}
+
+						{% if user_level == 2 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="view_all_patient.php">View all patient</a>
 							</li>
 						{% endif %}
 
 						<li class="nav-item">
-							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" onclick="return confirm('Do you want to sign out?')" href="signout.php">Sign out</a>
 						</li>
 					</ul>
 				</div>
@@ -40,53 +47,45 @@
 								<label for="firstName" class="form-label">First name
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="firstName" id="firstName" onkeyup="userInput()" aria-label="First name" placeholder="John" required>
+								<input type="text" class="form-control" name="firstName" id="firstName" oninput="userInputValid()" aria-label="First name" placeholder="John" required>
 							</div>
 							<div class="col">
 								<label for="lastName" class="form-label">Last name
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="lastName" id="lastName" onkeyup="userInput()" aria-label="Last name" placeholder="Doe" required>
+								<input type="text" class="form-control" name="lastName" id="lastName" oninput="userInputValid()" aria-label="Last name" placeholder="Doe" required>
 							</div>
 						</div>
 						<div class="mb-3">
 							<label for="userName" class="form-label">User name
 								<span class="asterisk">*</span>
 							</label>
-							<input type="text" class="form-control" name="userName" id="userName" onkeyup="userInput()" placeholder="Enter user name here..." required>
+							<input type="text" class="form-control" name="userName" id="userName" oninput="userInputValid()" placeholder="Enter user name here..." required>
 						</div>
 						<div class="mb-3">
 							<label for="email" class="form-label">Email address
 								<span class="asterisk">*</span>
 							</label>
-							<input type="email" class="form-control" name="email" id="email" onkeyup="userInput()" aria-describedby="emailHelp" pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" title="must be a valid email address" placeholder="example@gmail.com" required>
+							<input type="email" class="form-control" name="email" id="email" oninput="userInputValid()" aria-describedby="emailHelp" pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" title="must be a valid email address" placeholder="example@gmail.com" required>
 						</div>
 						<div class="mb-3">
 							<label for="password" class="form-label">Password
 								<span class="asterisk">*</span>
 							</label>
-							<input type="password" class="form-control" name="password" id="password" onkeyup="userInput()" pattern="[A-Za-z0-9!@#$%^&*()-_=+{}'|,<.>/\?]{8,}" title="must be atleast 8 characters" placeholder="minimum 8 characters" required>
+							<input type="password" class="form-control" name="password" id="password" oninput="userInputValid()" pattern="[A-Za-z0-9!@#$%^&*()-_=+{}'|,<.>/\?]{8,}" title="must be atleast 8 characters" placeholder="minimum 8 characters" required>
 						</div>
 						<div class="mb-3">
 							<label for="contactNumber" class="form-label">Contact number
 								<span class="asterisk">*</span>
 							</label>
-							<input type="text" pattern="\d{1,12}" inputmode="numeric" class="form-control" name="contactNumber" id="contactNumber" onkeyup="userInput()" title="must contain digits only" placeholder="maximum 12 digits" required>
+							<input type="text" pattern="\d{6,12}" inputmode="numeric" class="form-control" name="contactNumber" id="contactNumber" oninput="userInputValid()" title="must contain digits only" placeholder="maximum 12 digits" required>
 						</div>
 
 						{% if user_level == 2 %}
-
-							{# <div class="mb-3">
-								<label for="profession" class="form-label">Profession
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control" name="profession" id="profession" onkeyup="userInput()" placeholder="doctor, nurse, pharmacist..." required>
-							</div> #}
-
 							<div class="mb-3">
 								<label for="profession" class="form-label">User profession</label>
 								<span class="asterisk">*</span>
-								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required>
+								<select class="custom-select form-control" name="profession" id="profession" oninput="userInputValid()" required>
 									<option value="">Please select profession...</option>
 									<option value="Doctor">Doctor</option>
 									<option value="Nurse">Nurse</option>
@@ -97,45 +96,31 @@
 								</select>
 							</div>
 
-
-							{# <div class="mb-3">
-								<label for="userLevel" class="form-label">User level</label>
-								<input type="text" class="form-control" name="userLevel" id="userLevel" onkeyup="userInput()" value="2" disabled>
-							</div> #}
-
-
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
-								<select class="custom-select form-control" name="userLevel" id="userLevel" onkeyup="userInput()" required disabled>
-									<option selected value="2">3 = Medical Practitioner</option>
-								</select>
+								<input type="text" class="form-control" name="userLevel" id="userLevel" oninput="userInputValid()" value="3" readonly>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name</label>
-								<input type="text" class="form-control" name="institutionName" id="institutionName" onkeyup="userInput()" value="{{user_ins_name}}" disabled>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" oninput="userInputValid()" value="{{user_ins_name}}" readonly>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionAddress" class="form-label">Institution address
 								</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" onkeyup="userInput()" value="{{user_ins_add}}" disabled>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" oninput="userInputValid()" value="{{user_ins_add}}" readonly>
 							</div>
 
 						{% elseif user_level == 1 %}
 
-							{# <div class="mb-3">
-								<label for="profession" class="form-label">Profession</label>
-								<input type="text" class="form-control" name="profession" id="profession" onkeyup="userInput()" value="admin" disabled>
-							</div> #}
-
 							<div class="mb-3">
 								<label for="profession" class="form-label">User profession</label>
 								<span class="asterisk">*</span>
-								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required>
-									<option value="">Please select profession...</option>
-									<option value="Administration">Administration</option>
+								<select class="custom-select form-control" name="profession" id="profession" oninput="userInputValid()" required>
+									<option value="">Please select profession...</option>								
 									<option value="Developer">Developer</option>
+									<option value="Administration">Administration</option>
 									<option value="Doctor">Doctor</option>
 									<option value="Nurse">Nurse</option>
 									<option value="Pathologist">Pathologist</option>
@@ -145,15 +130,10 @@
 								</select>
 							</div>
 
-							{# <div class="mb-3">
-								<label for="userLevel" class="form-label">User level</label>
-								<input type="text" class="form-control" name="userLevel" id="userLevel" onkeyup="userInput()" value="1" disabled>
-							</div> #}
-
 							<div class="mb-3">
 								<label for="userLevel" class="form-label">User level</label>
 								<span class="asterisk">*</span>
-								<select class="custom-select form-control" name="userLevel" id="userLevel" onkeyup="userInput()" required>
+								<select class="custom-select form-control" name="userLevel" id="userLevel" oninput="userInputValid()" required>
 									<option value="">Please select user level...</option>
 									<option value="1">1 = Developer</option>
 									<option value="2">2 = Administration</option>
@@ -161,25 +141,29 @@
 								</select>
 							</div>
 
+							<div id="otherInput" style="display:none;">
+								<label for="otherOption">Please specify:</label>
+								<input type="text" id="otherOption" name="otherOption">
+							</div>
+
 							<div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="institutionName" id="institutionName" onkeyup="userInput()" placeholder="Enter institution name here..." required>
+								<input type="text" class="form-control" name="institutionName" id="institutionName" oninput="userInputValid()" placeholder="Enter institution name here..." required>
 							</div>
 
 							<div class="mb-3">
 								<label for="institutionAddress" class="form-label">Institution address
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" onkeyup="userInput()" placeholder="Enter institution address here..." required>
+								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" oninput="userInputValid()" placeholder="Enter institution address here..." required>
 							</div>
 
 						{% endif %}
 
 						<div class="mb-3">
-							<label for="formFile" class="form-label">Choose your profile picture
-								{# <span class="asterisk">*</span> #}
+							<label for="formFile" class="form-label">Choose your profile picture								
 							</label>
 							<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
 						</div>
@@ -202,6 +186,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/createNewUser.js" defer></script>
+		<script type="text/javascript" src="js/createUser.js" defer></script>
 	</body>
 </html>

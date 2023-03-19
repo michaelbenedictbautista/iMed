@@ -31,6 +31,7 @@ class User extends Database
         WHERE user_level = ? ";
 
         try {
+            // Verify database connection
             $statement = $this->dbconnection->prepare($queryUser) or die($this->dbconnection->error);
             $statement->bind_param("i", $userDisplayLevel);
 
@@ -48,6 +49,7 @@ class User extends Database
                 return $accounts;
             }
         } catch (Exception $exc) {
+            // Handle errors
             $errors["system"] = $exc->getMessage();
             $accounts["success"] = false;
             $accounts["errors"] = $errors;

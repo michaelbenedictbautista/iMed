@@ -18,13 +18,15 @@ class Account extends Database
     // Create user account
     public function createUser($firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image, $insName, $insAdd)
     {
+        // Declaring variables
         $errors = array();
         $response = array();
 
-        $firstName = trim($firstName);
-        $lastName = trim($lastName);
+        $firstName = trim(strtolower($firstName));
+        $lastName = trim(strtolower($lastName));
         $userName = trim(strtolower($userName));
         $password = trim($password);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $contactNumber = trim($contactNumber);
         $email = trim(strtolower($email));
         $profession = trim(strtolower($profession));
@@ -87,7 +89,7 @@ class Account extends Database
                                 try {
                                     //$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                                     $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
-                                    $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
+                                    $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $hashedPassword, $contactNumber, $email, $profession, $userLevel, $image);
 
                                     // Execute query
                                     if (!$statementUser->execute()) {
@@ -98,6 +100,7 @@ class Account extends Database
                                         $response["ins_ID"] =  $ins_ID;
                                     }
                                 } catch (Exception $exc) {
+                                    // Handle errors
                                     $errors["system"] = $exc->getMessage();
                                     if ($this->dbconnection->errno == "1062") {
                                         $errors["account"] = "The email address already exists!";
@@ -135,7 +138,7 @@ class Account extends Database
                             try {
                                 //$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                                 $statementUser = $this->dbconnection->prepare($queryInsertUser) or die($this->dbconnection->error);
-                                $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image);
+                                $statementUser->bind_param("sssssssis", $firstName, $lastName, $userName, $hashedPassword, $contactNumber, $email, $profession, $userLevel, $image);
 
                                 // Execute query
                                 if (!$statementUser->execute()) {
@@ -207,7 +210,6 @@ class Account extends Database
                 } else {
                     $account_data = $result->fetch_assoc();
                     
-
                     // Check password
                     //  if ($password == $account_data["password"]) {
                      if (password_verify($password, $account_data["password"])) {           
@@ -233,6 +235,7 @@ class Account extends Database
                 }
             }
         } catch (Exception $exc) {
+            // Handle errors
             $errors["system"] = $exc->getMessage();
             $response["success"] = false;
             $response["errors"] = $errors;
@@ -248,8 +251,8 @@ class Account extends Database
         $errors = array();
         $response = array();
 
-        $firstName = trim($firstName);
-        $lastName = trim($lastName);
+        $firstName = trim(strtolower($firstName));
+        $lastName = trim(strtolower($lastName));
         $userName = trim(strtolower($userName));
         $password = trim($password);
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -279,8 +282,7 @@ class Account extends Database
                 throw new Exception("All fields are required!");
                 return false;
             } else {
-                //$hashedPassword = password_hash($user_pw, PASSWORD_DEFAULT);
-
+                
                 // Execute query
                 $query = "
                 UPDATE user         
@@ -327,6 +329,7 @@ class Account extends Database
                 return $response;
             }
         } catch (Exception $exc) {
+            // Handle errors
             $errors["system"] = $exc->getMessage();
             $response["success"] = false;
             $response["message"] = "Account cannot be updated";
@@ -345,6 +348,7 @@ class Account extends Database
         DELETE from user where user_id = ?";
 
         try {
+            // Verify database connection
             $statement = $this->dbconnection->prepare($query);
             $statement->bind_param("i", $user_id);
             if (!$statement->execute()) {
@@ -354,6 +358,7 @@ class Account extends Database
                 $response["message"] = "Account has been deleted!";
             }
         } catch (Exception $exc) {
+            // Handle errors
             $errors["system"] = $exc->getMessage();
             $response["success"] = false;
             $response["message"] = "account cannot be deleted";

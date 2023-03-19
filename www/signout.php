@@ -4,7 +4,7 @@ require("vendor/autoload.php");
 
 use imed\Session;
 
-// Unset variable after when user log out
+// Unset variables after when user log out
 $user_id = Session::unset("user_id");
 $user_lastName = Session::unset("user_lastName");
 $user_pw = Session::unset("user_pw");
@@ -29,6 +29,7 @@ echo $twig->render(
 
     "signin.html.twig",
     [
+        //Pass all variables to be used
         "user_id" => $user_id,
         "user_userName" => $user_userName,
         "user_pw" => $user_pw,

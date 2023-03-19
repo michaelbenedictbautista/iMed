@@ -28,15 +28,12 @@ if (Session::get('user_email') == null) {
   $user_ins_add = Session::get("user_ins_add");
 }
 
-// Instantiate Note class
+// Instantiate Note and display all notes dynamically
 $note = new Note();
 $notes = $note->getAllNotes();
 
 
 //  Convert text image into a new searchable text file
-// $ocr = new TesseractOCR('img/1.jpg');
-// echo $ocr->run();
-
 $fileRead = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -45,26 +42,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $file_name = $_FILES['file']['name'];
     $tmp_file = $_FILES['file']['tmp_name'];
 
+    // Rename the file
     $file_name = $user_id . '_' . time() . '_' . str_replace(array('!', "@", '#', '$', '%', '^', '&', ' ', '*', '(', ')', ':', ';', ',', '?', '/' . '\\', '~', '`', '-'), '_', strtolower($file_name));
 
     if (move_uploaded_file($tmp_file, 'img/uploads/' . $file_name)) {
       try {
 
-        // $fileRead = (new TesseractOCR('img/uploads/' . $file_name))       
-        //   ->setLanguage('eng')
-        //   ->run()
+        //TODO 
 
+        // Prepocessing of an image prior conversion
         $file = (new TesseractOCR('img/uploads/' . $file_name));
-        $fileLang = $file->setLanguage('eng');
-        $fileDPI = $file->dpi(300);
+        $file->config('convert_to_grayscale', 'true');
+        $file->config('image_resize', '1500');
+        $file->config('preserve_interword_spaces', 'true');
+        $file->config('language', 'eng');
+
+        // Read text to images
         $fileRead = $file->run();
-        //echo '<meta http-equiv="refresh" content="0">';
-        // header('Location: ' . $_SERVER['REQUEST_URI']);
-        // exit;
-
-
       } catch (Exception $e) {
-
+        //Handle error
         echo $e->getMessage();
       }
     } else {
@@ -72,43 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   }
 }
-
-////////////////////////
-// $detailText = null;
-// if (isset($_GET['id'])) {
-//   $note_id = $_GET['id'];
-//   $detail = $note->getNoteDetail($note_id);
-//   $detailText = $detail['note_text'];
-// } else {
-//   // Display all patients on the home page
-//   // ...
-// }
-
-
-////////////////////////
-// $detailText= null;
-// if(isset($_POST['submitBtnNote']) && isset($_POST['note_id'])) {
-//   $note_id = $_POST['note_id'];
-//   $detail = $note->getNoteDetail($note_id);
-//   $detailText = $detail['note_text'];
-
-// } else {
-//   // Display all patients on the home page
-//   // ...
-// }
-
-
-/////////////////
-// $detailText = null;
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//   $note_id = $_POST['submitBtn'];
-//   $detail = $note->getNoteDetail($note_id);
-//   $detailText = $detail['note_text'];
-//   echo "<p class='alert alert-danger'>$note_id</p>";
-// }
-
-
-
 
 
 $site_name = "iMed";
@@ -120,12 +79,11 @@ $twig = new Twig\Environment($loader, ["cache" => false]);
 echo $twig->render(
   "index.html.twig",
   [
+    // Pass all variables to be used
     "page_title" => "iMed",
     "site_name" => $site_name,
     "greeting" => "Welcome to iMed",
 
-
-    // Session after login
     "user_id" => $user_id,
     "user_userName" => $user_userName,
     "user_pw" => $user_pw,
@@ -141,7 +99,6 @@ echo $twig->render(
     "user_ins_add" => $user_ins_add,
 
     "notes" => $notes,
-    // "result" => $result,
     "fileRead" => $fileRead,
   ]
 );

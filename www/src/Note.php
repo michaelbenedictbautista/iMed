@@ -16,7 +16,7 @@ class Note extends Database
         $this->dbconnection = parent::getConnection();
     }
 
-    // Fetch data from note table our from database
+    // Fetch data from note table 
     public function getAllNotes()
     {
         $query = "
@@ -81,7 +81,7 @@ class Note extends Database
             VALUES (?, ?)";
 
         try {
-            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);        
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
             if (!$statement) {
                 throw new Exception("Database connection error!");
             }
@@ -103,25 +103,29 @@ class Note extends Database
     {
         $notes = array();
         $errors = array();
-        
+
         $query = "
             SELECT 
             note_ID,
             note_text,
             note.user_ID,
-            note.updated_date
+            note.updated_date,
+            user.first_name,
+            user.last_name,
+            user.profession
         
             FROM note
             INNER JOIN user
             ON  note.user_ID= user.user_ID
             WHERE note.note_ID = ?";
-            
+
         try {
+            // Verify database connection
             $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
             if (!$statement) {
                 throw new Exception("Database connection error!");
             }
-
+            // pass an argument to a parameter
             $statement->bind_param("i", $note_ID);
             if (!$statement->execute()) {
                 throw new Exception("Query execution error!");
@@ -131,6 +135,7 @@ class Note extends Database
                 return $detail;
             }
         } catch (Exception $exception) {
+            // Handle errors
             echo $exception->getMessage();
             $errors["system"] = $exception->getMessage();
             $notes["errors"] = $errors;

@@ -23,12 +23,18 @@
 
 						{% if user_level == 1 %}
 							<li class="nav-item">
-								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('do you want to delete Y/N')">Delete account</a>
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('Do you want to delete?')">Delete account</a>
+							</li>
+						{% endif %}
+
+						{% if user_level == 2 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="view_all_patient.php">View all patient</a>
 							</li>
 						{% endif %}
 
 						<li class="nav-item">
-							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="signout.php">Sign out</a>
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" onclick="return confirm('Do you want to sign out?')" href="signout.php">Sign out</a>
 						</li>
 					</ul>
 				</div>
@@ -60,20 +66,6 @@
 
 						{% endfor %}
 					</div>
-
-					{# <p>
-						{{user_id}}
-						<br>
-						{{user_email}}
-						<br>
-						{{user_userName}}
-						<br>
-						{{user_ins_ID}}
-						<br>
-						{{user_ins_add}}
-
-					</p> #}
-					<button style="width:100%; padding:5px; margin-top: 50px;">Test button</button>
 				</div>
 			</div>
 		</div>

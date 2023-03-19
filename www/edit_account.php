@@ -3,7 +3,6 @@
 require("vendor/autoload.php");
 
 use imed\Session;
-use imed\Account;
 
 // Session class
 if (Session::get('user_email') == null) {
@@ -33,10 +32,10 @@ $twig = new Twig\Environment($loader, ["cache" => false]);
 echo $twig->render(
     "edit_account.html.twig",
     [
+        //Pass all variables to be used
         "page_title" => "Edit account",
         "site_name" => $site_name,
-
-        // Session after login
+        
         "user_id" => $user_id,
         "user_userName" => $user_userName,
         "user_pw" => $user_pw,

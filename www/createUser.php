@@ -8,19 +8,6 @@ use imed\Account;
 $account = new Account();
 $result = null;
 
-$user_id = null;
-$user_userName = null;
-$user_pw = null;
-$user_firstName = null;
-$user_lastName = null;
-$user_contact = null;
-$user_email = null;
-$user_profession = null;
-$user_level = null;
-$user_image = null;
-$user_ins_name = null;
-$user_ins_add = null;
-
 // Session class
 $user_email = null;
 
@@ -55,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_user_ins_name = trim(strtolower($_POST["institutionName"]));
     $new_user_ins_add = trim(strtolower($_POST["institutionAddress"]));
 
-    
+
     // $file = $_FILES['formFile'];
     // $fileName = $file['name'];
     // $fileSize = $file['size'];
@@ -64,41 +51,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Declare the values for update a thumbnail
     $file = $_FILES['formFile'];
+    $tmp_file = $_FILES['formFile']['tmp_name'];
     $fileName = $file['name'];
     $fileError = $file['error'];
 
-
     // Check the fileName
     if (!empty($fileName)) {
-        // Find "." and separate into the array ---------
+        // Find "." and separate into the array 
         $fileExt = explode('.', $fileName);
-        // Find the last element in the array -> make it lower case ---------
+        // Find the last element in the array -> make it lower case 
         $fileActualExt = strtolower(end($fileExt));
         // make array to accept file type ---------
         $fileAllowed = array('jpg', 'jpeg', 'png');
-        // Check the condition ---------
+        // Check the condition 
         if (in_array($fileActualExt, $fileAllowed)) {
             // Check for error
             if ($fileError === 0) {
-                // Change the file name as "fileName + . + Uniqid" ---------
-                //$fileNameNew = uniqid('', true) . "." . $fileName;
 
-                // Destination folder ---------
-                //$fileDestination = 'img/user/' . $fileNameNew;
-                $fileDestination = 'img/user/' . $fileName;
-                move_uploaded_file($fileName, $fileDestination);
+                // Rename the file
+                $fileName = $user_id . '_' . time() . '_' . str_replace(array('!', "@", '#', '$', '%', '^', '&', ' ', '*', '(', ')', ':', ';', ',', '?', '/' . '\\', '~', '`', '-'), '_', strtolower($fileName));
 
-                // Insert the data
-                //$firstName, $lastName, $userName, $password, $contactNumber, $email, $profession, $userLevel, $image, $insName, $insAdd
-                $result = $account->createUser($new_user_firstName, $new_user_lastName, $new_user_userName, $new_user_pw, $new_user_contact, $new_user_email, $new_user_profession, $new_user_level, $fileName, $new_user_ins_name, $new_user_ins_add);
+                // Save file to folder
+                if (move_uploaded_file($tmp_file, 'img/user/' . $fileName)) {
+                    try {
+                        // Insert the data
+                        $result = $account->createUser($new_user_firstName, $new_user_lastName, $new_user_userName, $new_user_pw, $new_user_contact, $new_user_email, $new_user_profession, $new_user_level, $fileName, $new_user_ins_name, $new_user_ins_add);
 
-                header('Location: userdashboard.php');
+                        echo "<script>
+                        alert('User added successfully!');
+                        window.location.href='userdashboard.php';
+                        </script>";
+                    } catch (Exception $e) {
+
+                        echo $e->getMessage();
+                    }
+                } else {
+                    echo "<p class='alert alert-danger'>Choose file to upload.</p>";
+                }
+            } else {
+                echo "<script>
+                alert('Error adding new user!');
+                window.location.href='userdashboard.php';
+                </script>";
             }
         }
     } else {
         $fileName = "default.jpg";
         $result = $account->createUser($new_user_firstName, $new_user_lastName, $new_user_userName, $new_user_pw, $new_user_contact, $new_user_email, $new_user_profession, $new_user_level, $fileName, $new_user_ins_name, $new_user_ins_add);
-        header('Location: userdashboard.php');
+        echo "<script>
+            alert('User added successfully!');
+            window.location.href='userdashboard.php';
+            </script>";
     }
 }
 
@@ -113,10 +116,10 @@ echo $twig->render(
 
     "createUser.html.twig",
     [
+        // Pass all variables to be used
         "page_title" => "Create New User",
         "site_name" => $site_name,
-
-        // Session after login. Setting user accountdata
+       
         "result" => $result,
         "user_id" => $user_id,
         "user_userName" => $user_userName,

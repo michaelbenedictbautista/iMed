@@ -33,6 +33,7 @@ $note = new Note();
 $result =  null;
 $newNote = null;
 
+// Verify post method and user email address
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
     $newNote = trim($_POST["addingNote"]);
     $result = $note->addNote($newNote, $user_id);
@@ -41,15 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
     alert('Note added successfully!');
     window.location.href='index.php';
     </script>";
-
-    header('Location: index.php');
+   
 } else {
     echo "<script>
     alert('Error occured during execution!);
     window.location.href='index.php';
     </script>";
 
-    header('Location: index.php');
 }
 
 $site_name = "iMed";
@@ -62,6 +61,7 @@ echo $twig->render(
 
     "index.html.twig",
     [
+        // Pass variables to be used
         "user_id" => $user_id,
         "user_email" => $user_email,
         "result" => $result,

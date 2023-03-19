@@ -39,7 +39,6 @@ $items = $user->getAllUser($userDisplayLevel);
 $account = new Account();
 $result =  null;
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
 
     //Unset account data
@@ -69,12 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     //$user_image = $_POST["formFile"];
     $user_ins_name = trim(strtolower($_POST["institutionName"]));
     $user_ins_add = trim(strtolower($_POST["institutionAddress"]));
-
-    // $file = $_FILES['formFile'];
-    // $fileName = $file['name'];
-    // $fileSize = $file['size'];
-    // $fileError = $file['error'];
-    // $fileType = $file['type'];
 
     // Declare the values for update a thumbnail
     $file = $_FILES['formFile'];
@@ -113,10 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
         header('Location: userdashboard.php');
     }
     
-
-    // $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
-
-
     // Set account data
     Session::set("user_userName", $user_userName);
     Session::set("user_pw", $user_pw);
@@ -147,6 +136,7 @@ $twig = new Twig\Environment($loader, ["cache" => false]);
 echo $twig->render(
     "userdashboard.html.twig",
     [
+        //Pass all variables to be used
         "page_title" => "User dashboard",
         "site_name" => $site_name,
 

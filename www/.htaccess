@@ -1,0 +1,5 @@
+# Database Credentials
+SetEnv dbuser iMed
+SetEnv dbpass iMed12345!
+SetEnv dbname iMed
+SetEnv dbhost db

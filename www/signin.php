@@ -24,7 +24,6 @@ $user_ins_add = null;
 
 
 // Set variable after successful log in
-//if ($_SERVER["REQUEST_METHOD"] == "POST")
 if (isset($_POST['signin'])) {
     $user_email = $_POST["email"];
     $user_pw = $_POST["password"];
@@ -64,10 +63,10 @@ echo $twig->render(
 
     "signin.html.twig",
     [
+        //Pass all variables to be used
         "page_title" => "Sign in",
         "site_name" => $site_name,
 
-        // Session after login. Setting user accountdata
         "result" => $result,
         "user_id" => $user_id,
         "user_userName" => $user_userName,
@@ -82,6 +81,5 @@ echo $twig->render(
         "user_ins_ID" => $user_ins_ID,
         "user_ins_name" => $user_ins_name,
         "user_ins_add" => $user_ins_add,
-
     ]
 );

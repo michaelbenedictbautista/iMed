@@ -54,6 +54,7 @@ echo $twig->render(
 
     "signin.html.twig",
     [
+        //Pass all variables to be used
         "user_id" => $user_id,
         "user_userName" => $user_userName,
         "user_pw" => $user_pw,

@@ -6,13 +6,10 @@ class Session
 {
     public static function init()
     {
+        // Verify if there is an existing session if none, implement session start()
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
-        }
-
-        // if (!isset($_SESSION)) {
-        //     session_start();
-        // }
+        }       
     }
 
     // Getters, setters and unset
@@ -25,8 +22,6 @@ class Session
     public static function get($name)
     {
         self::init();
-        // // if ? else : ---------
-        // return $_SESSION[$name] ? $_SESSION[$name] : null;
 
         if (isset($_SESSION[$name])) {
             $_SESSION[$name] = $_SESSION[$name];

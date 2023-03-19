@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+		<div class="container container-body px-5 py-5 shadow-lg rounded">
+			<div class="row">
+				<div class="col-md-2 side-container">
+					<ul class="nav flex-column">
+
+                         <li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="userdashboard.php">Dashboard</a>				
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="createUser.php">Create new user</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" href="edit_account.php">Edit account</a>
+						</li>
+
+						{% if user_level == 1 %}
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="delete.php" onclick="return  confirm('Do you want to delete?')">Delete account</a>
+							</li>
+						{% endif %}
+
+						{% if user_level == 2 %}
+
+							<li class="nav-item">
+								<a class="nav-link active text-reset" style="margin-left: -1rem;" href="view_all_patient.php">
+                                    <strong class="text-primary">View all patient</strong>
+                                </a>
+							</li>
+						{% endif %}
+
+						<li class="nav-item">
+							<a class="nav-link active text-reset" style="margin-left: -1rem;" onclick="return confirm('Do you want to sign out?')" href="signout.php">Sign out</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-10 main-container text-left">
+					<h1 class="text-center mb-5">View All Patient</h1>
+					
+					<div class="d-grid">
+						<button type="button" name="add-note-btn" class="btn btn-primary btn-lg mt-5" id="add-note-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+							<strong>Add New patient</strong>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+	</body>
+</html>
