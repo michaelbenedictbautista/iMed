@@ -55,6 +55,21 @@
 //     }));
 // });
 
+
+
+// searchBtn.addEventListener('click', function(event) {
+//   // Prevent the default form submission behavior
+//   event.preventDefault();
+
+//   // Disable the submit button
+//   submitBtn.disabled = true;
+
+//   // Do some processing, e.g. sending an AJAX request
+
+//   // Re-enable the submit button
+//   submitBtn.disabled = false;
+// });
+
 var imageInput = document.getElementById('imageInput');
   var previewImage = document.getElementById('previewImage');
   imageInput.addEventListener('change', function() {
@@ -81,6 +96,8 @@ var imageInput = document.getElementById('imageInput');
     };
     xhr.send(new FormData(imageUploadForm));
   });
+
+  
 
 
 

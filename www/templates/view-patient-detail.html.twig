@@ -1,0 +1,119 @@
+<!doctype html>
+<html
+	lang="en">
+	<!-- Calling method head.html.twig-->
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+
+		<div class="container">
+			<ul class="nav nav-pills gap-3 mb-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+				</li>
+			</ul>
+
+			<!-- List of Patient -->
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+				<div class="row justify-content-between align-items-center">
+					<div class="col-2">
+						<img src="img/patient/{{ patientDetail.patient_image}}" class="img-fluid rounded overflow-hidden" id="patient-image" style="max-width:100%; height: auto;" alt="patient image">
+					</div>
+					<div class="col-4 mt-3">
+						<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}}
+							{{ patientDetail.last_name }}</p>
+						<span class="nav-text text-capitalize">
+							DOB:
+							{{ patientDetail.date_of_birth | date("d F Y")}}
+							| Age:
+							{{ patientDetail.age }}
+						</span><br>
+						<span class="text-capitalize">
+							Allergies:
+							{{ patientDetail.allergy }}
+						</span><br>
+						<span class="text-capitalize">
+							Emergency response:
+							{{ patientDetail.emergency_response }}
+						</span><br>
+						<span class="text-capitalize">
+							Status:
+							{{ patientDetail.status }}
+						</span>
+					</div>
+
+					<div class="col-6  mt-3">
+						<p class="fst-italic text-end text-capitalize">Room
+							{{ patientDetail.room }}
+							{{ patientDetail.ins_name }}</p>
+						<p class="fst-italic text-end">Status
+							{{ patientDetail.status }}</p>
+					</div>
+				</div>
+			</div>
+
+			<!--Other usefult links regarding patient's information -->
+			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" href="/">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" aria-current="page" href="patient.php">Progress</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" aria-current="page" href="patient.php">Vital Signs</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" aria-current="page" href="patient.php">Medication</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" aria-current="page" href="patient.php">Medical records</a>
+				</li>
+			</ul>
+
+			<!--Other usefult links regarding patient's information -->
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+				<div class="row justify-content-between">
+					<div class="col-2 d-block">
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Gender:</span>
+						</p>
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Medicare number:</span>
+						</p>
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Doctor name:</span>
+						</p>
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Diagnosis:</span>
+						</p>
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Diagnosis:</span>
+						</p>
+						<p class="text-end" id="gender">
+							<span class="fw-bold">Diet:</span>
+						</p>
+					</div>
+					<div class="col-4">
+						<p>
+							{{patientDetail.gender}}</p>
+					</div>
+
+					<div class="col-6">
+						<p class="fst-italic text-end text-capitalize">Room
+							{{ patientDetail.room }}
+							{{ patientDetail.ins_name }}</p>
+						<p class="fst-italic text-end">Status
+							{{ patientDetail.status }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script type="text/javascript" src="js/patient_v1.js" defer></script>
+	</body>
+</html>

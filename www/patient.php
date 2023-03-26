@@ -24,8 +24,15 @@ if (Session::get('user_email') == null) {
     $user_ins_add = Session::get("user_ins_add");
 }
 
+// Display patient
 $patient = new Patient();
 $patients = $patient->getAllPatients();
+$notFoundMessage = null;
+
+// Display patient by search name
+$searchedName = null;
+$search_result_count = null;
+$search_result = null;
 
 $site_name = "iMed";
 
@@ -55,5 +62,9 @@ echo $twig->render(
         "user_ins_add" => $user_ins_add,
 
         "patients" => $patients,
+        "search_result" => $search_result,
+        "search_result_count" => $search_result_count,
+        "notFoundMessage" => $notFoundMessage,
+
     ]
 );

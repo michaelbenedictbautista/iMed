@@ -7,7 +7,7 @@
 		{% include "partial/navigation.html.twig" %}
 
 		<div class="container">
-			<ul class="nav nav-pills gap-3">
+			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
 					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
 				</li>
@@ -15,37 +15,87 @@
 					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
 				</li>
 			</ul>
-			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded" style="background-color: gray; color:white">
-				<div class="row justify-content-between">
+
+			<!-- Search and Status option -->
+			<form id="patientSearchAndStatus" method="post" action="patient_search_result.php">
+				<div class="row justify-content-between my-3">
+					<div class="col-6">
+						<label for="seacrh" class="form-label fw-bold">Patient name</label>
+						<div class="input-group mb-3" id="searchBoxAndButton">
+							<input type="text" class="form-control" name="inputName" id="inputName" placeholder="Search patient here..." aria-label="Patient's name" aria-describedby="Type patient's name here">
+							<button class="btn btn-secondary" type="submit" name="searchBtn" id="searchBtn" disabled>Search</button>
+						</div>
+					</div>
+					<div class="col-3">
+						<label for="status" class="form-label fw-bold">Status</label>
+						<div class="input-group">
+							<select
+								class="form-select" name="statusSelected" aria-label="status">
+								{# <option selected>Choose...</option> #}
+								<option value="all">All</option>
+								<option value="active" selected>Active</option>
+								<option value="deceased">Deceased</option>
+								<option value="discharged">Discharged</option>
+								<option value="transferred">Transferred</option>
+								<option value="wait listed">Wait listed</option>
+							</select>
+							<button class="btn btn-primary" type="submit" name="statusBtn" id="statusBtn">Search</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<!-- Error found message -->
+			{% if notFoundMessage | length > 0 %}
+				<p class="alert alert-warning" style="display:flex">{{notFoundMessage}}</p>
+
+			{% else  %}
+				<p class="alert alert-warning" style="display:none">{{notFoundMessage}}</p>
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded" style="background-color: gray; color:white">
+					<div class="row justify-content-between">
 						<div class="col-9">
 							<p class="fw-bold " id="patient-name">Patients</p>
 						</div>
 						<div class="col-3">
-							<p class="fw-bold text-end">Room</p>					
+							<p class="fw-bold text-end">Room</p>
 						</div>
+					</div>
 				</div>
-			</div>
+
+			{% endif  %}
+
+			<!-- List of all Patients -->
 			{% for patient in patients.items %}
-			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
-				<div class="row justify-content-between">					
-					<div class="col-2">
-						<img src="img/patient/{{ patient.patient_image}}" class="img-fluid rounded overflow-hidden" style="height:100px;" alt="patient image">
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-2">
+							<img src="img/patient/{{ patient.patient_image}}" class="img-fluid rounded overflow-hidden" style="max-width:100%; max-height: 100px; height: auto;" alt="patient image">
+						</div>
+						<div class="col-4 mb-3">
+							<p class="fw-bold fs-5 text-capitalize">{{ patient.first_name}}
+								{{ patient.last_name }}</p>
+							<span class="navbar-text text-capitalize">
+								DOB:
+								{{ patient.date_of_birth | date("d F Y")}}
+								| Age:
+								{{ patient.age }}
+							</span>
+						</div>
+
+						<div class="col-6 mt-3">
+							<p class="fst-italic text-end">Room
+								{{ patient.room }}
+								{{ patient.ins_name }}</p>
+							<p class="text-end">
+								<form action="view-patient-detail.php" method="POST">
+									<input type="hidden" name="patient_ID" value="{{patient.patient_ID}}">
+									<p class="text-end">
+										<button class="btn btn-primary" type="submit">View</button>
+									</p>
+								</form>
+							</p>
+						</div>
 					</div>
-					<div class="col-4">
-						<p class="fw-bold fs-5 text-capitalize" id="patient-name">{{ patient.first_name}} {{ patient.last_name }}</p>
-						<span class="navbar-text text-capitalize">
-							DOB: {{ patient.date_of_birth | date("d F Y")}} | Age: {{ patient.age }}
-						</span>
-					</div>
-					
-					<div class="col-6">
-						<p class="fst-italic text-end">Room {{ patient.room }} {{ patient.ins_name }}</p>
-						<p class="text-end">								
-						<button id='{{patient.patient_ID}}'  class='btn btn-primary patientDetailBtn'>View</button>					
-						</p>
-					</div>
-				</div>
-			
 				</div>
 			{% endfor %}
 
@@ -57,5 +107,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
+		<script type="text/javascript" src="js/patient_v1.js" defer></script>
 	</body>
 </html>

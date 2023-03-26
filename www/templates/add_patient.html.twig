@@ -4,14 +4,17 @@
 	<body>
 		{% include "partial/navigation.html.twig" %}
 		<div class="container">
-			<ul class="nav nav-pills gap-3">
-				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
-				</li>
-			</ul>
+			
+			
+				<ul class="nav nav-pills gap-3 mb-5">
+					<li class="nav-item">
+						<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+					</li>
+				</ul>
+			
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
 				<h1 class="text-center mb-5">Add new patient</h1>
 				<form id="createPatient" method="post" action="add_patient.php" enctype="multipart/form-data">
@@ -44,7 +47,7 @@
                     <div class="mb-3">
                         <label for="gender" class="form-label">Gender</label>
                         <span class="asterisk">*</span>
-                        <select class="custom-select form-control" name="gender" id="gender" required>
+                        <select class="form-select" name="gender" id="gender" required>
                             <option value="">Please select gender...</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -55,7 +58,7 @@
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <span class="asterisk">*</span>
-                        <select class="custom-select form-control" name="status" id="status" required>
+                        <select class="form-select" name="status" id="status" required>
                             <option value="">Please select status...</option>
                             <option value="Active">Active</option>
                             <option value="Deceased">Deceased</option>
@@ -68,7 +71,7 @@
                     <div class="mb-3">
                         <label for="er_response" class="form-label">Emergency response</label>
                         <span class="asterisk">*</span>
-                        <select class="custom-select form-control" name="er_response" id="er_response" required>
+                        <select class="form-select" name="er_response" id="er_response" required>
                             <option value="">Please select emergency response...</option>
                             <option value="for resuscitation">For Resuscitation</option>
                             <option value="not for resuscitation">Not For Resuscitation</option>
@@ -113,6 +116,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/patient.js" defer></script>	
+		<script type="text/javascript" src="js/patient_v1.js" defer></script>	
 	</body>
 </html>
