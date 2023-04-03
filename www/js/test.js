@@ -70,6 +70,99 @@
 //   submitBtn.disabled = false;
 // });
 
+
+
+
+// When the user submits the form in the modal
+// $('#modal-form').on('submit', function(event) {
+//   event.preventDefault(); // prevent the form from submitting normally
+
+//   // Get the data from the form
+//   var patientId = $('#patient-id').val();
+//   var additionalInfo = $('#additional-info').val();
+
+//   // Send an AJAX request to the PHP endpoint
+//   $.ajax({
+//       url: 'save-additional-info.php',
+//       type: 'POST',
+//       data: {
+//           patient_id: patientId,
+//           additional_info: additionalInfo
+//       },
+//       success: function(response) {
+//           // Update the patient's profile page with the new information
+//           $('#patient-info').text(response);
+//           // Hide the modal
+//           $('#modal').modal('hide');
+//       },
+//       error: function(xhr, status, error) {
+//           // Handle the error
+//           alert('An error occurred: ' + error);
+//       }
+//   });
+// });
+
+
+
+// $(document).ready(function() {
+//   // Handle form submission
+//   $("#addProfileForm").submit(function(e) {
+//     e.preventDefault(); // Prevent default form submission
+
+//     // Get form data
+//     var formData = $(this).serialize();
+
+//     // Send AJAX request
+//     $.ajax({
+//       url: "add-medical-profile.php",
+//       type: "POST",
+//       data: formData,
+//       success: function(response) {
+//         // Handle successful response
+//         console.log(response);
+//         $("#addProfileModal").modal("hide"); // Hide the modal
+//       },
+//       error: function(xhr, status, error) {
+//         // Handle error response
+//         console.log(xhr.responseText);
+//       }
+//     });
+//   });
+// });
+
+
+// if (document.getElementById('successfulMessage').style.display == 'flex') {
+//   setTimeout(function() {
+//     document.getElementById('successfulMessage').style.display = 'none';
+// }, 2000);
+// }
+
+  
+// const successfulMessage = document.getElementById('successfulMessage');
+// setTimeout(function() {
+//   successfulMessage.style.display = 'none';
+// }, 2000);
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   const successfulMessage = document.getElementById('successfulMessage');
+//   setTimeout(function() {
+//       successfulMessage.style.display = 'none';
+//   }, 2000);
+// });
+
+
+// // function for passing data without refreshing the page
+// $(document).ready(function() {
+//   $('.viewMedProviderBtn').click(function() {
+//       patient_id = $(this).attr('id')
+//       alert(patient_id)
+//   })
+// });
+
+
+
+
 var imageInput = document.getElementById('imageInput');
   var previewImage = document.getElementById('previewImage');
   imageInput.addEventListener('change', function() {

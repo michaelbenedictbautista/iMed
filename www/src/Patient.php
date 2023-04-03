@@ -363,4 +363,90 @@ class Patient extends Database
             return false;
         }
     }
+
+    // Add Medical provider function
+    public function addMedicalProvider($mp_name, $med_number, $patient_ID, $user_ID)
+    {
+        $patients = array();
+        $errors = array();
+
+        $query = "
+            INSERT INTO patient_medical_provider (mp_name, med_number, patient_ID, user_ID)
+            VALUES (?, ?, ?, ?)";
+
+        try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+
+            $statement->bind_param("ssii", $mp_name, $med_number, $patient_ID, $user_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $patients["success"] = true;
+                return true;
+            }
+        } catch (Exception $exception) {
+            $errors["system"] = $exception->getMessage();
+            $patients["success"] = false;
+            $patients["message"] = "Medical provider cannot be added!";
+            $patients["errors"] = $errors;
+        }
+        return $patients;
+    }
+
+    // Get note's details
+    public function getProviderDetail($patient_ID)
+    {
+        $providers = array();
+        $errors = array();
+
+        $query = "
+            SELECT 
+            mp_ID,
+            mp_name,
+            med_number,
+            patient_medical_provider.patient_ID,
+            patient_medical_provider.user_ID,
+            patient_medical_provider.updated_date,
+
+            patient.patient_ID,
+
+            user.first_name,
+            user.last_name,
+            user.profession
+        
+            FROM patient_medical_provider
+            INNER JOIN patient
+            ON patient_medical_provider.patient_ID = patient.patient_ID
+            INNER JOIN user
+            ON  patient_medical_provider.user_ID= user.user_ID
+            WHERE patient_medical_provider.patient_ID = ?
+            ORDER BY patient_medical_provider.updated_date DESC";
+
+        try {
+            // Verify database connection
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+            // pass an argument to a parameter
+            $statement->bind_param("i", $patient_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $result = $statement->get_result();
+                $detail = $result->fetch_assoc();
+                return $detail;
+            }
+        } catch (Exception $exception) {
+            // Handle errors
+            echo $exception->getMessage();
+            $errors["system"] = $exception->getMessage();
+            $providers["errors"] = $errors;
+            return false;
+        }
+        return $providers;
+    }
 }

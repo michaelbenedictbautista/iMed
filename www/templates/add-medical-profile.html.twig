@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+		<div class="container">
+
+
+			<ul class="nav nav-pills gap-3 mb-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+				</li>
+			</ul>
+
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
+				<h1 class="text-center mb-5">Add new medical profile</h1>
+				<form id="createPatient" method="post" action="add_patient.php" enctype="multipart/form-data">
+					<div class="mb-3">
+						<label for="medNumber" class="form-label">Medicare number</label>
+						<input type="text" class="form-control" name="medNumber" id="medNumber" aria-label="medicare number" placeholder="Enter medicare number here...">
+					</div>
+                    <div class="mb-3">
+						<label for="docName" class="form-label">Doctor or General Practioner name</label>
+						<input type="text" class="form-control" name="docName" id="docName" aria-label="doctor name" placeholder="Enter doctor's name here.">
+					</div>
+					<div class="mb-3">
+						<label for="diagnosis" class="form-label">diagnosis</label>
+						<input type="text" class="form-control" name="diagnosis" id="diagnosis" aria-label="diagnosis" placeholder="Enter diagnosis here. Separate with comma if more than one...">
+					</div>
+
+					<div class="mb-3">
+						<label for="diet" class="form-label">Diet</label>
+						<input type="text" class="form-control" name="diet" id="diet" aria-label="diet" placeholder="Enter diet here. Separate with comma if more than one...">
+					</div>
+
+					<div class="mb-3">
+						<label for="status" class="form-label">Status</label>
+						<span class="asterisk">*</span>
+						<select class="form-select" name="status" id="status" required>
+							<option value="">Please select status...</option>
+							<option value="Active">Active</option>
+							<option value="Deceased">Deceased</option>
+							<option value="Discharged">Discharged</option>
+							<option value="Transferred">Transferred</option>
+							<option value="Wait listed">Wait listed</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label for="er_response" class="form-label">Emergency response</label>
+						<span class="asterisk">*</span>
+						<select class="form-select" name="er_response" id="er_response" required>
+							<option value="">Please select emergency response...</option>
+							<option value="for resuscitation">For Resuscitation</option>
+							<option value="not for resuscitation">Not For Resuscitation</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label for="allergy" class="form-label">Allergy</label>
+						<input type="text" class="form-control" name="allergy" id="allergy" placeholder="Enter known allergy here or leave it blank if none...">
+					</div>
+
+					<div class="mb-3">
+						<label for="room" class="form-label">Room</label>
+						<input type="text" class="form-control" name="room" id="room" placeholder="Enter room information...">
+					</div>
+
+
+					<div class="mb-3">
+						<label for="filechoose" class="form-label">Choose File</label>
+						<input type="file" name="file" class="form-control" type="file" id="filechoose">
+					</div>
+					{% set outcome = resultCreated.errors | join(", ") %}
+					<button type="submit" name="submit" class="btn btn-primary mt-3" id="add-patient-btn">Add</button>
+
+					<a href="patient.php">
+						<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
+					</a>
+
+					{% if outcome | length > 0 %}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							{{ outcome }}
+							<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						</div>
+					{% endif %}
+				</form>
+			</div>
+
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script type="text/javascript" src="js/patient_v3.js" defer></script>
+	</body>
+</html>

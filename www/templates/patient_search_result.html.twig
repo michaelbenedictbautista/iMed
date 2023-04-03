@@ -129,7 +129,7 @@
 								<p class="fst-italic text-end">Room
 									{{ item.room }}
 									{{ item.ins_name }}</p>
-								<form action="view-patient-detail.php" method="POST">
+								<form action="view-patient-profile.php" method="POST">
 									<input type="hidden" name="patient_ID" value="{{item.patient_ID}}">
 									<p class="text-end">
 										<button class="btn btn-primary" type="submit">View</button>
@@ -164,6 +164,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/patient_v1.js" defer></script>
+		<script type="text/javascript" src="js/patient_v3.js" defer></script>
 	</body>
 </html>

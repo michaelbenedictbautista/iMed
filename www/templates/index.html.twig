@@ -6,7 +6,7 @@
 	<body>
 		{% include "partial/navigation.html.twig" %}
 
-		<div class="container">	
+		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
 					<a class="nav-link fw-bold active" aria-current="page" href="/">Home</a>
@@ -17,12 +17,12 @@
 			</ul>
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded" style="background-color: gray; color:white">
 				<div class="row justify-content-between">
-						<div class="col-9">
-							<p class="fw-bold " id="patient-name">Notes</p>
-						</div>
-						<div class="col-3">
-							<p class="fw-bold text-end">Date</p>					
-						</div>
+					<div class="col-9">
+						<p class="fw-bold " id="patient-name">Notes</p>
+					</div>
+					<div class="col-3">
+						<p class="fw-bold text-end">Date</p>
+					</div>
 				</div>
 			</div>
 
@@ -40,8 +40,8 @@
 						</div>
 						<div class="col-3">
 							<p class="fst-italic text-end">{{ note.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}</p>
-							<p class="text-end">					
-								<button id='{{note.note_ID}}'  class='btn btn-primary noteDetailBtn'>View</button>
+							<p class="text-end">
+								<button id='{{note.note_ID}}' class='btn btn-primary noteDetailBtn'>View</button>
 							</p>
 						</div>
 					</div>
@@ -62,11 +62,11 @@
 					<form id="addNote" method="post" action="add_note.php">
 						<div class="modal-content">
 							<div class="modal-header">
+								<h5 class="modal-title" id="addProfileModalLabel">Add note</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<div class="form-group">
-									<label for="addingNote">Notes</label>
+								<div class="form-group mb-3">
 									<textarea type="text" rows="3" class="form-control mt-3" placeholder="Leave a note here" name="addingNote" id="addingNote" onkeyup="noteInput()" required style="height: 400px; "></textarea>
 								</div>
 							</div>
@@ -90,35 +90,35 @@
 
 			<!--View note-->
 			<div class="modal fade" id="viewNoteModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-				<div
-					class="modal-dialog">
-					
+				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modal-title"></h5>
-							<h4 id="viewingTitle" class="text-capitalize"></h4>			
+							<h5 class="modal-title" id="modal-title">View note detail</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">						
-							<h1 id="viewingNote"></h1>												
+						<div class="modal-body">
+							<p class="fw-bold fs-5 mb-3" id="viewingNote"></p>
+							<span class="navbar-text text-capitalize" id="viewingSource"></span>
+							
 						</div>
 						<div class="modal-footer justify-content-between">
-							<p id="viewingDate" class="fst-italic"></p>
-							<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+							<p class="fst-italic" id="viewingDate"></p>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 
-			<hr class="my-4">
-			
+			<hr
+			class="my-4">
+
 			<!-- Read text from images OCR -->
 			<div class="row mt-5">
 				<div class="col-sm-8 mx-auto">
 					<div class="read-text">
 						<h1 class="display-4">Read Text from Images</h1>
-					<p>{{fileRead}}</p>
+						<p>{{fileRead}}</p>
 					</div>
 				</div>
 			</div>
@@ -141,6 +141,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/index.js"></script>
+		<script src="js/index_v2.js"></script>
 	</body>
 </html>

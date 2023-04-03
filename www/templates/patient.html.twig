@@ -32,8 +32,8 @@
 							<select
 								class="form-select" name="statusSelected" aria-label="status">
 								{# <option selected>Choose...</option> #}
-								<option value="all">All</option>
-								<option value="active" selected>Active</option>
+								<option value="all" selected>All</option>
+								<option value="active">Active</option>
 								<option value="deceased">Deceased</option>
 								<option value="discharged">Discharged</option>
 								<option value="transferred">Transferred</option>
@@ -83,30 +83,43 @@
 						</div>
 
 						<div class="col-6 mt-3">
-							<p class="fst-italic text-end">Room
-								{{ patient.room }}
+							<p class="fst-italic text-end text-capitalize">Room
+								{{ patient.room }} | 
 								{{ patient.ins_name }}</p>
-							<p class="text-end">
-								<form action="view-patient-detail.php" method="POST">
+							<p class="text-end ">
+								{# <form action="view-patient-detail.php" method="POST">
 									<input type="hidden" name="patient_ID" value="{{patient.patient_ID}}">
 									<p class="text-end">
 										<button class="btn btn-primary" type="submit">View</button>
 									</p>
-								</form>
+								</form> #}
+								<p class="text-end">						
+									<a class="btn btn-primary" href="view-patient-profile.php?patient_ID={{patient.patient_ID}}">View</a>
+								</p>
 							</p>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 
+			{% if user_level == 2 %}
 			<div class="d-grid">
 				<a href="add_patient.php" type="button" name="add-patient-btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
 					<strong>Add new patient</strong>
 				</a>
 			</div>
+			{% else %}
+				<div style="display:none">
+					<a href="add_patient.php" type="button" name="add-patient-btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
+						<strong>Add new patient</strong>
+					</a>
+				</div>
+			{% endif %}
+
+
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/patient_v1.js" defer></script>
+		<script type="text/javascript" src="js/patient_v3.js" defer></script>
 	</body>
 </html>

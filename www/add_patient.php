@@ -58,7 +58,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($user_id != null) && ($user_ins_I
             $new_patient_allergy = "no known allergies";
         }
         $new_patient_room = trim(strtolower($_POST["room"]));
-        if ($new_patient_room == "") {
+        if ($new_patient_room == "" || $new_patient_status == "deceased" ) {
             $new_patient_room = "undefined";
         }
 

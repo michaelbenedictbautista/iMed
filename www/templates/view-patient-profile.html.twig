@@ -1,0 +1,220 @@
+<!doctype html>
+<html
+	lang="en">
+	<!-- Calling method head.html.twig-->
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+
+		<div class="container">
+			<ul class="nav nav-pills gap-3 mb-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+				</li>
+			</ul>
+
+			<!-- List of Patient -->
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
+				<div class="row justify-content-between align-items-center">
+
+					<div class="col-2">
+						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}">
+							<img src="img/patient/{{ patientDetail.patient_image}}" class="img-fluid rounded overflow-hidden" id="patient-image" style="max-width:100%; height: auto;" alt="patient image">
+						</a>
+					</div>
+
+					<div class="col-4 mt-3">
+						<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}}
+							{{ patientDetail.last_name }}</p>
+						<span class="nav-text text-capitalize">
+							DOB:
+							{{ patientDetail.date_of_birth | date("d F Y")}}
+							| Age:
+							{{ patientDetail.age }}
+						</span><br>
+						<span class="text-capitalize">
+							Gender:
+							{{ patientDetail.gender }}
+						</span><br>
+						<span class="text-capitalize">
+							Allergies:
+							{{ patientDetail.allergy }}
+						</span><br>
+						<span class="text-capitalize">
+							Emergency response:
+							{{ patientDetail.emergency_response }}
+						</span><br>
+						<span class="text-capitalize">
+							Status:
+							{{ patientDetail.status }}
+						</span>
+					</div>
+
+					<div class="col-6">
+						<p class="fw-bold fs-5 text-end text-capitalize">Room | Institution</p>
+						<p class="fst-italic text-end text-capitalize">Room
+							{{ patientDetail.room }}
+						</p>
+
+						<p class="fst-italic text-end text-capitalize">
+							{{ patientDetail.ins_name }}</p>
+					</div>
+				</div>
+			</div>
+
+
+			<!--Navigation tab -->
+			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="patient.php">Progress</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="patient.php">Vital Signs</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="patient.php">Medication</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="patient.php">Medical records</a>
+				</li>
+			</ul>
+
+
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+				<div class="container container-body px-1 py-1  shadow-sm rounded">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-6">
+							<p class=" text-capitalize mt-3">
+								<span class="fw-bold">Medical provider and number:</span>medicare | M00235445456<br>
+								<span class="fw-bold">Updated date:</span>19 Jul 2022
+							</p>
+						</div>
+						<div class="col-3">
+							<p class="text-end">
+
+								<button id='{{patientDetail.patient_ID}}' class="btn btn-primary addMedProviderNameClass" data-bs-toggle="modal" data-bs-target="#addMedProviderModal">Add</button>
+
+
+								{# <button id='{{patientDetail.patient_ID}}' class="btn btn-primary viewMedProviderBtn" data-bs-toggle="modal" data-bs-target="#viewProviderModal">View</button> #}
+								<button id="12345" class="btn btn-primary viewMedProviderBtn" >TEST MODAL</button>
+
+							</p>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="container container-body px-1 py-1 shadow-sm rounded">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-6">
+							<p class=" text-capitalize mt-3">
+								<span class="fw-bold">Diagnosis:</span>Pneumonia<br>
+
+								<span class="fw-bold">Doctor:</span>Dr.Bane<br>
+
+								<span class="fw-bold">Updated date:</span>19 Jul 2022
+							</p>
+						</div>
+						<div class="col-3">
+							<p class="text-end">
+								<button type="button" name="add-diagnosis-btn" id="add-diagnosis-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMedDiagnosisModal">add</button>
+							</p>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="container container-body px-1 py-1shadow-sm rounded">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-6">
+							<p class=" text-capitalize mt-3">
+								<span class="fw-bold">Diet:</span>Soft diet<br>
+								<span class="fw-bold">Dietitian:</span>Dra. Mckinley<br>
+								<span class="fw-bold">Updated date:</span>19 Jul 2022
+							</p>
+						</div>
+						<div class="col-3">
+							<p class="text-end">
+								<button type="button" name="add-diet-btn" id="add-diet-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDietModal">add</button>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Add Medical Provider modal -->
+			<div class="modal fade" id="addMedProviderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<form id="addMedProvider" method="POST" action="add-medical-profile.php">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="addProfileModalLabel">Add medical provider</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group mb-3">
+									<input type="hidden" class="patient_ID" name="patient_ID" value="{{patientDetail.patient_ID}}">
+									<label for="medProviderName">Medical provider<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control" name="medProviderName" id="medProviderName" aria-label="medical provider name" placeholder="Enter medical provider name here..." required>
+								</div>
+								<div class="form-group mb-3">
+									<label for="medProviderNumber">Medical number<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control" name="medProviderNumber" id="medProviderNumber" aria-label="medical provider number" placeholder="Enter medical provider number here..." required>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+								{% set outcome = results.errors | join(", ") %}
+								<button type="submit" class="btn btn-primary submitMedProviderNameClass" name="submitMedProviderBtn" id="submitMedProviderBtn">Add provider</button>
+
+								{% if outcome | length > 0 %}
+									<div class="alert alert-warning alert-dismissible fade show" role="alert">
+										{{ outcome }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+			<!--View provider detail-->
+			<div class="modal fade" id="viewProviderModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modal-title">View medical provider detail</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p class="fw-bold fs-5" id="viewingProviderName"></p><br>
+							<p class="fw-bold fs-5" id="viewingProviderNumber"></p><br>
+							<span class="navbar-text text-capitalize" id="viewingProviderUser"></span>
+						</div>
+						<div class="modal-footer justify-content-between">
+							<p class="fst-italic" id="viewingProviderUpdatedDate"></p>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script type="text/javascript" src="js/patient_v3.js" defer></script>
+	</body>
+</html>
+
