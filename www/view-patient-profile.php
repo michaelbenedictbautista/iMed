@@ -25,19 +25,39 @@ if (Session::get('user_email') == null) {
 }
 // Create instance of Note class and declare variables
 $patient = new Patient();
-$patientDetail = array();
 $patient_id = null;
+$patientDetail = array();
+$providerDetail = array();
+$diagnosisDetail = array();
+$dietDetail = array();
 
-// Check if noteID is being receive.
-// if (isset($_POST["patient_ID"])) {
-//     $patient_id = $_POST['patient_ID'];
-//     $patientDetail = $patient->getPatientDetailById($patient_id);
-// }
+//Check if patient_ID is being passed from patient-search-result page
+if (isset($_POST["patient_ID"])) {
+    $patient_id = $_POST['patient_ID'];
+    // Display patient basic information
+    $patientDetail = $patient->getPatientDetailById($patient_id);
 
-// Check if noteID is being receive.
+    // Display patient provider details
+    $providerDetail = $patient->getProviderDetail($patient_id);
+    
+    // Display patient diagnosis details
+    $diagnosisDetail = $patient->getDignosisDetail($patient_id);
+}
+
+// Check if patient_ID patient and view-patient-profile page is being receive.
 if (isset($_GET["patient_ID"])) {
     $patient_id = $_GET['patient_ID'];
+    // Display patient basic information
     $patientDetail = $patient->getPatientDetailById($patient_id); 
+
+    // Display patient provider details
+    $providerDetail = $patient->getProviderDetail($patient_id);
+
+    // Display patient diagnosis details
+    $diagnosisDetail = $patient->getDignosisDetail($patient_id);
+    
+    // Display patient diet details
+    $dietDetail = $patient->getDietDetail($patient_id);
 }
 
 
@@ -69,5 +89,8 @@ echo $twig->render(
         "user_ins_add" => $user_ins_add,
 
         "patientDetail" => $patientDetail,
+        "providerDetail" => $providerDetail,
+        "diagnosisDetail" => $diagnosisDetail,
+        "dietDetail" => $dietDetail,
     ]
 );

@@ -26,7 +26,7 @@ if (Session::get('user_email') == null) {
 
 // Check if patient_ID is being receive.
 $patient = new Patient();
-$results = null;
+$resultsMedProvider = null;
 $newMedicalProviderName = null;
 $newMedicalProviderNumber = null;
 $patient_id = null;
@@ -38,25 +38,29 @@ $resultsErrorsCount = null;
 $resultsErrorsMessage = array();
 $myArrayresultsErrorsMessage = "";
 
-// Check for recieve data through request post method and assign it to variables
+
+$providerDetail = array();
+
+// Add medical provider
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['submitMedProviderBtn'])) {
+    $patient_id = $_POST['patient_ID'];
+
+
+    if (isset($_POST['submitMedProvider'])) {
         $newMedicalProviderName = trim(strtolower($_POST["medProviderName"]));
         $newMedicalProviderNumber = trim($_POST["medProviderNumber"]);
-        $patient_id = $_POST['patient_ID'];
-        // $user_id = $_POST['user_ID'];
-
-        // Add new medical provider in the database
-        $results = $patient->addMedicalProvider($newMedicalProviderName, $newMedicalProviderNumber, $patient_id, $user_id);
 
         // Display all patient's detail from our database
         $patientDetail = $patient->getPatientDetailById($patient_id);
 
+        // Add new medical provider in the database
+        $resultsMedProvider = $patient->addMedicalProvider($newMedicalProviderName, $newMedicalProviderNumber, $patient_id, $user_id);
+
         // Check for errors
-        if (isset($results['errors'])) {
+        if (isset($resultsMedProvider['errors'])) {
 
             // Combine to all erros to a string with a delimeter of (,)
-            $myArrayresultsErrorsMessage = implode(",", $results['errors']);
+            $myArrayresultsErrorsMessage = implode(",", $resultsMedProvider['errors']);
             $unSuccessfulMessage = $myArrayresultsErrorsMessage;
 
             echo
@@ -64,6 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $unSuccessfulMessage
             <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
             </div>";
+
+            // Display all patient's detail from our database
+            $patientDetail = $patient->getPatientDetailById($patient_id);
+            // Display Medical provider
+            $providerDetail = $patient->getProviderDetail($patient_id);
         } else {
 
             $successfulMessage = "Medical provider added successfully!";
@@ -77,6 +86,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     successfulMessage.style.display = 'none';
                 }, 5000);
             </script>";
+
+            // Display all patient's detail from our database
+            $patientDetail = $patient->getPatientDetailById($patient_id);
+            // Display Medical provider
+            $providerDetail = $patient->getProviderDetail($patient_id);
         }
     } else {
         $unSuccessfulMessage = "Error occured during execution!";
@@ -89,6 +103,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 successfulMessage.style.display = 'none';
             }, 5000);
         </script>";
+
+        // Display all patient's detail from our database
+        $patientDetail = $patient->getPatientDetailById($patient_id);
+        // Display Medical provider
+        $providerDetail = $patient->getProviderDetail($patient_id);
     }
 } else {
 
@@ -102,7 +121,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             successfulMessage.style.display = 'none';
         }, 5000);
     </script>";
+
+    // Display all patient's detail from our database
+    $patientDetail = $patient->getPatientDetailById($patient_id);
+    // Display Medical provider
+    $providerDetail = $patient->getProviderDetail($patient_id);
 }
+
+
+// // Add diagnosis
+// $resultsDiagnosis = null;
+// $newDx_text = null;
+// $newName_of_doctor = null;
+
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     if (isset($_POST['submitDiagnosis'])) {
+//         $newDx_text = trim(strtolower($_POST["dx_text"]));
+//         $newName_of_doctor = trim($_POST["name_of_doctor"]);
+//         $patient_id = $_POST['patient_ID'];
+//         // $user_id = $_POST['user_ID'];
+
+//         // Add new medical provider in the database
+//         $resultsDiagnosis = $patient->addDiagnosis($newDx_text, $newName_of_doctor, $patient_id, $user_id);
+
+//         // Display all patient's detail from our database
+//         $patientDetail = $patient->getPatientDetailById($patient_id);
+
+//         // Check for errors
+//         if (isset($resultsDiagnosis['errors'])) {
+
+//             // Combine to all erros to a string with a delimeter of (,)
+//             $myArrayresultsErrorsMessage = implode(",", $resultsDiagnosis['errors']);
+//             $unSuccessfulMessage = $myArrayresultsErrorsMessage;
+
+//             echo
+//             "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+//             $unSuccessfulMessage
+//             <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
+//             </div>";
+//         } else {
+
+//             $successfulMessage = "Medical provider added successfully!";
+//             echo "<p class='alert alert-success' id='successfulMessage'>$successfulMessage</p>";
+
+//             // Hide the message after 5 seconds
+//             echo
+//             "<script>
+//                 const successfulMessage = document.getElementById('successfulMessage');
+//                 setTimeout(function() {
+//                     successfulMessage.style.display = 'none';
+//                 }, 5000);
+//             </script>";
+//         }
+//     } else {
+//         $unSuccessfulMessage = "Error occured during execution!";
+//         echo "<p class='alert alert-warning' id='successfulMessage'>$unSuccessfulMessage</p>";
+//         // Hide the message after 5 seconds
+//         echo
+//         "<script>
+//             const successfulMessage = document.getElementById('successfulMessage');
+//             setTimeout(function() {
+//                 successfulMessage.style.display = 'none';
+//             }, 5000);
+//         </script>";
+//     }
+// } else {
+//      // Display all patient's detail from our database
+//      $patientDetail = $patient->getPatientDetailById($patient_id);
+
+//     $unSuccessfulMessage = "Error occured during execution!";
+//     echo "<p class='alert alert-warning' id='successfulMessage'>$unSuccessfulMessage</p>";
+//     // Hide the message after 5 seconds
+//     echo
+//     "<script>
+//         const successfulMessage = document.getElementById('successfulMessage');
+//         setTimeout(function() {
+//             successfulMessage.style.display = 'none';
+//         }, 5000);
+//     </script>";
+// }
 
 $site_name = "iMed";
 
@@ -132,10 +229,13 @@ echo $twig->render(
         "user_ins_add" => $user_ins_add,
 
         "patientDetail" => $patientDetail,
-        "results" => $results,
+        "resultsMedProvider" => $resultsMedProvider,
         "newMedicalProviderName" => $newMedicalProviderName,
         "newMedicalProviderNumber" => $newMedicalProviderNumber,
         "patient_id" => $patient_id,
         "successfulMessage" => $successfulMessage,
+
+        "providerDetail" => $providerDetail,
+        //"resultsDiagnosis" => $resultsDiagnosis,
     ]
 );

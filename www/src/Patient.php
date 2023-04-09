@@ -182,6 +182,7 @@ class Patient extends Database
             $errors["system"] = $exception->getMessage();
             $search_patient["errors"] = $errors;
         }
+        return $search_patient;
     }
 
 
@@ -396,7 +397,7 @@ class Patient extends Database
         return $patients;
     }
 
-    // Get note's details
+    // Get provider details
     public function getProviderDetail($patient_ID)
     {
         $providers = array();
@@ -448,5 +449,146 @@ class Patient extends Database
             return false;
         }
         return $providers;
+    }
+
+
+    // Add diagnosis function
+    public function addDiagnosis($dx_text, $name_of_doctor, $patient_ID, $user_ID)
+    {
+        $patients = array();
+        $errors = array();
+
+        $query = "
+            INSERT INTO patient_diagnosis(dx_text, name_of_doctor, patient_ID, user_ID)
+            VALUES (?, ?, ?, ?)";
+
+        try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+
+            $statement->bind_param("ssii", $dx_text, $name_of_doctor, $patient_ID, $user_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $patients["success"] = true;
+                return true;
+            }
+        } catch (Exception $exception) {
+            $errors["system"] = $exception->getMessage();
+            $patients["success"] = false;
+            $patients["message"] = "Diagnosis cannot be added!";
+            $patients["errors"] = $errors;
+        }
+        return $patients;
+    }
+
+    // Get diagnosis details
+    public function getDignosisDetail($patient_ID)
+    {
+        $diagnosis = array();
+        $errors = array();
+
+        $query = "
+            SELECT 
+            dx_ID,
+            dx_text,
+            name_of_doctor,
+            patient_diagnosis.patient_ID,
+            patient_diagnosis.user_ID,
+            patient_diagnosis.updated_date,
+
+            patient.patient_ID,
+
+            user.first_name,
+            user.last_name,
+            user.profession
+        
+            FROM patient_diagnosis
+            INNER JOIN patient
+            ON patient_diagnosis.patient_ID = patient.patient_ID
+            INNER JOIN user
+            ON patient_diagnosis.user_ID= user.user_ID
+            WHERE patient_diagnosis.patient_ID = ?
+            ORDER BY patient_diagnosis.updated_date DESC";
+
+        try {
+            // Verify database connection
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+            // pass an argument to a parameter
+            $statement->bind_param("i", $patient_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $result = $statement->get_result();
+                $detail = $result->fetch_assoc();
+                return $detail;
+            }
+        } catch (Exception $exception) {
+            // Handle errors
+            echo $exception->getMessage();
+            $errors["system"] = $exception->getMessage();
+            $diagnosis["errors"] = $errors;
+            return false;
+        }
+        return $diagnosis;
+    }
+    
+    // Get diet details
+    public function getDietDetail($patient_ID)
+    {
+        $diet = array();
+        $errors = array();
+
+        $query = "
+            SELECT 
+            diet_ID,
+            diet_text,
+            name_of_dietitian,
+            patient_diet.patient_ID,
+            patient_diet.user_ID,
+            patient_diet.updated_date,
+
+            patient.patient_ID,
+
+            user.first_name,
+            user.last_name,
+            user.profession
+        
+            FROM patient_diet
+            INNER JOIN patient
+            ON patient_diet.patient_ID = patient.patient_ID
+            INNER JOIN user
+            ON patient_diet.user_ID= user.user_ID
+            WHERE patient_diet.patient_ID = ?
+            ORDER BY patient_diet.updated_date DESC";
+
+        try {
+            // Verify database connection
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+            if (!$statement) {
+                throw new Exception("Database connection error!");
+            }
+            // pass an argument to a parameter
+            $statement->bind_param("i", $patient_ID);
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $result = $statement->get_result();
+                $detail = $result->fetch_assoc();
+                return $detail;
+            }
+        } catch (Exception $exception) {
+            // Handle errors
+            echo $exception->getMessage();
+            $errors["system"] = $exception->getMessage();
+            $diet["errors"] = $errors;
+            return false;
+        }
+        return $diet;
     }
 }

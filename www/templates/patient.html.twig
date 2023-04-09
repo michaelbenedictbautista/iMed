@@ -105,13 +105,13 @@
 			{% if user_level == 2 %}
 			<div class="d-grid">
 				<a href="add_patient.php" type="button" name="add-patient-btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
-					<strong>Add new patient</strong>
+					<strong>Add patient</strong>
 				</a>
 			</div>
 			{% else %}
 				<div style="display:none">
 					<a href="add_patient.php" type="button" name="add-patient-btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
-						<strong>Add new patient</strong>
+						<strong>Add patient</strong>
 					</a>
 				</div>
 			{% endif %}
@@ -120,6 +120,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/patient_v3.js" defer></script>
+		<script src="js/patient_v6.js" defer></script>
 	</body>
 </html>

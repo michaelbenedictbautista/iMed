@@ -49,10 +49,10 @@
 
 			{% endfor %}
 
-			<!-- Add note button function -->
+			<!-- Add note button -->
 			<div class="d-grid">
 				<button type="button" name="add-note-btn" class="btn btn-primary btn-lg mt-5" id="add-note-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
-					<strong>Add new note</strong>
+					<strong>Add note</strong>
 				</button>
 			</div>
 
@@ -93,7 +93,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modal-title">View note detail</h5>
+							<h5 class="modal-title" id="modal-title">Note details</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -141,6 +141,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/index_v2.js"></script>
+		<script src="js/index_v2.js" defer></script>
 	</body>
 </html>

@@ -4,7 +4,7 @@ $(document).ready(function() {
         note_id = $(this).attr('id')
         // alert(note_id)
         $.ajax({
-            url: "view_note_detail.php",
+            url: "ajax.php",
             method: 'post',
             data: {
                 note_ID: note_id

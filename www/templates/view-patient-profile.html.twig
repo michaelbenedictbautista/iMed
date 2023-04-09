@@ -72,76 +72,79 @@
 					<a class="nav-link fw-bold active" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="patient.php">Progress</a>
+					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Progress</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="patient.php">Vital Signs</a>
+					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Vital Signs</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="patient.php">Medication</a>
+					<a class="nav-link" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medication</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="patient.php">Medical records</a>
+					<a class="nav-link" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medical records</a>
 				</li>
 			</ul>
 
 
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
-				<div class="container container-body px-1 py-1  shadow-sm rounded">
+				<div class="container container-body px-1 py-1  mb-3 shadow-sm rounded bg-body ">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-6">
-							<p class=" text-capitalize mt-3">
-								<span class="fw-bold">Medical provider and number:</span>medicare | M00235445456<br>
-								<span class="fw-bold">Updated date:</span>19 Jul 2022
+							<p class="text-capitalize mt-3">
+								<span class="fw-bold">Medical provider: </span>{{providerDetail.mp_name}}<br>
+								<span class="fw-bold">Medical number: </span>{{providerDetail.med_number}}<br>
+								<span class="fw-bold">Updated date:</span> {{providerDetail.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}
 							</p>
 						</div>
 						<div class="col-3">
-							<p class="text-end">
-
+							<p class="text-end ">
+								<!--TO FIX
 								<button id='{{patientDetail.patient_ID}}' class="btn btn-primary addMedProviderNameClass" data-bs-toggle="modal" data-bs-target="#addMedProviderModal">Add</button>
-
-
-								{# <button id='{{patientDetail.patient_ID}}' class="btn btn-primary viewMedProviderBtn" data-bs-toggle="modal" data-bs-target="#viewProviderModal">View</button> #}
-								<button id="12345" class="btn btn-primary viewMedProviderBtn" >TEST MODAL</button>
-
+								-->
+								<button id="{{patientDetail.patient_ID}}" class="btn btn-primary viewMedProviderBtn">View</button>
+								
 							</p>
-
 						</div>
 					</div>
 				</div>
+				
 
-				<div class="container container-body px-1 py-1 shadow-sm rounded">
+				<div class="container container-body px-1 py-1 mb-3 shadow-sm rounded bg-body ">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-6">
 							<p class=" text-capitalize mt-3">
-								<span class="fw-bold">Diagnosis:</span>Pneumonia<br>
-
-								<span class="fw-bold">Doctor:</span>Dr.Bane<br>
-
-								<span class="fw-bold">Updated date:</span>19 Jul 2022
+								<span class="fw-bold">Diagnosis: </span>{{diagnosisDetail.dx_text}}<br>
+								<span class="fw-bold">Doctor: </span>{{diagnosisDetail.name_of_doctor}}<br>
+								<span class="fw-bold">Updated date: </span>{{diagnosisDetail.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}
 							</p>
 						</div>
 						<div class="col-3">
 							<p class="text-end">
+								<!--TO FIX
 								<button type="button" name="add-diagnosis-btn" id="add-diagnosis-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMedDiagnosisModal">add</button>
+								-->
+								<button id="{{patientDetail.patient_ID}}" class="btn btn-primary viewDiagnosisBtn">View</button>
+								
 							</p>
-
 						</div>
 					</div>
 				</div>
 
-				<div class="container container-body px-1 py-1shadow-sm rounded">
+				<div class="container container-body px-1 py-1 mb-3 shadow-sm rounded bg-body">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-6">
 							<p class=" text-capitalize mt-3">
-								<span class="fw-bold">Diet:</span>Soft diet<br>
-								<span class="fw-bold">Dietitian:</span>Dra. Mckinley<br>
-								<span class="fw-bold">Updated date:</span>19 Jul 2022
+								<span class="fw-bold">Diet: </span>{{dietDetail.diet_text}}<br>
+								<span class="fw-bold">Dietitian: </span>{{dietDetail.name_of_dietitian}}<br>
+								<span class="fw-bold">Updated date: </span>{{dietDetail.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}
 							</p>
 						</div>
 						<div class="col-3">
 							<p class="text-end">
+								<!--TO FIX
 								<button type="button" name="add-diet-btn" id="add-diet-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDietModal">add</button>
+								-->
+								<button id="{{patientDetail.patient_ID}}" class="btn btn-primary viewDietBtn">View</button>
 							</p>
 						</div>
 					</div>
@@ -160,7 +163,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="form-group mb-3">
-									<input type="hidden" class="patient_ID" name="patient_ID" value="{{patientDetail.patient_ID}}">
+									<input type="hidden" name="patient_ID" value="{{patientDetail.patient_ID}}">
 									<label for="medProviderName">Medical provider<span class="asterisk">*</span>
 									</label>
 									<input type="text" class="form-control" name="medProviderName" id="medProviderName" aria-label="medical provider name" placeholder="Enter medical provider name here..." required>
@@ -174,8 +177,8 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-								{% set outcome = results.errors | join(", ") %}
-								<button type="submit" class="btn btn-primary submitMedProviderNameClass" name="submitMedProviderBtn" id="submitMedProviderBtn">Add provider</button>
+								{% set outcome = resultsMedProvider.errors | join(", ") %}
+								<button type="submit" class="btn btn-primary submitMedProvider" name="submitMedProvider" id="submitMedProvider">Add provider</button>
 
 								{% if outcome | length > 0 %}
 									<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -195,17 +198,101 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modal-title">View medical provider detail</h5>
+							<h5 class="modal-title" id="modal_title">Medical provider details</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<p class="fw-bold fs-5" id="viewingProviderName"></p><br>
-							<p class="fw-bold fs-5" id="viewingProviderNumber"></p><br>
+							<span class="fw-bold fs-5" id="viewingProviderName">Medical provider:</span><br>
+							<span class="fw-bold fs-5" id="viewingProviderNumber">Medical number:</span><br><br>
 							<span class="navbar-text text-capitalize" id="viewingProviderUser"></span>
 						</div>
 						<div class="modal-footer justify-content-between">
 							<p class="fst-italic" id="viewingProviderUpdatedDate"></p>
-							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="closeMedProviderBtn">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- Add Diagnosis modal -->
+			<div class="modal fade" id="addMedDiagnosisModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<form id="addDiagnosis" method="POST" action="add-medical-profile.php">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="addProfileModalLabel">Add diagnosis</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group mb-3">
+									<input type="hidden" class="patient_ID" name="patient_ID" value="{{patientDetail.patient_ID}}">
+									<label for="dx_text">Diagnosis<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control" name="dx_text" id="dx_text" aria-label="Patient diagnosis" placeholder="Enter diagnosis here..." required>
+								</div>
+								<div class="form-group mb-3">
+									<label for="name_of_doctor">Doctor name<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control" name="name_of_doctor" id="name_of_doctor" aria-label="Name of doctor" placeholder="Enter doctor name here..." required>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+								{% set outcome = results.errors | join(", ") %}
+								<button type="submit" class="btn btn-primary submitDiagnosis" name="submitDiagnosis" id="submitDiagnosis">Add diagnosis</button>
+
+								{% if outcome | length > 0 %}
+									<div class="alert alert-warning alert-dismissible fade show" role="alert">
+										{{ outcome }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!--View diagnosis detail-->
+			<div class="modal fade" id="viewDiagnosisModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modal_title">Diagnosis details</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<span class="fw-bold fs-5" id="viewingDiagnosis">Diagnosis:</span><br>
+							<span class="fw-bold fs-5" id="viewingDoctor">Doctor name:</span><br><br>
+							<span class="navbar-text text-capitalize" id="viewingDiagnosisUser"></span>
+						</div>
+						<div class="modal-footer justify-content-between">
+							<p class="fst-italic" id="viewingDiagnosisUpdatedDate"></p>
+							<button type="button" class="btn btn-primary" id="closeDiagnosisBtn" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--View diet detail-->
+			<div class="modal fade" id="viewDietModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modal_title">Diet details</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<span class="fw-bold fs-5" id="viewingDiet">Diet:</span><br>
+							<span class="fw-bold fs-5" id="viewingDietitian">Dietitian name:</span><br><br>
+							<span class="navbar-text text-capitalize" id="viewingDietUser"></span>
+						</div>
+						<div class="modal-footer justify-content-between">
+							<p class="fst-italic" id="viewingDietUpdatedDate"></p>
+							<button type="button" class="btn btn-primary" id="closeDietBtn" data-bs-dismiss="modal">Close</button>
 						</div>
 					</div>
 				</div>
@@ -214,7 +301,7 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script type="text/javascript" src="js/patient_v3.js" defer></script>
+		<script src="js/patient_v6.js" defer></script>
 	</body>
 </html>
 

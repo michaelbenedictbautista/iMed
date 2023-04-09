@@ -28,6 +28,7 @@ class Note extends Database
         last_name,
         profession
         
+        
         FROM note
         INNER JOIN user
         ON note.user_ID = user.user_ID
