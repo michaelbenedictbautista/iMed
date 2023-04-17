@@ -64,16 +64,20 @@
 
 			{% endif  %}
 
+			
 			<!-- List of all Patients -->
 			{% for patient in patients.items %}
 				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-2">
-							<img src="img/patient/{{ patient.patient_image}}" class="img-fluid rounded overflow-hidden" style="max-width:100%; max-height: 100px; height: auto;" alt="patient image">
+							<a href="view-patient-profile.php?patient_ID={{patient.patient_ID}}">
+								<img src="img/patient/{{ patient.patient_image}}" class="img-fluid rounded overflow-hidden" style="max-width:100%; max-height: 100px; height: auto;" alt="patient image">
+							</a>
 						</div>
 						<div class="col-4 mb-3">
-							<p class="fw-bold fs-5 text-capitalize">{{ patient.first_name}}
-								{{ patient.last_name }}</p>
+							<a href="view-patient-profile.php?patient_ID={{patient.patient_ID}}" class="text-reset text-decoration-none">
+								<p class="fw-bold fs-5 text-capitalize">{{ patient.first_name}} {{ patient.last_name }}</p>								
+							</a>
 							<span class="navbar-text text-capitalize">
 								DOB:
 								{{ patient.date_of_birth | date("d F Y")}}

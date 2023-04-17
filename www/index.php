@@ -33,7 +33,7 @@ $note = new Note();
 $notes = $note->getAllNotes();
 
 
-//  Convert text image into a new searchable text file
+// Convert text image into a new searchable text file
 $fileRead = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -59,15 +59,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Read text to images
         $fileRead = $file->run();
+
+        
+        // Delete the uploaded image after running
+        unlink('img/uploads/' . $file_name);
+
       } catch (Exception $e) {
         //Handle error
-        echo $e->getMessage();
+        $errorMessage = $e->getMessage();
+        // echo  $errorMessage;    
+        "<p class='alert alert-danger'>$errorMessage</p>";
       }
     } else {
       echo "<p class='alert alert-danger'>Choose file to upload.</p>";
     }
   }
 }
+
+
+///////////////////////////////////////////
+// $fileRead = null;
+// if (isset($_POST['image'])) {
+//   // decode the image data from base64
+//   $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['image']));
+
+
+//   // write the image data to a temporary file
+//   // $tempFilePath = tempnam(sys_get_temp_dir('img/uploads/'), 'ocr-image-');
+//   // file_put_contents($tempFilePath, $imageData);
+
+//   $tmp_file = $_FILES['file']['tmp_name'];
+//   if (move_uploaded_file($tmp_file, 'img/uploads/' . $imageData)) {
+//      // create a TesseractOCR instance and set the image file path
+//   $file = (new TesseractOCR('img/uploads/' . $imageData));
+//   $file->config('convert_to_grayscale', 'true');
+//   $file->config('image_resize', '1500');
+//   $file->config('preserve_interword_spaces', 'true');
+//   $file->config('language', 'eng');
+//   $fileRead = $file->run();
+
+//    // delete the temporary file
+//    unlink('img/uploads/' . $imageData);
+//   }
+
+// }
+
+
+////////////////////////////////////////////////
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//   $tempFile = $_FILES['image']['tmp_name'];
+//   $targetPath = 'img/uploads/';
+//   $targetFile = $targetPath . uniqid() . '.png';
+//   move_uploaded_file($tempFile, $targetFile);
+//   echo 'File uploaded successfully.';
+// } else {
+//   echo "<p class='alert alert-danger'>Image.not received.</p>";
+// }
 
 
 $site_name = "iMed";

@@ -161,33 +161,70 @@
 // });
 
 
-// Upload and display image statically
+
+
+///////////////////////////////////////////////////////
+//Test cropper.js working
+// const image = document.getElementById('myImage');
+// const cropper = new Cropper(image, {
+//   aspectRatio: 16 / 9,
+//   crop(event) {
+//     console.log(event.detail.x);
+//     console.log(event.detail.y);
+//     console.log(event.detail.width);
+//     console.log(event.detail.height);
+//     console.log(event.detail.rotate);
+//     console.log(event.detail.scaleX);
+//     console.log(event.detail.scaleY);
+//   },
+// });
+
+
+
+//Upload and display image statically
 var imageInput = document.getElementById('imageInput');
-  var previewImage = document.getElementById('previewImage');
-  imageInput.addEventListener('change', function() {
-    var file = this.files[0];
-    var reader = new FileReader();
-    reader.onload = function(event) {
-      previewImage.src = event.target.result;
+var previewImage = document.getElementById('previewImage');
+imageInput.addEventListener('change', function() {
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    previewImage.src = event.target.result;
+  }
+  reader.readAsDataURL(file);
+});
+
+var imageUploadForm = document.getElementById('imageUploadForm');
+imageUploadForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'ajax_medical_records.php', true);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log('Image uploaded successfully.');
+    } else {
+      console.log('Image upload failed.');
     }
-    reader.readAsDataURL(file);
+  };
+  xhr.send(new FormData(imageUploadForm));
 });
 
 
-// var imageUploadForm = document.getElementById('imageUploadForm');
-// imageUploadForm.addEventListener('submit', function(event) {
-//   event.preventDefault();
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('POST', 'upload.php', true);
-//   xhr.onload = function() {
-//     if (xhr.status === 200) {
-//       console.log('Image uploaded successfully.');
-//     } else {
-//       console.log('Image upload failed.');
-//     }
-//   };
-//   xhr.send(new FormData(imageUploadForm));
-// });
+var cropper = new Cropper(previewImage, {
+  aspectRatio: 16 / 9,
+  crop(event) {
+    console.log(event.detail.x);
+    console.log(event.detail.y);
+    console.log(event.detail.width);
+    console.log(event.detail.height);
+    console.log(event.detail.rotate);
+    console.log(event.detail.scaleX);
+    console.log(event.detail.scaleY);
+  },
+});
+
+
+
+
   
 
 

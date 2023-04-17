@@ -6,6 +6,7 @@ use imed\Note;
 use imed\Patient;
 use imed\ProgressNote;
 use imed\VitalSigns;
+use imed\Medication;
 
 // Create instance of Note class and declare variables
 $note = new Note();
@@ -157,7 +158,7 @@ if (isset($_POST["vs_ID"])) {
     $vitalSignsDetail["respiratory_rate"] = $vitalSignsDetail['respiratory_rate'];
     $vitalSignsDetail["oxygen_saturation"] = $vitalSignsDetail['oxygen_saturation'];
     $vitalSignsDetail["vs_text"] = $vitalSignsDetail['vs_text'];
-    $vitalSignsDetail["updated_date"] = $vitalSignsDetail['updated_date'];
+    // $vitalSignsDetail["updated_date"] = $vitalSignsDetail['updated_date'];
 
 
     $vitalSignsDetail["first_name"] = $vitalSignsDetail['first_name'];
@@ -172,4 +173,40 @@ if (isset($_POST["vs_ID"])) {
 
     // pass variable for display
     echo json_encode(array('vitalSignsDetail' => $vitalSignsDetail));
+}
+
+
+//Declare variables
+$medication = new Medication();
+$medicationDetail = array();
+
+//Check if patient_ID is being receive from view-vital-signs- page
+if (isset($_POST["med_ID"])) {
+    $med_ID = $_POST["med_ID"];
+    $medicationDetail = $medication->getMedicationDetail($med_ID);
+    $medicationDetail["med_ID"] = $medicationDetail['med_ID'];
+    $medicationDetail["time_of_prescription"] = $medicationDetail['time_of_prescription'];
+    $medicationDetail["name_of_drug"] = $medicationDetail['name_of_drug'];
+    $medicationDetail["dose"] = $medicationDetail['dose'];
+    $medicationDetail["route"] = $medicationDetail['route'];
+    $medicationDetail["frequency"] = $medicationDetail['frequency'];
+    $medicationDetail["start_date"] = $medicationDetail['start_date'];
+    $medicationDetail["end_date"] = $medicationDetail['end_date'];
+    $medicationDetail["name_of_doctor"] = $medicationDetail['name_of_doctor'];
+    $medicationDetail["status"] = $medicationDetail['status'];
+    $medicationDetail["med_text"] = $medicationDetail['med_text'];
+
+
+    $medicationDetail["first_name"] = $medicationDetail['first_name'];
+    $medicationDetail["last_name"] = $medicationDetail['last_name'];
+    $medicationDetail["profession"] = $medicationDetail['profession'];
+
+    // Convert a specific date and time to Sydney
+    $original_datetime = new DateTime($medicationDetail['updated_date'], new DateTimeZone('UTC'));
+    $converted_datetime = clone $original_datetime;
+    $converted_datetime->setTimezone(new DateTimeZone('Australia/Sydney'));
+    $medicationDetail["updated_date"] = $converted_datetime->format('d/m/Y | h:ia');
+
+    // pass variable for display
+    echo json_encode(array('medicationDetail' => $medicationDetail));
 }

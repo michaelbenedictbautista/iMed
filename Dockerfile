@@ -12,3 +12,6 @@ RUN apt update && \
 RUN a2enmod rewrite && \
     apt-get update && apt-get upgrade -y
 RUN apt-get update && apt-get install -y tesseract-ocr
+
+RUN apt-get update && apt-get install -y nodejs npm
+RUN npm install cropperjs

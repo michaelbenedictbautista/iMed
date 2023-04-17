@@ -1,0 +1,386 @@
+<!doctype html>
+<html
+	lang="en">
+	<!-- Calling method head.html.twig-->
+	{% include "partial/head.html.twig" %}
+	<body>
+		{% include "partial/navigation.html.twig" %}
+
+		<div class="container">
+			<ul class="nav nav-pills gap-3 mb-5">
+				<li class="nav-item">
+					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+				</li>
+			</ul>
+
+			<!-- List of Patient -->
+			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
+				<div class="row justify-content-between align-items-center">
+
+					<div class="col-2">
+						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}">
+							<img src="img/patient/{{ patientDetail.patient_image}}" class="img-fluid rounded overflow-hidden" id="patient-image" style="max-width:100%; height: auto;" alt="patient image">
+						</a>
+					</div>
+
+					<div class="col-4 mt-3">
+						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}" class="text-reset text-decoration-none">
+							<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}} {{ patientDetail.last_name }}</p>						
+						</a>
+						<span class="nav-text text-capitalize">
+							DOB:
+							{{ patientDetail.date_of_birth | date("d F Y")}}
+							| Age:
+							{{ patientDetail.age }}
+						</span><br>
+						<span class="text-capitalize">
+							Gender:
+							{{ patientDetail.gender }}
+						</span><br>
+						<span class="text-capitalize">
+							Allergies:
+							{{ patientDetail.allergy }}
+						</span><br>
+						<span class="text-capitalize">
+							Emergency response:
+							{{ patientDetail.emergency_response }}
+						</span><br>
+						<span class="text-capitalize">
+							Status:
+							{{ patientDetail.status }}
+						</span>
+					</div>
+
+					<div class="col-6">
+						<p class="fw-bold fs-5 text-end text-capitalize">Room | Institution</p>
+						<p class="fst-italic text-end text-capitalize">Room
+							{{ patientDetail.room }}
+						</p>
+
+						<p class="fst-italic text-end text-capitalize">
+							{{ patientDetail.ins_name }}</p>
+					</div>
+				</div>
+			</div>
+
+
+			<!--Navigation tab -->
+			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
+				<li class="nav-item">
+					<a class="nav-link" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Progress</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Vital sign</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold active" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medication</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medical record</a>
+				</li>
+			</ul>
+
+
+			{% for item in medicationDetail %}
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+					<div class="row justify-content-between ">
+
+						<div class="col-9">
+							<p class="fs-5" id="medication">
+								<span class="navbar-text fw-bold">Drug name:</span>
+								{{item.name_of_drug}}
+								&#8226;
+								<span class="navbar-text fw-bold">Dose:</span>
+								{{item.dose}}
+								&#8226;
+								<span class="navbar-text fw-bold">Route:</span>
+								{{item.route}}
+								&#8226;
+								<span class="navbar-text fw-bold">Frequency:</span>
+								{{item.frequency}}
+							</p>
+							<p class="text-truncate">
+								<span class="navbar-text fw-bold">Instruction:</span>
+								{{ item.med_text}}
+							</p>
+							<span class="navbar-text text-capitalize">
+								Entered by:
+								{{ item.first_name ~ ' ' }}{{ item.last_name }}
+								|
+								{{ item.profession }}
+							</span>
+						</div>
+
+						<div class="col-3">
+							<p class="fst-italic text-end">
+								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
+							<p class="text-end">
+								<button id='{{item.med_ID}}' class='btn btn-primary viewMedicationBtn'>View</button>
+							</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+			<!-- Add medication button -->
+			<div class="d-grid">
+				<button type="button" name="addMedicationBtn" class="btn btn-primary btn-lg mt-5" id="addMedicationBtn" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
+					<strong>Add medication</strong>
+				</button>
+			</div>
+
+			<!-- Add medication modal -->
+			<div class="modal fade" id="addMedicationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<form id="addMedication" method="post" action="add-medication.php" enctype="multipart/form-data">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="addMedicationLabel">Add medication</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<!-- Input type hidden to pass patient_ID -->
+							<input
+							type="hidden" name="patient_ID" value="{{patientDetail.patient_ID}}">
+
+							<!-- Start of form -->
+							<div class="mb-3 px-3 py-1">
+								<label for="time_of_prescription" class="form-label">Time of prescription
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control time_of_prescription" name="time_of_prescription" id="time_of_prescription" placeholder="Select date and time" required>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="name_of_drug" class="form-label">Name of drug
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="name_of_drug" id="name_of_drug" placeholder="Type name of drug here..." required>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="dose" class="form-label">Dose
+									<span class="asterisk">*</span>
+								</label>
+								<div class="input-group flex-nowrap">
+								<input type="number" class="form-control" name="dose" id="dose" placeholder="Type drug dose here..." step="0.01" required> 
+								<span class="input-group-text" id="dose_suffix" name="dose_suffix">mg</span>
+								</div>		
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="route" class="form-label">Route
+									<span class="asterisk">*</span>
+								</label>
+								<select class="form-select" name="route" id="route" aria-label="route" required>
+									<option value="oral" selected>Oral</option>
+									<option value="sublingual">Sublingual</option>
+									<option value="intramuscular">Intramuscular</option>
+									<option value="intravenous">Intravenous</option>
+									<option value="topical">Topical</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="frequency" class="form-label">Frequency
+									<span class="asterisk">*</span>
+								</label>
+								<select class="form-select" name="frequency" id="frequency" aria-label="frequency" required>
+									<option value="once a day" selected>Once a day</option>
+									<option value="twice a day">Twice a day</option>
+									<option value="three times a day">Three times a day</option>
+									<option value="four times a day">Four times a day</option>
+									<option value="as needed">As needed</option>
+									<option value="other">Other</option>
+								</select>	
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="start_date" class="form-label">Start date
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control start_date" name="start_date" id="start_date" placeholder="Select date and time" required>
+							</div>
+
+
+							<div class="mb-3 px-3 py-1">
+								<label for="end_date" class="form-label">End date
+								</label>
+								<input type="text" class="form-control end_date" name="end_date" id="end_date" placeholder="Select date and time">
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="name_of_doctor" class="form-label">Name of Doctor
+									<span class="asterisk">*</span>
+								</label>
+								<input type="text" class="form-control" name="name_of_doctor" id="name_of_doctor" placeholder="Type name of doctor here..." required>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="status" class="form-label">Status
+									<span class="asterisk">*</span>
+								</label>
+								<select class="form-select" name="status" id="status" aria-label="status">
+									<option value="active" selected>Active</option>
+									<option value="ceased">Ceased</option>
+									<option value="other">Other</option>
+								</select>	
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="med_text" class="form-label">Instruction
+								</label>
+								<textarea type="text" class="form-control" name="med_text" id="med_text" rows="3" placeholder="Enter instruction here..."></textarea>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="med_file" class="form-label">Upload file</label>                      
+								<input type="file" class="form-control" name="med_file" id="med_file">
+							</div>
+
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+								{% set outcome = resultsMedication.errors | join(", ") %}
+								<button type="submit" class="btn btn-primary" id="add-prog-note-btn">Add medication</button>
+
+								{% if outcome | length > 0 %}
+									<div class="alert alert-warning alert-dismissible fade show" role="alert">
+										{{ outcome }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!--View Vital signs details-->
+			<div class="modal fade" id="viewMedicationModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modal-title">Medication</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="mb-3 px-3 py-1">
+								<label for="time_of_prescription" class="form-label view_time_of_prescription">Time of Prescription</label>						
+								<input type="text" class="form-control view_time_of_prescription" name="view_time_of_prescription" id="view_time_of_prescription" disabled>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="name_of_drug" class="form-label">Name of drug</label>
+								<input type="text" class="form-control name_of_drug" name="name_of_drug" id="name_of_drug" disabled>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="dose" class="form-label">Dose</label>
+								
+								<input type="text" class="form-control dose" name="dose" id="dose" disabled> 
+									
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="route" class="form-label">Route</label>
+								<select class="form-select route" name="route" id="route" aria-label="route" disabled>
+									<option value="oral" selected>Oral</option>
+									<option value="sublingual">Sublingual</option>
+									<option value="intramuscular">Intramuscular</option>
+									<option value="intravenous">Intravenous</option>
+									<option value="topical">Topical</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="frequency" class="form-label frequency">Frequency</label>
+								<select class="form-select" name="frequency" id="frequency" aria-label="frequency" disabled>
+									<option value="once a day" selected>Once a day</option>
+									<option value="twice a day">Twice a day</option>
+									<option value="three times a day">Three times a day</option>
+									<option value="four times a day">Four times a day</option>
+									<option value="as needed">As needed</option>
+									<option value="other">Other</option>
+								</select>	
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="view_start_date" class="form-label">Start date</label>
+								<input type="text" class="form-control view_start_date" name="view_start_date" id="view_start_date" disabled>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="view_end_date" class="form-label">End date</label>
+								<input type="text" class="form-control view_end_date" name="view_end_date" id="view_end_date" disabled>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="name_of_doctor" class="form-label">Name of Doctor</label>
+								<input type="text" class="form-control name_of_doctor" name="name_of_doctor" id="name_of_doctor" disabled>
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="status" class="form-label">Status</label>
+								<select class="form-select status" name="status" id="status" aria-label="status" disabled>
+									<option value="active" selected>Active</option>
+									<option value="ceased">Ceased</option>
+									<option value="other">Other</option>
+								</select>	
+							</div>
+
+							<div class="mb-3 px-3 py-1">
+								<label for="med_text" class="form-label">Instruction</label>
+								<textarea type="text" class="form-control med_text" name="med_text" id="med_text" rows="3" placeholder="No Comments available..." disabled></textarea>
+							</div>
+
+							
+
+							<div class="mb-3 px-3 py-1">
+								<label for="source" class="form-label">Entered by
+								</label>
+								<input type="text" class="form-control source text-capitalize viewMedicationsource" name="source" id="viewMedicationsource" disabled></input>								
+							</div>
+
+						</div>
+						<div class="modal-footer justify-content-between">
+							<p class="fst-italic" id="viewingMedicationDate"></p>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		{% include "partial/footer.html.twig" %}
+		{% include "partial/script.html.twig" %}
+		<script src="js/patient_medication_v2.js" defer></script>
+	</body>
+</html>

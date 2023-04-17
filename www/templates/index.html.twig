@@ -39,7 +39,7 @@
 							</span>
 						</div>
 						<div class="col-3">
-							<p class="fst-italic text-end">{{ note.updated_date | date("d/m/Y h:ia", "Australia/NSW")}}</p>
+							<p class="fst-italic text-end">{{ note.updated_date | date("d F Y h:ia", "Australia/NSW")}}</p>
 							<p class="text-end">
 								<button id='{{note.note_ID}}' class='btn btn-primary noteDetailBtn'>View</button>
 							</p>
@@ -99,7 +99,7 @@
 						<div class="modal-body">
 							<p class="fw-bold fs-5 mb-3" id="viewingNote"></p>
 							<span class="navbar-text text-capitalize" id="viewingSource"></span>
-							
+
 						</div>
 						<div class="modal-footer justify-content-between">
 							<p class="fst-italic" id="viewingDate"></p>
@@ -110,37 +110,11 @@
 				</div>
 			</div>
 
-			<hr
-			class="my-4">
-
-			<!-- Read text from images OCR -->
-			<div class="row mt-5">
-				<div class="col-sm-8 mx-auto">
-					<div class="read-text">
-						<h1 class="display-4">Read Text from Images</h1>
-						<p>{{fileRead}}</p>
-					</div>
-				</div>
-			</div>
-			<div class="row col-sm-8 mx-auto">
-				<div class="card mt-5">
-					<div class="card-body">
-						<form action="" method="post" enctype="multipart/form-data">
-							<div class="form-group">
-
-								<label for="filechoose">Choose File</label>
-
-								<input type="file" name="file" class="form-control-file" id="filechoose">
-
-								<button class="btn btn-primary mt-3 " type="submit" name="submit">Upload</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
+			{# <div class="row col-sm-8 mx-auto"></div> #}
+				
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/index_v2.js" defer></script>
+		<script src="js/index_v3.js" defer></script>
 	</body>
 </html>

@@ -27,8 +27,9 @@
 					</div>
 
 					<div class="col-4 mt-3">
-						<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}}
-							{{ patientDetail.last_name }}</p>
+						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}" class="text-reset text-decoration-none">
+							<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}} {{ patientDetail.last_name }}</p>								
+						</a>
 						<span class="nav-text text-capitalize">
 							DOB:
 							{{ patientDetail.date_of_birth | date("d F Y")}}
@@ -75,13 +76,13 @@
 					<a class="nav-link fw-bold active" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Progress</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Vital Signs</a>
+					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Vital sign</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medication</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medical records</a>
+					<a class="nav-link" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medical record</a>
 				</li>
 			</ul>
 
@@ -102,7 +103,7 @@
 
 						<div class="col-3">
 							<p class="fst-italic text-end">
-								{{ item.updated_date | date("d F Y")}}</p>
+								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
 							<p class="text-end">
 								<button id='{{item.prog_ID}}' class='btn btn-primary viewProgNoteBtn'>View</button>
 							</p>
@@ -176,6 +177,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/patient_progress.js" defer></script>
+		<script src="js/patient_progress_v2.js" defer></script>
 	</body>
 </html>
