@@ -41,7 +41,7 @@ if (isset($_GET["patient_ID"])) {
     // Display patient basic information
     $patientDetail = $patient->getPatientDetailById($patient_ID);
 
-    // Display patient basic information
+    // Display patient medication
     $medicationDetail = $medication->getAllMedication($patient_ID);
 }
 

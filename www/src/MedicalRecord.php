@@ -98,7 +98,7 @@ class MedicalRecord extends Database
 
         // Query statement
         $query = "
-            INSERT INTO patient_medical_record ($mr_time, $mr_title, $mr_result, $mr_file, $mr_text, $patient_ID, $user_ID)
+            INSERT INTO patient_medical_record (mr_time, mr_title, mr_result, mr_file, mr_text, patient_ID, user_ID)
             VALUES (?,?,?,?,?,?,?)";
 
         try {

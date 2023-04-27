@@ -33,6 +33,7 @@ if (Session::get('user_email') == null) {
 //Declare variables
 $patient = new Patient();
 $patientDetail = null;
+
 $medication = new Medication();
 $medicationDetail = array();
 $resultsMedication =  null;
@@ -83,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
 
         if (move_uploaded_file($imageFileTempName, $uploadPath)) {
             try {
-                // Add progress note function
+                // Add progress medication function
                 $resultsMedication = $medication->addMedication($time_of_prescription, $name_of_drug, $dose, $route, $frequency, $start_date, $end_date, $name_of_doctor, $status, $med_text, $generatedImageFileName, $patient_ID, $user_id);
 
                 // Display patient basic information
@@ -105,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
                 
             } catch (Exception $e) {
 
-                $myArrayresultsErrorsMessage = implode(",", $resultsMedicatio['errors']);
+                $myArrayresultsErrorsMessage = implode(",", $resultsMedication['errors']);
                 
                 echo
                 "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
@@ -116,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
                 // Display patient basic information
                 $patientDetail = $patient->getPatientDetailById($patient_ID);
 
-                // Display patient basic information
+                // Display patient medication information
                 $medicationDetail = $medication->getAllMedication($patient_ID);
                 
             } 
@@ -130,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
         // Display patient basic information
         $patientDetail = $patient->getPatientDetailById($patient_ID);
 
-        // Display patient basic information
+        // Display patient medication information
         $medicationDetail = $medication->getAllMedication($patient_ID);
 
         echo "<p class='alert alert-success' id='successfulMessage'>Medication added successfully!</p>";

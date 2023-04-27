@@ -2,11 +2,13 @@
 // Enable composer autoloading
 require("vendor/autoload.php");
 
+
 use imed\Note;
 use imed\Patient;
 use imed\ProgressNote;
 use imed\VitalSigns;
 use imed\Medication;
+use imed\MedicalRecord;
 
 // Create instance of Note class and declare variables
 $note = new Note();
@@ -209,4 +211,32 @@ if (isset($_POST["med_ID"])) {
 
     // pass variable for display
     echo json_encode(array('medicationDetail' => $medicationDetail));
+}
+
+$medicalRecord = new MedicalRecord();
+$medicalRecordDetail = array();
+
+//Check if patient_ID is being receive from view-vital-signs- page
+if (isset($_POST["mr_ID"])) {
+    $mr_ID = $_POST["mr_ID"];
+    $medicalRecordDetail = $medicalRecord->getMedicalRecordDetail($mr_ID);
+    $medicalRecordDetail["mr_ID"] = $medicalRecordDetail['mr_ID'];
+    $medicalRecordDetail["mr_time"] = $medicalRecordDetail['mr_time'];
+    $medicalRecordDetail["mr_title"] = $medicalRecordDetail['mr_title'];
+    $medicalRecordDetail["mr_result"] = $medicalRecordDetail['mr_result'];
+    $medicalRecordDetail["mr_file"] = $medicalRecordDetail['mr_file'];
+    $medicalRecordDetail["mr_text"] = $medicalRecordDetail['mr_text'];
+ 
+    $medicalRecordDetail["first_name"] = $medicalRecordDetail['first_name'];
+    $medicalRecordDetail["last_name"] = $medicalRecordDetail['last_name'];
+    $medicalRecordDetail["profession"] = $medicalRecordDetail['profession'];
+
+    // Convert a specific date and time to Sydney
+    $original_datetime = new DateTime($medicalRecordDetail['updated_date'], new DateTimeZone('UTC'));
+    $converted_datetime = clone $original_datetime;
+    $converted_datetime->setTimezone(new DateTimeZone('Australia/Sydney'));
+    $medicalRecordDetail["updated_date"] = $converted_datetime->format('d/m/Y | h:ia');
+
+    // pass variable for display
+    echo json_encode(array('medicalRecordDetail' => $medicalRecordDetail));
 }

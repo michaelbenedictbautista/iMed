@@ -3,9 +3,7 @@
 	{% include "partial/head.html.twig" %}
 	<body>
 		{% include "partial/navigation.html.twig" %}
-		<div class="container">
-			
-			
+		<div class="container">		
 				<ul class="nav nav-pills gap-3 mb-5">
 					<li class="nav-item">
 						<a class="nav-link fw-bold linkUnset " href="/">Home</a>
@@ -15,6 +13,7 @@
 					</li>
 				</ul>
 			
+			<!-- Form to add new patient-->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
 				<h1 class="text-center mb-5">Add new patient</h1>
 				<form id="createPatient" method="post" action="add_patient.php" enctype="multipart/form-data">
@@ -94,22 +93,24 @@
 						<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
 					</div> #}
                     <div class="mb-3">
-                        <label for="filechoose" class="form-label">Choose File</label>
+                        <label for="filechoose" class="form-label">Upload picture</label>
                             <input type="file" name="file" class="form-control" type="file" id="filechoose">
                     </div>
-					{% set outcome = resultCreated.errors | join(", ") %}
-					<button type="submit" name="submit" class="btn btn-primary mt-3" id="add-patient-btn">Add</button>
-					
-					<a href="patient.php">
-						<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
-					</a>
 
-					{% if outcome | length > 0 %}
-						<div class="alert alert-warning alert-dismissible fade show" role="alert">
-							{{ outcome }}
-							<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-						</div>
-					{% endif %}
+					<div class="modal-footer">
+						{% set outcome = resultCreated.errors | join(", ") %}
+						<a href="patient.php">
+							<div class="btn btn-outline-primary">Cancel</div>
+						</a>
+						<button type="submit" name="submit" class="btn btn-primary" id="add-patient-btn">Add</button>
+						
+						{% if outcome | length > 0 %}
+							<div class="alert alert-warning alert-dismissible fade show" role="alert">
+								{{ outcome }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+							</div>
+						{% endif %}
+					</div>
 				</form>
 			</div>
 

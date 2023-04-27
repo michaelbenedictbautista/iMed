@@ -25,22 +25,23 @@ if (Session::get('user_email') == null) {
     $user_ins_name = Session::get("user_ins_name");
     $user_ins_add = Session::get("user_ins_add");
 }
-// Create instance of Note class and declare variables
+// Create instance of patient class and declare variables
 $patient = new Patient();
 $patient_id = null;
 $patientDetail = array();
 
-
+// Create instance medical record class and declare variables
 $medicalRecord = new MedicalRecord();
 $medicalRecordDetail = array();
 
-
-// Check if patient_ID patient and view-patient-profile page is being receive.
+// Check if patient_ID patient and view-patient-medication page is being receive.
 if (isset($_GET["patient_ID"])) {
-    $patient_id = $_GET['patient_ID'];
+    $patient_ID = $_GET['patient_ID'];
     // Display patient basic information
-    $patientDetail = $patient->getPatientDetailById($patient_id);
+    $patientDetail = $patient->getPatientDetailById($patient_ID);
 
+    // Display medical records
+    $medicalRecordDetail = $medicalRecord->getAllMedicalRecords($patient_ID);
 }
 
 $site_name = "iMed";
@@ -71,5 +72,6 @@ echo $twig->render(
         "user_ins_add" => $user_ins_add,
 
         "patientDetail" => $patientDetail,
+        "medicalRecordDetail" => $medicalRecordDetail,
     ]
 );

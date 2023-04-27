@@ -6,7 +6,7 @@
 	<body>
 		{% include "partial/navigation.html.twig" %}
 
-		<div class="container container-body px-5 py-5 shadow-lg rounded">
+		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
 					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
@@ -86,186 +86,60 @@
 				</li>
 			</ul>
 
+			<!-- Display all medical records -->
+			{% for item in medicalRecordDetail %}
+				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
+					<div class="row justify-content-between ">
 
-			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
-				<div class="input-group mb-3 gap-3">
-					<input type="file"  name="file" class="form-control" id="fileInput">	
-					<img src="" id="myImage" alt="" style="max-width:100%; height:auto;">
-				</div>	
-				<hr>
+						<div class="col-9">
+							<p class="fw-bold fs-5 text-truncate" id="mr_title">{{item.mr_title}}</p>
+							{% if item.mr_text | length > 0 %}
+								<p class="text-truncate">
+									<span class="navbar-text fw-bold">Comments:</span>
+									{{ item.mr_text}}
+								</p>
+							{% else %}
+								<p class="text-truncate">
+									<span class="navbar-text fw-bold">Comments: N/A</span>
+									{{ item.mr_text}}
+								</p>
+							{% endif %}
+							
+							{% if item.mr_file | length > 0 %}
+								<p class="text-truncate">
+								<span class="navbar-text fw-bold">View image attached: <a href="img/uploads_medical_record/{{ item.mr_file }}" target="_blank">Click here</a></span>
+								</p>
+							{% else %}
+								<p class="text-truncate">
+									<span class="navbar-text fw-bold">View image attached: N/A</span>
+								</p>
+							{% endif %}
+							<span class="navbar-text text-capitalize">
+								Entered by:
+								{{ item.first_name ~ ' ' }}{{ item.last_name }}
+								|
+								{{ item.profession }}
+							</span>				
+						</div>
 
-				<button class="btn btn-primary" id="cropBtn" type="button">Crop Image</button>
-				
-				<!-- Rotate image -->
-				<button class="btn btn-primary my-3" id="leftRotateBtn" type="button" name="leftRotateBtn">left</button>
-				<button class="btn btn-primary my-3" id="rightRotateBtn" type="button" name="rightRotateBtn">right</button>
-				<!-- Reset image -->
-				<a href="view-patient-medical-record.php?patient_ID={{patientDetail.patient_ID}}" class="btn btn-secondary">Reset
+						<div class="col-3">
+							<p class="fst-italic text-end">
+								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
+							<p class="text-end">
+								<button id='{{item.mr_ID}}' class='btn btn-primary viewMedicalBtn'>View</button>
+							</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+			<!-- Add medical record details and pass the patient_ID-->
+			<div class="d-grid">
+				<a href="add-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" type="button" name="add_medicalRecord_btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
+				<strong>Add new medical record</strong>
 				</a>
-				<!-- Reset image -->
-				<!--<button class="btn btn-secondary" id="destroyBtn">Destroy</button> -->
-				
-				<!-- display the result -->
-				<div class="container mt-3">
-					<h1 class="display-4 text-center">Cropped image result</h1>
-					<img id="croppedImage"  alt="Cropped image" style="max-width:100%; display:none;">
-					
-				</div>						
-								
-				<button class="btn btn-primary my-3" id="convertBtn" type="button">Convert</button>
-
-				<!--Result OCR -->
-				<div class="text-start mt-3">
-					<h1 class="display-4 text-center">OCR convertion result</h1>
-					<p id="convertedImageToText"></p>
-				</div>
-
-				<button class="btn btn-primary my-3 addOCRBtn" id="{{patientDetail.patient_ID}}" type="button">Add result</button>
-		   		
-				<!-- Add medical record manual button -->
-				<div class="d-grid">
-					<button type="button" name="addMedicalRecordManualModalBtn" class="btn btn-primary btn-lg mt-5" id="addMedicalRecordManualModalBtn" >
-						<strong>Add medical record</strong>
-					</button>
-				</div>
-
-				<textarea name="" id="mr_result2" cols="30" rows="10"></textarea>
-		   
-		    </div>
-
-			<!-- Add medical record manual modal -->
-			<div class="modal fade" id="addMedicalRecordManualModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-xl ">
-					<form id="addMedicalRecordManual" method="post" action="add-medical-record.php">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="addMedicalRecordLabel">Add medical record</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<!-- Input type hidden to pass patient_ID -->
-							<input
-							type="hidden" name="patient_ID" value="{{patientDetail.patient_ID}}">
-
-							<!-- Start of form -->
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_time" class="form-label">Time
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control mr_time" name="mr_time" id="mr_time" placeholder="Select date and time" required>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_title" class="form-label">Title
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control" name="mr_title" id="mr_title" placeholder="Enter title here..." required>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_result" class="form-label">Result
-								</label>
-								<textarea type="text" class="form-control" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..."></textarea>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_text" class="form-label">Comments
-								</label>
-								<textarea type="text" class="form-control" name="mr_text" id="mr_text" rows="3" placeholder="Enter comments here..."></textarea>
-								<!-- Add medical record manual button -->
-								<div class="d-grid">
-									<button type="button" name="addMedicalRecordManualModalBtn" class="btn btn-primary btn-lg mt-5" id="addMedicalRecordManualModalBtn" >
-										<strong>Upload from computer</strong>
-									</button>
-								</div>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_file" class="form-label">Upload file</label>                      
-								<input type="file" class="form-control" name="mr_file" id="mr_file">
-							</div>
-
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-								{% set outcome = resultsMedicalRecord.errors | join(", ") %}
-								<button type="submit" class="btn btn-primary" id="addMedicalRecordManualBtn">Add medical record</button>
-
-								{% if outcome | length > 0 %}
-									<div class="alert alert-warning alert-dismissible fade show" role="alert">
-										{{ outcome }}
-										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-									</div>
-								{% endif %}
-							</div>
-						</div>
-					</form>
-				</div>
 			</div>
 
-
-			<!-- Add medical record automatic modal -->
-			<div class="modal fade" id="addMedicalRecordAutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-						<div class="modal-content">
-							
-							<input type="hidden" name="patient_ID" value="{{patientDetail.patient_ID}}">
-							
-							<div class="modal-header">
-								<h5 class="modal-title" id="addMedicalRecordAutoLabel">Add medical record</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<!-- Input type hidden to pass user_id -->
-							<input
-							type="hidden" name="user_id" id="user_id" value="{{user_id}}">
-
-							<!-- Start of form -->
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_time" class="form-label">Time
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control mr_time" name="mr_time" id="mr_time" placeholder="Select date and time" required>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_title" class="form-label">Title
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control" name="mr_title" id="mr_title" placeholder="Enter title here..." required>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_result" class="form-label">Result
-								</label>
-								<textarea type="text" class="form-control" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..."></textarea>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_text" class="form-label">Comments
-								</label>
-								<textarea type="text" class="form-control" name="mr_text" id="mr_text" rows="3" placeholder="Enter comments here..."></textarea>
-							</div>
-
-							<div class="mb-3 px-3 py-1">
-								<label for="mr_file" class="form-label">Upload file</label>                      
-								<input type="text" class="form-control" name="mr_file" id="mr_file">
-							</div>
-
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-								{% set outcome = resultsMedicalRecord.errors | join(", ") %}
-								<button type="button" class="btn btn-primary" id="addMedicalRecordAutoBtn">Add medical record</button>
-
-								{% if outcome | length > 0 %}
-									<div class="alert alert-warning alert-dismissible fade show" role="alert">
-										{{ outcome }}
-										<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-									</div>
-								{% endif %}
-							</div>
-						</div>
-				</div>
-			</div>
 
 			<!-- View medical record details -->
 			<div class="modal fade" id="viewMedicalRecordModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
@@ -277,7 +151,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="mb-3 px-3 py-1">
-								<label for="mr_time" class="form-label">Time
+								<label for="mr_time" class="form-label">Recorded date
 								</label>
 								<input type="text" class="form-control mr_time" name="mr_time" id="mr_time" placeholder="Select date and time" disabled>
 							</div>
@@ -286,51 +160,46 @@
 								<label for="mr_title" class="form-label">Title
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="mr_title" id="mr_title" placeholder="Enter title here..." disabled>
+								<input type="text" class="form-control mr_title" name="mr_title" id="mr_title" placeholder="Enter title here..." disabled>
 							</div>
 
 							<div class="mb-3 px-3 py-1">
 								<label for="mr_result" class="form-label">Result
 								</label>
-								<textarea type="text" class="form-control" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..." disabled></textarea>
+								<textarea type="text" class="form-control mr_result" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..." disabled></textarea>
 							</div>
-							{% if mr_file | length > 0 %}
-							<div class="container mb-3 px-3 py-1" style="display:block">
-								<label for="mr_file" class="form-label">File
-								</label>
-								<img type="text" class="image-fluid" name="mr_file" id="mr_file">
-							</div>
-							{% else %}
-							<div class="container mb-3 px-3 py-1" style="display:none">
-								<label for="mr_file" class="form-label">File
-								</label>
-								<img type="text" class="image-fluid" name="mr_file" id="mr_file">
-							</div
-							{% endif %}
 
+
+							<div class="mb-3 px-3 py-1 mr_file_wrapper">							
+								<p class="text-truncate my_mr_file">
+								<span class="navbar-text fw-bold">View image attached: <a href="" target="_blank" id="medical-record-link">Click here</a></span>
+								</p>
+							</div>
+							
+							
 							<div class="mb-3 px-3 py-1">
 								<label for="mr_text" class="form-label">Comments
 								</label>
-								<textarea type="text" class="form-control" name="mr_text" id="mr_text" rows="3" placeholder="Enter comments here..." disabled></textarea>
+								<textarea type="text" class="form-control mr_text" name="mr_text" id="mr_text" rows="3" placeholder="Enter comments here..." disabled></textarea>
 							</div>
 
 							<div class="mb-3 px-3 py-1">
 								<label for="source" class="form-label">Entered by
 								</label>
-								<input type="text" class="form-control source text-capitalize" name="source" id="source" disabled></input>								
+								<input type="text" class="form-control text-capitalize viewMedicalsource" name="source" id="source" disabled></input>								
 							</div>
 
 						</div>
 						<div class="modal-footer justify-content-between">
 							<p class="fst-italic" id="viewingDate"></p>
-							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
 						</div>
 					</div>
-
-            
+				</div>
+			</div>    
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/patient_medical_record_v2.js" defer></script>
+		<script src="js/patient_medical_record_v5.js" defer></script>
 	</body>
 </html>
