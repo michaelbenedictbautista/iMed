@@ -41,15 +41,17 @@
 				<div class="col-md-10 main-container text-left">
 					<h1 class="text-center mb-5">Edit Account</h1>
 					<form id="user" method="post" action="userdashboard.php?uId = {{user_id}}" enctype="multipart/form-data">
-						<div class="row mb-3">
-							<div class="col-md-3 offset-md-3" style="margin-left: 4rem;">
+						<div class="row justify-content-center mb-3">
+							<div class="col-md-2 text-center">
+								{% if user_image %}
 								<a class="navbar-brand " href="userdashboard.php">
-									<img class="img-detail user-image" style="width:100px; height:100px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
+								<img id="userProfilePic" class="img-detail user-image" style="width:100px; height:100px; object-fit:cover;border-radius:500%;" src="/img/user/{{ user_image }}">
 								</a>
+								{% endif %}
 							</div>
-							<div class="col">
-								<label for="formFile" class="form-label">Upload or change picture?</label>
-								<input class="form-control" type="file" name="formFile" id="formFile" value="{{ user_image }}" onchange="fileValidation()">
+							<div class="col-md-10 text-start mt-4 mt-md-0">
+								<label for="profilePic" class="form-label">Upload or change picture?</label>
+								<input class="form-control" type="file" name="userProfilePic" id="profilePic" onchange="previewImage(event)">
 							</div>
 						</div>
 
@@ -149,9 +151,9 @@
 								<label for="profession" class="form-label">User profession</label>
 								<span class="asterisk">*</span>
 								<select class="custom-select form-control" name="profession" id="profession" onkeyup="userInput()" required>
-									<option value="">Please select profession...</option>
-									<option value="Administration">Administration</option>
+									<option value="">Please select profession...</option>									
 									<option value="Developer">Developer</option>
+									<option value="Administration">Administration</option>
 									<option value="Doctor">Doctor</option>
 									<option value="Nurse">Nurse</option>
 									<option value="Pathologist">Pathologist</option>
@@ -191,22 +193,26 @@
 
 						<input type="hidden" name="user_id" value="{{user_id}}">
 
-						{% set outcome = result.errors | join(", ") %}
-						<button type="submit" class="btn btn-primary mt-3">Update</button>
-						<a href="userdashboard.php">
-							<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
-						</a>
-						{% if outcome | length > 0 %}
-							<div class="alert alert-warning alert-dismissible fade show" role="alert">
-								{{ outcome }}
-								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-							</div>
-						{% endif %}
+						<div class="modal-footer">
+							{% set outcome = result.errors | join(", ") %}							
+							<a href="userdashboard.php">
+								<button type="button" class="btn btn-outline-primary" id="edit-cancel-btn">Cancel</button>
+							</a>
+							<button type="submit" class="btn btn-primary">Update</button>
+							{% if outcome | length > 0 %}
+								<div class="alert alert-warning alert-dismissible fade show" role="alert">
+									{{ outcome }}
+									<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+								</div>
+							{% endif %}
+						</div>
+
 					</form>
 				</div>
 			</div>
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
+		<script src="js/edit_user.js" defer></script>
 	</body>
 </html>

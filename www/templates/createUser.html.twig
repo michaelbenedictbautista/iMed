@@ -169,23 +169,25 @@
 						</div>
 
 						{% set outcome = result.errors | join(", ") %}
-						<button type="submit" class="btn btn-secondary mt-3" id="create-btn" disabled>Create</button>
-						<a href="userdashboard.php">
-							<div class="btn btn-secondary ml-3 mt-3">Cancel</div>
-						</a>
-
-						{% if outcome | length > 0 %}
-							<div class="alert alert-warning alert-dismissible fade show" role="alert">
-								{{ outcome }}
-								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-							</div>
-						{% endif %}
+						
+						<div class="modal-footer">
+							<a href="userdashboard.php">
+								<button type="button" class="btn btn-outline-primary" id="create-cancel-btn">Cancel</button>
+							</a>
+							<button type="submit" class="btn btn-secondary" id="create-btn" disabled>Create</button>
+							{% if outcome | length > 0 %}
+								<div class="alert alert-warning alert-dismissible fade show" role="alert">
+									{{ outcome }}
+									<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+								</div>
+							{% endif %}
+						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/createUser.js" defer></script>
+		<script src="js/createUser_v2.js" defer></script>
 	</body>
 </html>

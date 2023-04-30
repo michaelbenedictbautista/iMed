@@ -130,8 +130,7 @@
 					<div class="modal-footer">
 						{% set outcome = resultsMedicalRecord.errors | join(", ") %}
 						<a href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}">
-
-							<button type="button" class="btn btn-outline-primary" id="add-patient-btn">Cancel</button>
+							
 						</a>
 						<button type="submit" name="add_medicalRecord_btn" class="btn btn-primary" id="add-patient-btn">Add</button>
 						{% if outcome | length > 0 %}
@@ -148,6 +147,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/patient_medical_record_v5.js" defer></script>
+		<script src="js/patient_medical_record_v3.js" defer></script>
 	</body>
 </html>

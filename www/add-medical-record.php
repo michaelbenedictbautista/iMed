@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
             echo 
             "<script>
                 alert('Unable to upload file!);
-                window.location.href='patient.php';
+                window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
             </script>";
         }
     } else {

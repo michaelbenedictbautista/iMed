@@ -9,28 +9,37 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" aria-current="page" href="/">Home</a>
+					<a class="nav-link fw-bold active" aria-current="page" href="/">
+						<i class="fa-sharp fa-solid fa-house-medical fa-xl"></i> Home
+					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" href="patient.php">Patients</a>
+					<a class="nav-link fw-bold linkUnset" href="patient.php">
+					<i class="fa-sharp fa-light fa-users-medical fa-xl" style="color: #000000;"></i> Patients</a>
 				</li>
 			</ul>
-			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded" style="background-color: gray; color:white">
-				<div class="row justify-content-between">
-					<div class="col-9">
-						<p class="fw-bold " id="patient-name">Notes</p>
+
+			<h2 class="text-center" style="color: #000000;">
+			<i class="fa-sharp fa-solid fa-house-medical" style="color: #000000;"></i> Home</h2>
+
+			<div class="container px-5 py-3 my-3 shadow-sm rounded " style="background-color: gray; color:white">
+				<div class="row justify-content-between align-items-center">
+					<div class="col-auto">
+						<p class="fw-bold mb-0" id="patient-name">Notes</p>
 					</div>
-					<div class="col-3">
-						<p class="fw-bold text-end">Date</p>
+					<div class="col-auto">
+						<p class="fw-bold mb-0">Date</p>
 					</div>
 				</div>
 			</div>
+
+			
 
 			{% for note in notes.items %}
 				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
 					<div class="row justify-content-between">
 						<div class="col-9">
-							<p class="fw-bold fs-5 text-truncate" id="note">{{note.note_text}}</p>
+							<p class="fw-bold fs-5 text-truncate mb-0" id="note">{{note.note_text}}</p>
 							<span class="navbar-text text-capitalize">
 								Entered by:
 								{{ note.first_name ~ ' ' }}{{ note.last_name }}
@@ -39,8 +48,8 @@
 							</span>
 						</div>
 						<div class="col-3">
-							<p class="fst-italic text-end">{{ note.updated_date | date("d F Y h:ia", "Australia/NSW")}}</p>
-							<p class="text-end">
+							<p class="fst-italic text-end mb-0">{{ note.updated_date | date("d F Y h:ia", "Australia/NSW")}}</p>
+							<p class="text-end mb-0">
 								<button id='{{note.note_ID}}' class='btn btn-primary noteDetailBtn'>View</button>
 							</p>
 						</div>

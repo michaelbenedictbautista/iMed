@@ -9,26 +9,32 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+					<a class="nav-link fw-bold linkUnset" aria-current="page" href="/">
+						<i class="fa-sharp fa-light fa-house-medical" style="color: #000000;"></i> Home
+					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+					<a class="nav-link fw-bold active" href="patient.php">
+					<i class="fa-sharp fa-solid fa-users-medical"></i> Patients</a>
 				</li>
 			</ul>
 
+			<h2 class="text-center">
+			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2>
+
 			<!-- List of Patient -->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
-				<div class="row justify-content-between align-items-center">
+				<div class="row justify-content-between align-items-start">
 
-					<div class="col-2">
+					<div class="col-md-2">
 						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}">
-							<img src="img/patient/{{ patientDetail.patient_image}}" class="img-fluid rounded overflow-hidden" id="patient-image" style="max-width:100%; height: auto;" alt="patient image">
+							<img src="img/patient/{{ patientDetail.patient_image}}" class="img-fluid rounded overflow-hidden view-patient-profile-patient-image" id="view-patient-profile-patient-image" alt="patient image">
 						</a>
 					</div>
 
-					<div class="col-4 mt-3">
+					<div class="col-md-7 mt-3">
 						<a href="view-patient-profile.php?patient_ID={{patientDetail.patient_ID}}" class="text-reset text-decoration-none">
-							<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}} {{ patientDetail.last_name }}</p>						
+							<p class="fw-bold fs-5 text-capitalize">{{ patientDetail.first_name}} {{ patientDetail.last_name }}</p>								
 						</a>
 						<span class="nav-text text-capitalize">
 							DOB:
@@ -54,13 +60,13 @@
 						</span>
 					</div>
 
-					<div class="col-6">
-						<p class="fw-bold fs-5 text-end text-capitalize">Room | Institution</p>
-						<p class="fst-italic text-end text-capitalize">Room
+					<div class="col-md-3 mt-3 view-patient-profile-room-institution-wrapper">
+						<p class="fw-bold fs-5 text-capitalize">Room | Institution</p>
+						<p class="fst-italic  text-capitalize">Room
 							{{ patientDetail.room }}
 						</p>
 
-						<p class="fst-italic text-end text-capitalize">
+						<p class="fst-italic text-capitalize">
 							{{ patientDetail.ins_name }}</p>
 					</div>
 				</div>
@@ -70,19 +76,24 @@
 			<!--Navigation tab -->
 			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">Profile</a>
+					<a class="nav-link" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">
+					<i class="fa-sharp fa-light fa-clipboard-user fa-xl" style="color: #4b7efb;"></i> Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Progress</a>
+					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-clipboard-medical fa-xl" style="color: #4b7efb; "></i> Progress</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Vital sign</a>
+					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-bed-pulse fa-xl" style="color: #4b7efb;"></i> Vital sign</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medication</a>
+					<a class="nav-link" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-pills fa-xl" style="color: #4b7efb;"></i> Medication</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">Medical record</a>
+					<a class="nav-link fw-bold active" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					\<i class="fa-sharp fa-solid fa-folder-medical fa-xl" style="color: #000000;"></i> Medical record</a>
 				</li>
 			</ul>
 
@@ -91,7 +102,7 @@
 				<div class="container container-body px-5 py-3 my-3 shadow-sm rounded">
 					<div class="row justify-content-between ">
 
-						<div class="col-9">
+						<div class="col-sm-9">
 							<p class="fw-bold fs-5 text-truncate" id="mr_title">{{item.mr_title}}</p>
 							{% if item.mr_text | length > 0 %}
 								<p class="text-truncate">
@@ -107,7 +118,9 @@
 							
 							{% if item.mr_file | length > 0 %}
 								<p class="text-truncate">
-								<span class="navbar-text fw-bold">View image attached: <a href="img/uploads_medical_record/{{ item.mr_file }}" target="_blank">Click here</a></span>
+								<span class="navbar-text fw-bold">Attached File: </span>
+								<span class="navbar-text fw-bold me-3"><a href="img/uploads_medical_record/{{ item.mr_file }}" target="_blank">View</a></span>
+								<span class="navbar-text fw-bold"><a href="img/uploads_medical_record/{{ item.mr_file }}" download>Download</a></span>
 								</p>
 							{% else %}
 								<p class="text-truncate">
@@ -122,10 +135,10 @@
 							</span>				
 						</div>
 
-						<div class="col-3">
+						<div class="col-sm-3 justify-content-between">
 							<p class="fst-italic text-end">
 								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
-							<p class="text-end">
+							<p class="text-end mt-3">
 								<button id='{{item.mr_ID}}' class='btn btn-primary viewMedicalBtn'>View</button>
 							</p>
 						</div>
@@ -146,7 +159,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modal-title">Vital signs</h5>
+							<h5 class="modal-title" id="modal-title">Medical record</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -163,18 +176,18 @@
 								<input type="text" class="form-control mr_title" name="mr_title" id="mr_title" placeholder="Enter title here..." disabled>
 							</div>
 
-							<div class="mb-3 px-3 py-1">
+							<div class="mb-3 px-3 py-1 result_wrapper" style="display:none;">
 								<label for="mr_result" class="form-label">Result
 								</label>
-								<textarea type="text" class="form-control mr_result" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..." disabled></textarea>
+								<textarea type="text" class="form-control mr_result" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..." disabled ></textarea>
 							</div>
 
 
-							<div class="mb-3 px-3 py-1 mr_file_wrapper">							
+							{# <div class="mb-3 px-3 py-1 mr_file_wrapper" style="display:none;">							
 								<p class="text-truncate my_mr_file">
 								<span class="navbar-text fw-bold">View image attached: <a href="" target="_blank" id="medical-record-link">Click here</a></span>
 								</p>
-							</div>
+							</div> #}
 							
 							
 							<div class="mb-3 px-3 py-1">
@@ -200,6 +213,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/patient_medical_record_v5.js" defer></script>
+		<script src="js/patient_medical_record_v3.js" defer></script>
 	</body>
 </html>

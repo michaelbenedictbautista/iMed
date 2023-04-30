@@ -65,45 +65,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     $user_contact = trim($_POST["contactNumber"]);
     $user_profession = trim(strtolower($_POST["profession"]));
     $user_level = $_POST["userLevel"];
-    //$user_image = $_POST["formFile"];
     $user_ins_name = trim(strtolower($_POST["institutionName"]));
     $user_ins_add = trim(strtolower($_POST["institutionAddress"]));
 
     // Declare the values for update a thumbnail
-    $file = $_FILES['formFile'];
-    $user_image = $file['name'];
-    $fileError = $file['error'];
+    $userProfilePic = $_FILES['userProfilePic'];
+    $imageFileName = $userProfilePic['name'];
+    $imageFileType = $userProfilePic['type'];
+    $imageFileTempName = $userProfilePic['tmp_name'];
+    $allowedTypes = array('image/jpeg', 'image/jpg','image/png', 'image/tiff'); // acceptable file extension
+    $maxSize = 5 * 1024 * 1024; // 5MB max size of an image
 
     // Check the fileName
-    if (!empty($user_image)) {
-        // Find "." and separate into the array ---------
-        $fileExt = explode('.', $user_image);
-        // Find the last element in the array -> make it lower case ---------
-        $fileActualExt = strtolower(end($fileExt));
-        // make array to accept file type ---------
-        $fileAllowed = array('jpg', 'jpeg', 'png');
-        // Check the condition ---------
-        if (in_array($fileActualExt, $fileAllowed)) {
-            // Check for error
-            if ($fileError === 0) {
-                // Change the file name as "fileName + . + Uniqid" ---------
-                //$fileNameNew = uniqid('', true) . "." . $fileName;
+    if (!empty($imageFileName)) {
+        // Check file type
+        if (!in_array($imageFileType, $allowedTypes)) {
+            echo 'Error: Invalid file type. Only JPEG, PNG, and TIFF files are allowed.';
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+            </script>";
+        }
 
-                // Destination folder ---------
-                //$fileDestination = 'img/user/' . $fileNameNew;
-                $fileDestination = 'img/user/' . $user_image;
-                move_uploaded_file($user_image, $fileDestination);
+        // Check file size
+        if ($userProfilePic['size'] > $maxSize) {
+            echo 'Error: File size exceeds 5MB limit.';
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+            </script>";
+        }
 
-                // Update account data   
-                $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
+        // Check if file exists
+        if (file_exists("img/user/$imageFileName")) {
+            unlink("img/user/$imageFileName"); // Delete the old file
+        }
+        
+        $imageFileExtension = pathinfo($imageFileName, PATHINFO_EXTENSION); // image extension
+        $generatedImageFileName = uniqid() . '.' . $imageFileExtension; // rename file with unique name
 
-                header('Location: userdashboard.php');
+        // Move uploaded file to desired location
+        $uploadPath = 'img/user/' . $generatedImageFileName;
+        
+        if (move_uploaded_file($imageFileTempName, $uploadPath)) {
+            try {
+                // Update account function
+                $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $generatedImageFileName, $user_ins_ID, $user_ins_name, $user_ins_add);
+                echo 
+                "<script>
+                    alert('Edit account successfully uploaded!');
+                    window.location.href='userdashboard.php';
+                </script>";
+            }catch (Exception $e) {
+                echo
+                "<script>
+                    alert('Edit account unsuccessful! Try again!!!');
+                    window.location.href='userdashboard.php';
+                </script>";
             }
         }
     } else {
-        $user_image = "default.jpg";
-        $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $user_image, $user_ins_ID, $user_ins_name, $user_ins_add);
-        header('Location: userdashboard.php');
+        $generatedImageFileName = "default.jpg";
+        $result = $account->updateAccount($user_id, $user_firstName, $user_lastName, $user_userName, $user_pw, $user_contact, $user_email, $user_profession, $user_level, $generatedImageFileName, $user_ins_ID, $user_ins_name, $user_ins_add);
+        
+        echo 
+        "<script>
+            alert('Edit account successful!');
+            window.location.href='userdashboard.php';
+        </script>";
     }
     
     // Set account data
@@ -116,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($user_id))) {
     Session::set("user_email", $user_email);
     Session::set("user_profession", $user_profession);
     Session::set("user_level", $user_level);
-    Session::set("user_image", $user_image);
+    Session::set("user_image", $generatedImageFileName);
     Session::set("user_ins_name", $user_ins_name);
     Session::set("user_ins_add", $user_ins_add);
 

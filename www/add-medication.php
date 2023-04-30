@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
     $time_of_prescription = trim($_POST["time_of_prescription"]);
     $name_of_drug = trim(strtolower($_POST["name_of_drug"]));
     $dose = trim(strtolower($_POST["dose"]));   
-    $dose .= "mg";
+    //$dose .= "mg";
     $route = $_POST["route"];
     $frequency = $_POST["frequency"];
     $start_date = trim($_POST["start_date"]);
