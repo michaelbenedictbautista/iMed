@@ -68,8 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
     $imageFileName = $mr_file['name'];
     $imageFileType = $mr_file['type'];
     $imageFileTempName = $mr_file['tmp_name'];
-    $allowedTypes = array('image/jpeg', 'image/jpg','image/png', 'image/tiff'); // acceptable file extension
-    $maxSize = 5 * 1024 * 1024; // 5MB max size of an image
+    $imageFileError = $med_file['error'];
+    $allowedTypes = array('image/jpeg', 'image/jpg','image/png', 'image/tiff', 'video/mp4', 'video/mpeg','video/quicktime', 'video/x-msvideo', 'audio/mpeg', 'audio/wav', 'application/pdf', 'application/json', 'application/xml', 'text/csv', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint','application/zip', 'image/gif', 'image/bmp', 'image/webp', 'image/svg+xml'); // acceptable file extension
+    $maxSize = 200 * 1024 * 1024; // 200mb max size of an image
 
     //echo $imageFileName;
 
@@ -86,11 +87,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
 
         // Check file size
         if ($mr_file['size'] > $maxSize) {
-            echo 'Error: File size exceeds 5MB limit.';
+            echo 'Error: File size exceeds 200mb limit.';
             "<script>
                 alert('Error occured during execution!);
                 window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
             </script>";
+        }
+
+         // Check file error
+        if ($imageFileError !== UPLOAD_ERR_OK) {   
+            echo 'Error: File upload failed with error code ' . $imageFileError;
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+            </script>";    
+            
         }
 
         $imageFileExtension = pathinfo($imageFileName, PATHINFO_EXTENSION); // image extension

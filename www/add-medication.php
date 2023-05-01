@@ -59,21 +59,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (('user_email') != null)) {
     $imageFileName = $med_file['name'];
     $imageFileType = $med_file['type'];
     $imageFileTempName = $med_file['tmp_name'];
-    $allowedTypes = array('image/jpeg', 'image/png', 'image/tiff'); // acceptable file extension
+    $imageFileError = $med_file['error'];
+    $allowedTypes = array('image/jpeg', 'image/png', 'image/tiff', 'application/pdf'); // acceptable file extension
     $maxSize = 5 * 1024 * 1024; // 5MB max size of an image
 
-    if (!empty($imageFilename)) {
+    if (!empty($imageFileName)) {
         
         // Check file type
         if (!in_array($imageFileType, $allowedTypes)) {
             echo 'Error: Invalid file type. Only JPEG, PNG, and TIFF files are allowed.';
-            exit;
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medication.php?patient_ID=$patient_ID';
+            </script>"; 
         }
 
         // Check file size
         if ($med_file['size'] > $maxSize) {
             echo 'Error: File size exceeds 5MB limit.';
-            exit;
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medication.php?patient_ID=$patient_ID';
+            </script>";   
+        }
+
+        // Check file error
+        if ($imageFileError !== UPLOAD_ERR_OK) {   
+            echo 'Error: File upload failed with error code ' . $imageFileError;
+            "<script>
+                alert('Error occured during execution!);
+                window.location.href='view-patient-medication.php?patient_ID=$patient_ID';
+            </script>";    
+            
         }
 
         $imageFileExtension = pathinfo($imageFileName, PATHINFO_EXTENSION); // image extension

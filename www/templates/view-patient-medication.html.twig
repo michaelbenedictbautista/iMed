@@ -120,6 +120,17 @@
 								<span class="navbar-text fw-bold">Instruction:</span>
 								{{ item.med_text}}
 							</p>
+							{% if item.med_file | length > 0 %}
+								<p class="text-truncate">
+								<span class="navbar-text fw-bold">Attached File: </span>
+								<span class="navbar-text fw-bold me-3"><a href="img/uploads_medication/{{ item.med_file }}" target="_blank">View</a></span>
+								<span class="navbar-text fw-bold"><a href="img/uploads_medication/{{ item.med_file }}" download>Download</a></span>
+								</p>
+							{% else %}
+								<p class="text-truncate">
+									<span class="navbar-text fw-bold">View image attached: N/A</span>
+								</p>
+							{% endif %}
 							<span class="navbar-text text-capitalize">
 								Entered by:
 								{{ item.first_name ~ ' ' }}{{ item.last_name }}

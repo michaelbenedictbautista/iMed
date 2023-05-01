@@ -77,7 +77,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($user_id != null) && ($user_ins_I
             $fileActualExt = strtolower(end($fileExt));
 
             // allowing certain file format
-            $fileAllowed = array('jpg', 'jpeg', 'png');
+            $fileAllowed = array('jpg', 'jpeg', 'png', 'tiff');
 
 
             if (in_array($fileActualExt, $fileAllowed)) {

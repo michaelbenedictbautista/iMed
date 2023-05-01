@@ -28,7 +28,7 @@
 							<label for="lastName" class="form-label">Last name
 								<span class="asterisk">*</span>
 							</label>
-							<input type="text" class="form-control" name="lastName" id="lastName"  aria-label="Last name" required>
+							<input type="text" class="form-control" name="lastName" id="lastName"  aria-label="Last name" placeholder="Doe" required>
 						</div>
 					</div>
 					<div class="mb-3">
@@ -40,7 +40,8 @@
 
                     <div class="mb-3">
                         <label for="age" class="form-label">Age</label>
-                        <input type="text" pattern="\d{1,3}" inputmode="numeric" class="form-control" name="age" id="age"  title="must contain digits only" placeholder="Maximum 3 digits">
+                        {# <input type="text" pattern="\d{1,3}" inputmode="numeric" class="form-control" name="age" id="age"  title="must contain digits only" placeholder="Maximum 3 digits"> #}
+						<input pattern="\d{1,3}" type="number" class="form-control" name="age" id="age" placeholder="Enter age here..." title="Must contain digits only" min="0" max="150"  required> 
                     </div>
 
                     <div class="mb-3">
@@ -83,7 +84,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="room" class="form-label">Room</label>                      
+                        <label for="room" class="form-label">Room information</label>                      
                         <input type="text" class="form-control" name="room" id="room" placeholder="Enter room information..." >
                     </div>
 
@@ -92,6 +93,7 @@
 						</label>
 						<input class="form-control" type="file" name="formFile" id="formFile" onchange="fileValidation()">
 					</div> #}
+					
                     <div class="mb-3">
                         <label for="filechoose" class="form-label">Upload picture</label>
                             <input type="file" name="file" class="form-control" type="file" id="filechoose">
