@@ -9,18 +9,18 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" aria-current="page" href="/">
-						<i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #000000;"></i> Home
+					<a class="nav-link fw-bold bg-secondary text-white" aria-current="page" href="/">
+						<i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #ffffff;"></i> Home
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="patient.php">
+					<a class="nav-link fw-bold active bg-primary text-white" href="patient.php">
 					<i class="fa-sharp fa-solid fa-users-medical fa-xl"></i> Patients</a>
 				</li>
 			</ul>
 
-			<h2 class="text-center">
-			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2>
+			{# <h2 class="text-center">
+			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2> #}
 
 			{% if notFoundMessage | length > 0 %}
 				<a href="patient.php" style="display:flex">Back to patients</a>
@@ -120,7 +120,7 @@
 							<div class="col-md-2">
 								<img src="img/patient/{{ item.patient_image}}" class="img-fluid rounded overflow-hidden" alt="patient image">
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-7">
 								<p class="fw-bold fs-5 text-capitalize" id="patient-name">{{ item.first_name}}
 									{{ item.last_name }}</p>
 								<span class="navbar-text text-capitalize">
@@ -131,16 +131,20 @@
 								</span>
 							</div>
 
-							<div class="col-md-6">
-								<p class="fst-italic text-end">Room
-									{{ item.room }}
+							<div class="col-md-3">
+								<p class="fst-italic text-capitalize text-end">Room
+									{{ item.room }} |
 									{{ item.ins_name }}</p>
 								<form action="view-patient-profile.php" method="POST">
 									<input type="hidden" name="patient_ID" value="{{item.patient_ID}}">
-									<p class="text-end">
-										<button class="btn btn-primary mt-3" type="submit">View</button>
+									<p class="d-grid text-end">
+										<button class="btn btn-primary mt-3" type="submit"><i class="fa-sharp fa-light fa-magnifying-glass" style="color: #ffffff;"></i> View</button>
 									</p>
 								</form>
+								<p class="d-grid mt-3">						
+									<a class="btn btn-primary" href="edit-patient-information.php?patient_ID={{item.patient_ID}}"><i class="fa-sharp fa-light fa-pen-to-square" style="color: #ffffff;"></i> Edit</a>
+								</p>
+
 							</div>
 						</div>
 					</div>

@@ -9,18 +9,18 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" aria-current="page" href="/">
-						<i class="fa-sharp fa-light fa-house-medical" style="color: #000000;"></i> Home
+					<a class="nav-link fw-bold bg-secondary text-white" aria-current="page" href="/">
+						<i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #ffffff;"></i> Home
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="patient.php">
-					<i class="fa-sharp fa-solid fa-users-medical"></i> Patients</a>
+					<a class="nav-link fw-bold active bg-primary text-white" href="patient.php">
+					<i class="fa-sharp fa-solid fa-users-medical fa-xl"></i> Patients</a>
 				</li>
 			</ul>
 
-			<h2 class="text-center">
-			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2>
+			{# <h2 class="text-center">
+			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2> #}
 
 			<!-- List of Patient -->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
@@ -68,6 +68,10 @@
 
 						<p class="fst-italic text-capitalize">
 							{{ patientDetail.ins_name }}</p>
+							
+						<p class="d-grid mt-3">						
+							<a class="btn btn-primary" href="edit-patient-information.php?patient_ID={{patient.patient_ID}}"><i class="fa-sharp fa-light fa-pen-to-square" style="color: #ffffff;"></i> Edit</a>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -76,24 +80,24 @@
 			<!--Navigation tab -->
 			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">
-					<i class="fa-sharp fa-light fa-clipboard-user fa-xl" style="color: #4b7efb;"></i> Profile</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">
+					<i class="fa-sharp fa-light fa-clipboard-user fa-xl" style="color: #ffffff;"></i> Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-light fa-clipboard-medical fa-xl" style="color: #4b7efb; "></i> Progress</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-clipboard-medical fa-xl" style="color: #ffffff; "></i> Progress</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-light fa-bed-pulse fa-xl" style="color: #4b7efb;"></i> Vital sign</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-bed-pulse fa-xl" style="color: #ffffff;"></i> Vital sign</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-light fa-pills fa-xl" style="color: #4b7efb;"></i> Medication</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-pills fa-xl" style="color: #ffffff;"></i> Medication</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					\<i class="fa-sharp fa-solid fa-folder-medical fa-xl" style="color: #000000;"></i> Medical record</a>
+					<a class="nav-link fw-bold active bg-primary text-white" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-solid fa-folder-medical fa-xl" style="color: #ffffff;"></i> Medical record</a>
 				</li>
 			</ul>
 
@@ -139,7 +143,7 @@
 							<p class="fst-italic text-end">
 								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
 							<p class="text-end mt-3">
-								<button id='{{item.mr_ID}}' class='btn btn-primary viewMedicalBtn'>View</button>
+								<button id='{{item.mr_ID}}' class='btn btn-primary viewMedicalBtn'><i class="fa-sharp fa-light fa-magnifying-glass" style="color: #ffffff;"></i> View</button>
 							</p>
 						</div>
 					</div>
@@ -149,14 +153,14 @@
 			<!-- Add medical record details and pass the patient_ID-->
 			<div class="d-grid">
 				<a href="add-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" type="button" name="add_medicalRecord_btn" class="btn btn-primary btn-lg mt-5" id="add-patient-btn">
-				<strong>Add new medical record</strong>
+				<strong><i class="fa-sharp fa-solid fa-file-arrow-up" style="color: #ffffff;"></i> Upload medical record</strong>
 				</a>
 			</div>
 
 
 			<!-- View medical record details -->
 			<div class="modal fade" id="viewMedicalRecordModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="modal-title">Medical record</h5>

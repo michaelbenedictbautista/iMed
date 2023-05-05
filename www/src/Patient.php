@@ -17,7 +17,7 @@ class Patient extends Database
         $this->dbconnection = parent::getConnection();
     }
 
-    // Fetch data from Patient table
+    // Create patient model class
     public function createPatient($first_name, $last_name, $date_of_birth, $age, $gender, $status, $emergency_response, $allergy, $room, $ins_ID, $user_ID, $patient_image)
     {
         // Declaring variables
@@ -59,6 +59,66 @@ class Patient extends Database
             $response["errors"] = $errors;
         }
         return $response;
+    }
+
+
+    // Edit patient's information model class
+    public function updatePatientInformation ($patient_ID ,$first_name, $last_name, $date_of_birth, $age, $gender, $status, $emergency_response, $allergy, $room, $ins_ID, $user_ID, $patient_image) {
+        
+        // Declaring variables
+        $errors = array();
+        $response = array();
+        
+        
+        $first_name = trim(strtolower($first_name));
+        $last_name = trim(strtolower($last_name));
+        $date_of_birth = trim($date_of_birth);
+        $age = trim($age);
+        $gender = trim(strtolower($gender));
+        $status = trim(strtolower($status));
+        $emergency_response = trim(strtolower($emergency_response));
+        $allergy = trim(strtolower($allergy));
+        $room = trim(strtolower($room));
+
+        // Query to insert user
+        $queryUpdatePatientInformation = "
+        UPDATE patient
+        SET
+        first_name = '$first_name',
+        last_name = '$last_name',
+        date_of_birth = '$date_of_birth',
+        age = '$age',
+        gender = '$gender',
+        status = '$status',
+        emergency_response = '$emergency_response',
+        allergy = '$allergy',
+        room = '$room',
+        ins_ID = '$ins_ID',
+        user_ID = '$user_ID',
+        patient_image = '$patient_image'
+        WHERE patient_ID = ?
+        ";
+        
+        // Execute query }
+        try {
+            $statementUpdatePatientInformation = $this->dbconnection->prepare($queryUpdatePatientInformation);
+            $statementUpdatePatientInformation->bind_param("i", $patient_ID);
+
+            if (!$statementUpdatePatientInformation->execute()) {
+                throw new Exception("Database connection error occured!");
+                
+            } else {
+                $response["success"] = true;
+                $response["message"] = "Account has been updated!";
+            }
+        } catch (Exception $exc) {
+            $errors["system"] = $exc->getMessage();
+            $response["success"] = false;
+            $response["message"] = "account cannot be updated";
+            $response["errors"] = $errors;
+        }
+        return $response;
+
     }
 
     // Fetch data from patient table 

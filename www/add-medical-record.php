@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
     $imageFileName = $mr_file['name'];
     $imageFileType = $mr_file['type'];
     $imageFileTempName = $mr_file['tmp_name'];
-    $imageFileError = $med_file['error'];
+    $imageFileError = $mr_file['error'];
     $allowedTypes = array('image/jpeg', 'image/jpg','image/png', 'image/tiff', 'video/mp4', 'video/mpeg','video/quicktime', 'video/x-msvideo', 'audio/mpeg', 'audio/wav', 'application/pdf', 'application/json', 'application/xml', 'text/csv', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint','application/zip', 'image/gif', 'image/bmp', 'image/webp', 'image/svg+xml'); // acceptable file extension
     $maxSize = 200 * 1024 * 1024; // 200mb max size of an image
 
@@ -136,11 +136,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
                 //     }, 5000);
                 // </script>";
 
-                echo 
-                "<script>
-                    alert('Medical record added successfully!');
-                    window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
-                </script>";
+
+                // echo 
+                // "<script>
+                //     alert('Medical record added successfully!');
+                //     window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+                // </script>";
+                
+
+               // Redirect to the medical record page with a success query parameter
+                header("Location: view-patient-medical-record.php?patient_ID=$patient_ID&success=true");
+                // Terminate the script to prevent any output
+                exit();
 
                       
             } catch (Exception $e) {
@@ -161,12 +168,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
                 // Display patient all medical records information
                 $medicalRecordDetail = $medicalRecord->getAllMedicalRecords($patient_ID);
 
-                echo 
-                "<script>
-                    alert('Error occured during execution!);
-                    window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
-                </script>";
-                
+
+                // echo 
+                // "<script>
+                //     alert('Error occured during execution!);
+                //     window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+                // </script>";
+
+                // Redirect to the medical record page with a success query parameter
+                header("Location: view-patient-medical-record.php?patient_ID=$patient_ID&success=false&errorMessage=$myArrayresultsErrorsMessage");
+                // Terminate the script to prevent any output
+                exit();
+
+                               
             } 
         } else {
             echo 
@@ -201,11 +215,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (('user_email') != null)) {
         //     }, 5000);
         // </script>";
 
-        echo 
-        "<script>
-            alert('Medical record added successfully!');
-            window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
-        </script>";
+        // echo 
+        // "<script>
+        //     alert('Medical record added successfully!');
+        //     window.location.href='view-patient-medical-record.php?patient_ID=$patient_ID';
+        // </script>";
+
+        
+        // Redirect to the medical record page with a success query parameter
+        header("Location: view-patient-medical-record.php?patient_ID=$patient_ID&success=true");
+        // Terminate the script to prevent any output
+        exit();
+
+        
                 
      }
    

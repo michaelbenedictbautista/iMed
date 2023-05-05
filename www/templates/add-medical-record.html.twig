@@ -21,7 +21,7 @@
 
 			<!-- Form to add new medical record-->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
-				<h1 class="text-center mb-5">Add new medical record</h1>
+				<h1 class="text-center mb-5">Upload medical record</h1>
 
 				<form id="createMedicalRecord" method="post" action="add-medical-record.php" enctype="multipart/form-data">
 
@@ -60,7 +60,7 @@
 
 					<div class="mb-3 px-3 py-1">
 						<label for="mr_file" class="form-label">Upload file</label><br>
-						<input type="file" class="form-control" name="mr_file" id="mr_file">
+						<input type="file" class="form-control" name="mr_file" id="mr_file" required>
 					</div>
 
 					{# <img class="img-fluid" src="" id="myImage" alt="" style="max-width:100%; height:auto;"> #}

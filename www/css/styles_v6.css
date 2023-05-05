@@ -146,7 +146,7 @@ input:focus:invalid {
 
 @media only screen and (max-width: 767px) {
   .view-patient-profile-room-institution-wrapper{
-    text-align: left;
+    text-align: left !important;
   }
 }
 

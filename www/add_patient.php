@@ -90,13 +90,22 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($user_id != null) && ($user_ins_I
                         // TODO
                         $newPatient = $patient->createPatient($new_patient_firstName, $new_patient_lastName, $new_patient_dob, $new_patient_age, $new_patient_gender, $new_patient_status, $new_patient_er_response, $new_patient_allergy, $new_patient_room, $user_ins_ID, $user_id, $new_patient_image);
 
-                        echo "<script>
-                        alert('Patient added successfully!');
-                        window.location.href='patient.php';
-                        </script>";
-                    } catch (Exception $e) {
+                        // echo "<script>
+                        // alert('Patient added successfully!');
+                        // window.location.href='patient.php';
+                        // </script>";
 
-                        echo $e->getMessage();
+                        // Redirect to the medical record page with a success query parameter
+                        header("Location: patient.php?success=true");
+                        // Terminate the script to prevent any output
+                        exit();
+                        
+                    } catch (Exception $e) {
+                        $myArrayresultsErrorsMessage = implode(",", $newPatient['errors']);
+
+                        header("Location: patient.php??success=false&errorMessage=$myArrayresultsErrorsMessage");
+                        // Terminate the script to prevent any output
+                        exit();
                     }
                 } else {
                     echo "<p class='alert alert-danger'>Choose file to upload.</p>";

@@ -44,6 +44,36 @@ if (isset($_GET["patient_ID"])) {
     $medicalRecordDetail = $medicalRecord->getAllMedicalRecords($patient_ID);
 }
 
+if (isset($_GET['success']) && $_GET['success'] == 'true') {
+    echo "<p class='alert alert-success' id='successfulMessage'>Medical record added successfully!</p>";
+    
+    // Hide the message after 5 seconds
+    echo
+    "<script>
+        const successfulMessage = document.getElementById('successfulMessage');
+        setTimeout(function() {
+            successfulMessage.style.display = 'none';
+        }, 5000);
+    </script>";
+} else if (isset($_GET['success']) && $_GET['success'] == 'false') {
+    $errorMessage = $_GET['errorMessage'];
+    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>   
+    $errorMessage
+    <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
+    </div>;
+    ";    
+}
+
+// Hide the message after 5 seconds
+echo
+"<script>
+     const successfulMessage = document.getElementById('successfulMessage');
+     setTimeout(function() {
+         successfulMessage.style.display = 'none';
+     }, 5000);
+ </script>";
+
+
 $site_name = "iMed";
 
 // create twig environment

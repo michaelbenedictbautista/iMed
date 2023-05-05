@@ -9,18 +9,18 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset" aria-current="page" href="/">
-						<i class="fa-sharp fa-light fa-house-medical" style="color: #000000;"></i> Home
+					<a class="nav-link fw-bold bg-secondary text-white" aria-current="page" href="/">
+						<i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #ffffff;"></i> Home
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="patient.php">
-					<i class="fa-sharp fa-solid fa-users-medical"></i> Patients</a>
+					<a class="nav-link fw-bold active bg-primary text-white" href="patient.php">
+					<i class="fa-sharp fa-solid fa-users-medical fa-xl"></i> Patients</a>
 				</li>
 			</ul>
 
-			<h2 class="text-center">
-			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2>
+			{# <h2 class="text-center">
+			<i class="fa-sharp fa-solid fa-users-medical" style="color: #000000;"></i> Patients</h2> #}
 
 			<!-- List of Patient -->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
@@ -68,6 +68,9 @@
 
 						<p class="fst-italic text-capitalize">
 							{{ patientDetail.ins_name }}</p>
+						<p class="d-grid mt-3">						
+							<a class="btn btn-primary" href="edit-patient-information.php?patient_ID={{patient.patient_ID}}"><i class="fa-sharp fa-light fa-pen-to-square" style="color: #ffffff;"></i> Edit</a>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -76,24 +79,24 @@
 			<!--Navigation tab -->
 			<ul class="nav nav-tabs justify-content-center mt-5 gap-5">
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">
-					<i class="fa-sharp fa-light fa-clipboard-user fa-xl" style="color: #4b7efb;"></i> Profile</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-profile.php?patient_ID={{ patientDetail.patient_ID }}">
+					<i class="fa-sharp fa-light fa-clipboard-user fa-xl" style="color: #ffffff;"></i> Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-light fa-clipboard-medical fa-xl" style="color: #4b7efb; "></i> Progress</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-progress.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-clipboard-medical fa-xl" style="color: #ffffff; "></i> Progress</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-light fa-bed-pulse fa-xl" style="color: #4b7efb;"></i> Vital sign</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-vital-sign.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-bed-pulse fa-xl" style="color: #ffffff;"></i> Vital sign</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					<i class="fa-sharp fa-solid fa-pills fa-xl" style="color: #000000;"></i> Medication</a>
+					<a class="nav-link fw-bold active bg-primary text-white" href="view-patient-medication.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-solid fa-pills fa-xl" style="color: #ffffff;"></i> Medication</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
-					\<i class="fa-sharp fa-light fa-folder-medical fa-xl" style="color: #4b7efb;"></i> Medical record</a>
+					<a class="nav-link bg-secondary text-white" href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}" aria-current="page">
+					<i class="fa-sharp fa-light fa-folder-medical fa-xl" style="color: #ffffff;"></i> Medical record</a>
 				</li>
 			</ul>
 
@@ -143,7 +146,7 @@
 							<p class="fst-italic text-end">
 								{{ item.updated_date | date("d F Y h:ia", "Australia/NSW") }}</p>
 							<p class="text-end mt-3">
-								<button id='{{item.med_ID}}' class='btn btn-primary viewMedicationBtn'>View</button>
+								<button id='{{item.med_ID}}' class='btn btn-primary viewMedicationBtn'><i class="fa-sharp fa-light fa-magnifying-glass" style="color: #ffffff;"></i> View</button>
 							</p>
 						</div>
 					</div>
@@ -153,7 +156,7 @@
 			<!-- Add medication button -->
 			<div class="d-grid">
 				<button type="button" name="addMedicationBtn" class="btn btn-primary btn-lg mt-5" id="addMedicationBtn" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
-					<strong>Add medication</strong>
+					<strong><i class="fa-sharp fa-solid fa-plus" style="color: #ffffff;"></i> Add medication</strong>
 				</button>
 			</div>
 
@@ -195,46 +198,53 @@
 								</div>		
 							</div>
 
-							<div class="mb-3 px-3 py-1">
-								<label for="route" class="form-label">Route
-									<span class="asterisk">*</span>
-								</label>
-								<select class="form-select" name="route" id="route" aria-label="route" required>
-									<option value="oral" selected>Oral</option>
-									<option value="sublingual">Sublingual</option>
-									<option value="intramuscular">Intramuscular</option>
-									<option value="intravenous">Intravenous</option>
-									<option value="topical">Topical</option>
-									<option value="other">Other</option>
-								</select>
-							</div>
 
-							<div class="mb-3 px-3 py-1">
-								<label for="frequency" class="form-label">Frequency
-									<span class="asterisk">*</span>
-								</label>
-								<select class="form-select" name="frequency" id="frequency" aria-label="frequency" required>
-									<option value="once a day" selected>Once a day</option>
-									<option value="twice a day">Twice a day</option>
-									<option value="three times a day">Three times a day</option>
-									<option value="four times a day">Four times a day</option>
-									<option value="as needed">As needed</option>
-									<option value="other">Other</option>
-								</select>	
-							</div>
+							<div class="row mb-3 px-3 py-1">
+								<div class="col">
+									<label for="route" class="form-label">Route
+										<span class="asterisk">*</span>
+									</label>
+									<select class="form-select" name="route" id="route" aria-label="route" required>
+										<option value="oral" selected>Oral</option>
+										<option value="sublingual">Sublingual</option>
+										<option value="intramuscular">Intramuscular</option>
+										<option value="intravenous">Intravenous</option>
+										<option value="topical">Topical</option>
+										<option value="other">Other</option>
+									</select>
+								</div>
 
-							<div class="mb-3 px-3 py-1">
-								<label for="start_date" class="form-label">Start date
-									<span class="asterisk">*</span>
-								</label>
-								<input type="text" class="form-control start_date" name="start_date" id="start_date" placeholder="Select date and time" required>
+								<div class="col">
+									<label for="frequency" class="form-label">Frequency
+										<span class="asterisk">*</span>
+									</label>
+									<select class="form-select" name="frequency" id="frequency" aria-label="frequency" required>
+										<option value="once a day" selected>Once a day</option>
+										<option value="twice a day">Twice a day</option>
+										<option value="three times a day">Three times a day</option>
+										<option value="four times a day">Four times a day</option>
+										<option value="as needed">As needed</option>
+										<option value="other">Other</option>
+									</select>	
+								</div>
 							</div>
 
 
-							<div class="mb-3 px-3 py-1">
-								<label for="end_date" class="form-label">End date
-								</label>
-								<input type="text" class="form-control end_date" name="end_date" id="end_date" placeholder="Select date and time">
+							<div class="row mb-3 px-3 py-1">
+								<div class="col">
+									<label for="start_date" class="form-label">Start date
+									<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control start_date" name="start_date" id="start_date" placeholder="Select date and time" required>
+								</div>
+
+
+								<div class="col">
+									<label for="end_date" class="form-label">End date
+									<span class="asterisk">*</span>
+									</label>
+									<input type="text" class="form-control end_date" name="end_date" id="end_date" placeholder="Select date and time" required>
+								</div>
 							</div>
 
 							<div class="mb-3 px-3 py-1">

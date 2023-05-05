@@ -3,7 +3,6 @@ $(document).ready(function() {
     enableTime: true,
     dateFormat: "d/m/Y h:iK",
     defaultDate: "today",
-    maxDate: "today",
     allowInput: false,
   });
 });
