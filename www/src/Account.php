@@ -34,7 +34,9 @@ class Account extends Database
         $ins_ID = null;
 
         $insName = trim(strtolower($insName));
-        $insAdd = trim(strtolower($insAdd));
+        //$insAdd = trim(strtolower($insAdd));
+        $insAdd = ($insAdd !== null) ? trim(strtolower($insAdd)) : '';
+       
 
         // check if email is valid
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -176,6 +178,44 @@ class Account extends Database
         }
 
         return $response;
+    }
+
+    public function getAllInstitution() {
+        $errors = array();
+        $institution = array();
+        $items =  array();
+        // Query statement
+        $query = "
+        SELECT
+        ins_name,
+        ins_add
+
+        FROM institution
+        ORDER BY ins_name
+        ";
+
+        try {
+            $statement = $this->dbconnection->prepare($query) or die($this->dbconnection->error);
+
+            if (!$statement->execute()) {
+                throw new Exception("Query execution error!");
+            } else {
+                $result = $statement->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    array_push($items, $row);
+                }
+
+                $institution["total"] =  count($items);
+                $institution["items"] =  $items;
+
+                return $institution;
+            }
+        } catch (Exception $exception) {
+            // Handle errors
+            $errors["system"] = $exception->getMessage();
+            $institution["errors"] = $errors;
+        }
+        return $institution;
     }
 
     // User login/signin 

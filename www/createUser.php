@@ -39,8 +39,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_user_profession = trim(strtolower($_POST["profession"]));
     $new_user_level = $_POST["userLevel"];
     // $new_user_ins_ID = $_GET["ins_ID"];
-    $new_user_ins_name = trim(strtolower($_POST["institutionName"]));
-    $new_user_ins_add = trim(strtolower($_POST["institutionAddress"]));
+    //$new_user_ins_name = trim(strtolower($_POST["institutionName"]));
+    //$new_user_ins_add = trim(strtolower($_POST["institutionAddress"]));
+
+    if ($_POST["institutionName"] == "others") {
+        $new_user_ins_name = trim(strtolower($_POST["institutionNameOther"]));
+        $new_user_ins_add = trim(strtolower($_POST["institutionAddressOther"]));
+    } else {
+        $new_user_ins_name = trim(strtolower($_POST["institutionName"]));
+        $new_user_ins_add = null;
+    }
+
+    //$new_user_ins_add = trim(strtolower($_POST["institutionAddress"]));
 
 
     // $file = $_FILES['formFile'];
@@ -105,6 +115,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+$institution = $account->getAllInstitution();
+
 
 $site_name = "iMed";
 
@@ -119,7 +131,7 @@ echo $twig->render(
         // Pass all variables to be used
         "page_title" => "Create New User",
         "site_name" => $site_name,
-       
+
         "result" => $result,
         "user_id" => $user_id,
         "user_userName" => $user_userName,
@@ -133,5 +145,7 @@ echo $twig->render(
         "user_image" => $user_image,
         "user_ins_name" => $user_ins_name,
         "user_ins_add" => $user_ins_add,
+
+        "institution" => $institution,
     ]
 );

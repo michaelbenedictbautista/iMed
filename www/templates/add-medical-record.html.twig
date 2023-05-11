@@ -7,10 +7,13 @@
 		<div class="container">
 			<ul class="nav nav-pills gap-3 mb-5">
 				<li class="nav-item">
-					<a class="nav-link fw-bold linkUnset " href="/">Home</a>
+					<a class="nav-link fw-bold bg-secondary text-white" aria-current="page" href="/">
+						<i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #ffffff;"></i> Home
+					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
+					<a class="nav-link fw-bold active bg-primary text-white" href="patient.php">
+					<i class="fa-sharp fa-solid fa-users-medical fa-xl"></i> Patients</a>
 				</li>
 			</ul>
 
@@ -36,13 +39,6 @@
 						<input type="text" class="form-control mr_time" name="mr_time" id="mr_time" placeholder="Select date and time" required>
 					</div>
 
-					{# <div class="mb-3 px-3 py-1">
-						<label for="mr_title" class="form-label">Title
-							<span class="asterisk">*</span>
-						</label>
-						<input type="text" class="form-control" name="mr_title" id="mr_title" placeholder="Enter title here..." required>
-					</div> #}
-
 					<div class="mb-3 px-3 py-1">
 						<label for="mr_title" class="form-label">Type of file</label>
 						<span class="asterisk">*</span>
@@ -57,65 +53,42 @@
 						</select>
 					</div>
 
-
 					<div class="mb-3 px-3 py-1">
 						<label for="mr_file" class="form-label">Upload file</label><br>
 						<input type="file" class="form-control" name="mr_file" id="mr_file" required>
 					</div>
-
-					{# <img class="img-fluid" src="" id="myImage" alt="" style="max-width:100%; height:auto;"> #}
-					<div class="row mt-3">
-						<div class="col-sm-8 mx-auto">
-							<img class="img-fluid" src="" id="myImage" alt="">
+		
+					
+					<div class="row mb-3 px-3 py-1 displayAndCroppedImage-wrapper" style="display:none;">
+						<div class="col-md-6">
+							<div class="container source-image-wrapper px-3" style="display:none;border: 1px solid gray;">
+								<img class="img-fluid px-0 py-3" src="" id="myImage" alt="" style="max-width:100%; height:500px;">
+							</div>
+							<div class="container mt-3 cropper-wrapper py-0" style="display:none;">	
+								<!-- Crop image -->
+								<button class="btn btn-primary" id="cropBtn" type="button">Crop Image</button>
+								<!-- Rotate image -->
+								<button class="btn btn-primary" id="leftRotateBtn" type="button" name="leftRotateBtn">left</button>
+								<button class="btn btn-primary " id="rightRotateBtn" type="button" name="rightRotateBtn">right</button>
+								<!-- Reset image -->
+								<a href="add-medical-record.php?patient_ID={{patientDetail.patient_ID}}" class="btn btn-secondary">Reset</a>
+							</div>
 						</div>
-						<div
-							class="col-sm-8 mx-auto d-flex gap-3 mt-2">
-							<!-- Crop image -->
-							<button class="btn btn-primary" id="cropBtn" type="button">Crop Image</button>
-							<!-- Rotate image -->
-							<button class="btn btn-primary" id="leftRotateBtn" type="button" name="leftRotateBtn">left</button>
-							<button class="btn btn-primary " id="rightRotateBtn" type="button" name="rightRotateBtn">right</button>
-							<!-- Reset image -->
-							<a href="add-medical-record.php?patient_ID={{patientDetail.patient_ID}}" class="btn btn-secondary">Reset</a>
-						</div>
-					</div>
 
-
-					<!-- display the result -->
-					{# <div class="container mt-3">
-							<h1 class="display-4 text-center">Cropped image result</h1>
-							<img id="croppedImage"  alt="Cropped image" style="max-width:100%; display:none;">
-							
-						</div> #}
-
-					<div class="row mt-3">
-						<div class="col-sm-8 mx-auto">
-							<h3 id="croppedImageResultText" class="text-center mt-3 mb-5" style="display:none;">Cropped image result</h3>
-							<img class="img-fluid px-2 py-2" id="croppedImage" alt="Cropped image" style="display:none; border:1px solid gray;">
-						</div>
-						<div class="d-grid col-8 mx-auto mt-3">
-							<button class="btn btn-primary my-3" id="convertBtn" type="button" style="display:none;">Extract text</button>
+						<div class="col-md-6 ">
+							<div class="container displayed-image-wrapper px-3" style="display:none; border: 1px solid gray;">
+								{# <h3 id="croppedImageResultText" class="text-center mt-5 mb-3" style="display:none;">Cropped image result</h3> #}
+								<img class="img-fluid px-0 py-3" id="croppedImage" alt="Cropped image" style="display:none; max-width:100%; height:500px;">
+							</div>
+							<div class="container mt-3 px-0 py-0 extract-btn-wrapper d-flex justify-content-center" style="display:none;">
+								<button class="btn btn-primary" id="convertBtn" type="button" style="display:none;">Extract text</button>
+							</div>
 						</div>
 					</div>
 
 
-					<!--Result OCR -->
-					{# <div class="text-start mt-3">
-							<h1 class="display-4 text-center">OCR convertion result</h1>
-							<p id="convertedImageToText"></p>
-						</div> #}
-
-
-					<!-- Add medical record manual button -->
-					{# <div class="d-grid">
-							<button type="button" name="addMedicalRecordManualModalBtn" class="btn btn-primary btn-lg mt-5" id="addMedicalRecordManualModalBtn" >
-								<strong>Add medical record</strong>
-							</button>
-						</div> #}
-
-					{# <textarea name="" id="mr_result2" cols="30" rows="10"></textarea> #}
-
-						<div class="mb-3 px-3 py-1" id="resultWrapper" style="display:none;"> <label for="mr_result" class="form-label">Result
+					<div class="mb-3 px-3 py-1" id="resultWrapper" style="display:none;">
+						<label for="mr_result" class="form-label">Result
 						</label>
 						<textarea type="text" class="form-control" name="mr_result" id="mr_result" rows="10" placeholder="Enter results here..."></textarea>
 					</div>
@@ -130,7 +103,7 @@
 					<div class="modal-footer">
 						{% set outcome = resultsMedicalRecord.errors | join(", ") %}
 						<a href="view-patient-medical-record.php?patient_ID={{ patientDetail.patient_ID }}">
-							
+							<div class="btn btn-outline-primary">Cancel</div>
 						</a>
 						<button type="submit" name="add_medicalRecord_btn" class="btn btn-primary" id="add-patient-btn">Add</button>
 						{% if outcome | length > 0 %}
@@ -147,6 +120,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/patient_medical_record_v3.js" defer></script>
+		<script src="js/patient_medical_record_v5.js" defer></script>
 	</body>
 </html>

@@ -146,18 +146,38 @@
 								<input type="text" id="otherOption" name="otherOption">
 							</div>
 
-							<div class="mb-3">
+							{# <div class="mb-3">
 								<label for="institutionName" class="form-label">Institution name
 									<span class="asterisk">*</span>
 								</label>
 								<input type="text" class="form-control" name="institutionName" id="institutionName" oninput="userInputValid()" placeholder="Enter institution name here..." required>
-							</div>
+							</div> #}
 
 							<div class="mb-3">
+								<label for="institutionName" class="form-label">Institution name
+									<span class="asterisk">*</span>
+								</label>
+								<select class="form-control" name="institutionName" id="institutionName" oninput="userInputValid()" onchange="handleInstitutionChange()">
+									<option value="">Select from the list...</option>
+									{% for item in institution.items %}
+									<option value="{{item.ins_name}}">{{item.ins_name}} | {{item.ins_add}}</option>
+									{% endfor %}
+									<option value="others">Others</option>
+									{# <input type="text" name="institutionAddress" value="{{item.ins_name}}"> #}
+								</select>
+								
+							</div>
+
+							<div class="mb-3 institutionName-wrapper" id="institutionName-wrapper" style="display: none;">
+								<label for="institutionNameInputField" class="form-label">Specify Institution Name</label> <span class="asterisk">*</span>
+								<input type="text" class="form-control" name="institutionNameOther" id="institutionNameOther" oninput="userInputValid()" placeholder="Enter institution name here..." required>
+							</div>
+
+							<div class="mb-3 institutionAddress-wrapper"id="institutionAddress-wrapper" style="display:none;">
 								<label for="institutionAddress" class="form-label">Institution address
 									<span class="asterisk">*</span>
 								</label>
-								<input type="text" class="form-control" name="institutionAddress" id="institutionAddress" oninput="userInputValid()" placeholder="Enter institution address here..." required>
+								<input type="text" class="form-control" name="institutionAddressOther" id="institutionAddressOther" oninput="userInputValid()" placeholder="Enter institution address here..." required>
 							</div>
 
 						{% endif %}
@@ -188,6 +208,6 @@
 		</div>
 		{% include "partial/footer.html.twig" %}
 		{% include "partial/script.html.twig" %}
-		<script src="js/createUser_v2.js" defer></script>
+		<script src="js/createUser_v3.js" defer></script>
 	</body>
 </html>

@@ -5,13 +5,16 @@
 		{% include "partial/navigation.html.twig" %}
 		<div class="container">		
 				<ul class="nav nav-pills gap-3 mb-5">
-					<li class="nav-item">
-						<a class="nav-link fw-bold linkUnset " href="/">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link fw-bold active" aria-current="page" href="patient.php">Patients</a>
-					</li>
-				</ul>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold bg-secondary text-white" aria-current="page" href="/">
+                            <i class="fa-sharp fa-light fa-house-medical fa-xl" style="color: #ffffff;"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold active bg-primary text-white" href="patient.php">
+                        <i class="fa-sharp fa-solid fa-users-medical fa-xl"></i> Patients</a>
+                    </li>
+                </ul>
 			
 			<!-- Form to add new patient-->
 			<div class="container container-body px-5 py-3 my-3 shadow-sm rounded ">
